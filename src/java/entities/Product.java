@@ -37,7 +37,18 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price"),
     @NamedQuery(name = "Product.findByImage", query = "SELECT p FROM Product p WHERE p.image = :image"),
     @NamedQuery(name = "Product.findByDiscription", query = "SELECT p FROM Product p WHERE p.discription = :discription"),
-    @NamedQuery(name = "Product.findByQuantity", query = "SELECT p FROM Product p WHERE p.quantity = :quantity")})
+    @NamedQuery(name = "Product.findByQuantity", query = "SELECT p FROM Product p WHERE p.quantity = :quantity"),
+    @NamedQuery(name = "Product.findWhere", query = "SELECT p FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower ORDER BY p.price ASC"),
+    @NamedQuery(name = "Product.findWhere1", query = "SELECT p FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower ORDER BY p.price DESC"),
+    @NamedQuery(name = "Product.findWhere2", query = "SELECT p FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower ORDER BY p.name ASC"),
+    @NamedQuery(name = "Product.findWhere3", query = "SELECT p FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower ORDER BY p.name DESC"),
+    @NamedQuery(name = "Product.findWhere4", query = "SELECT p FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower AND p.categoryId IN :categoryIds ORDER BY p.price ASC"),
+    @NamedQuery(name = "Product.findWhere5", query = "SELECT p FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower AND p.categoryId IN :categoryIds ORDER BY p.price DESC"),
+    @NamedQuery(name = "Product.findWhere6", query = "SELECT p FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower AND p.categoryId IN :categoryIds ORDER BY p.name ASC"),
+    @NamedQuery(name = "Product.findWhere7", query = "SELECT p FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower AND p.categoryId IN :categoryIds ORDER BY p.name DESC"),
+    @NamedQuery(name = "Product.count", query = "SELECT COUNT(p) FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower"),
+    @NamedQuery(name = "Product.count1", query = "SELECT COUNT(p) FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower AND p.categoryId IN :categoryIds")
+})
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

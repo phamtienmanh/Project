@@ -12,6 +12,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -20,6 +21,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 /**
  *
@@ -62,12 +64,12 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
         return super.find(id);
     }
 
-    @GET
-    @Override
-    @Produces({"application/xml", "application/json"})
-    public List<Product> findAll() {
-        return super.findAll();
-    }
+//    @GET
+//    @Override
+//    @Produces({"application/xml", "application/json"})
+//    public List<Product> findAll() {
+//        return super.findAll();
+//    }
 
     @GET
     @Path("{from}/{to}")
@@ -75,16 +77,77 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     public List<Product> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
+    
+    @GET
+    @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
+    public List<Product> findWhere(@QueryParam("limit") Integer limit, 
+                                    @QueryParam("skip") Integer skip,
+                                    @QueryParam("priceGreater") Integer priceGreater,
+                                    @QueryParam("priceLower") Integer priceLower,
+                                    @QueryParam("categoryIds") List<String> categoryIds,
+                                    @QueryParam("sortColumn") String sortColumn,
+                                    @QueryParam("sortValue") String sortValue) {
+        Query q = em.createNamedQuery("Product.findWhere", Product.class);
+        if(categoryIds.size()==0){
+            if(sortColumn.equals("price") && sortValue.equals("DESC")){
+                q = em.createNamedQuery("Product.findWhere1", Product.class);      
+            }
+            else if(sortColumn.equals("name") && sortValue.equals("ASC")){//name
+                q = em.createNamedQuery("Product.findWhere2", Product.class);
+            }
+            else if(sortColumn.equals("name") && sortValue.equals("DESC")){//name
+                q = em.createNamedQuery("Product.findWhere3", Product.class);
+            }
+        }
+        else{
+            q = em.createNamedQuery("Product.findWhere4", Product.class);
+            if(sortColumn.equals("price") && sortValue.equals("DESC")){
+                q = em.createNamedQuery("Product.findWhere5", Product.class);      
+            }
+            else if(sortColumn.equals("name") && sortValue.equals("ASC")){//name
+                q = em.createNamedQuery("Product.findWhere6", Product.class);
+            }
+            else if(sortColumn.equals("name") && sortValue.equals("DESC")){//name
+                q = em.createNamedQuery("Product.findWhere7", Product.class);
+            }
+            q.setParameter("categoryIds", categoryIds);                
+        } 
+        q.setParameter("priceGreater", priceGreater);
+        q.setParameter("priceLower", priceLower);
+        try {
+            q.setFirstResult(skip);
+            q.setMaxResults(limit);
+            return q.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     @GET
     @Path("count")
     @Produces({"application/xml", "application/json"})
-    public List<count> countREST() {
+    public List<count> countREST(@QueryParam("priceGreater") Integer priceGreater,
+                                 @QueryParam("priceLower") Integer priceLower,
+                                 @QueryParam("categoryIds") List<String> categoryIds) {
+        Query q = em.createNamedQuery("Product.count", Product.class);
+        if(categoryIds.size() != 0){
+            q = em.createNamedQuery("Product.count1", Product.class);
+            q.setParameter("categoryIds", categoryIds); 
+        }
+        q.setParameter("priceGreater", priceGreater);
+        q.setParameter("priceLower", priceLower);        
         List<count> listC = new ArrayList<count>();
         count c = new count();
-        c.setCount(super.count());
-        listC.add(c);
-        return listC;
+        try {
+            c.setCount(((Long) q.getSingleResult()).intValue());
+            listC.add(c);
+            return listC;
+        } catch (Exception e) {
+            c.setCount(0);
+            listC.add(c);
+            return listC;
+        }
     }
 
     @Override

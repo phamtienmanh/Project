@@ -27,14 +27,14 @@ angular.module('shopnxApp')
   .factory('SortOptions', [function() {
     var obj = {};
     obj.server= [
-       {name:'Low Price', val:{'variants.price':1}},
-       {name:'Hight Price', val:{'variants.price':-1}},
-       {name:'Name (A-Z)', val:{'name':1}},
-       {name:'Name (Z-A)', val:{'name':-1}}
+       {name:'Low Price', val:{'col': 'price', 'val': 'ASC'}},
+       {name:'Hight Price', val:{'col': 'price', 'val':'DESC'}},
+       {name:'Name (A-Z)', val:{'col': 'name', 'val':'ASC'}},
+       {name:'Name (Z-A)', val:{'col': 'name','val':'DESC'}}
     ];
     obj.client= [
-       {name:'Price Asc', val:'variants[0].price'},
-       {name:'Price Desc', val:'-variants[0].price'},
+       {name:'Price Asc', val:'price'},
+       {name:'Price Desc', val:'price'},
        {name:'Name Asc', val:'name'},
        {name:'Name Desc', val:'-name'}
     ];

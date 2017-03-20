@@ -24,5 +24,25 @@ http://www.tuckey.org/urlrewrite/
     <rule>
         <from>^/account$</from>
         <to>index.html</to>
+    </rule>
+    <rule>
+        <from>^/product$</from>
+        <to>index.html</to>
     </rule> 
+    <rule>
+        <from>^/category$</from>
+        <to>index.html</to>
+    </rule>
+    <rule>
+        <from>^/customer$</from>
+        <to>index.html</to>
+    </rule>
+    <rule>
+        <from>^/order$</from>
+        <to>index.html</to>
+    </rule>
+    <rule>
+        <from>^/shop$</from>
+        <to>index.html</to>
+    </rule>  
 </urlrewrite>

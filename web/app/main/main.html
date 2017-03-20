@@ -44,7 +44,7 @@
               <h3 class="panel-title">Categories
                 <div class="nav-search" id="nav-search">
                         <span class="input-icon">
-                            <input placeholder="Filter Categories ..." class="nav-search-input" autocomplete="off" type="text" autofocus style="width:100%">
+                            <input placeholder="Filter Categories ..." class="nav-search-input" ng-model="filterCat" autocomplete="off" type="text" autofocus style="width:100%">
                             <i class="search-icon fa fa-search nav-search-icon"></i>
                         </span>
                 </div>
@@ -55,8 +55,8 @@
 
               <form>
                   <div class="form-group">
-                      <div class="checkbox" ng-repeat="cat in categories">
-                          <label>
+                      <div class="checkbox" ng-repeat="cat in categories  | filter:filterCat">
+                          <label class="category">
                             <input type="checkbox" value="{{cat.name}}" checklist-model="fl.categories" checklist-value="cat" ng-click="filter();" />
                             {{cat.name}}<span>&nbsp;</span>
                           </label>
@@ -115,37 +115,37 @@
                                 <div class="flip-container">
                                     <div class="flipper">
                                         <div class="front">
-                                            <a ui-sref="productDetail({id:product._id, slug:product.slug})">
+                                            <a ui-sref="productDetail({id:product._id, slug:product.name})">
                                                 <img ng-src="assets/clothing/{{product.image}}"
-                                                    err-src="assets/images/photo.png"
+                                                    err-src="assets/clothing/photo.png"
                                                     alt="{{product.name}}" class="img-responsive">
                                             </a>
                                         </div>
                                         <div class="back">
-                                            <a ui-sref="productDetail({id:product._id, slug:product.slug})">
+                                            <a ui-sref="productDetail({id:product._id, slug:product.name})">
                                                 <img ng-src="assets/clothing/{{product.image}}"
-                                                    err-src="assets/images/photo.png"
+                                                    err-src="assets/clothing/photo.png"
                                                     alt="{{product.name}}" class="img-responsive">
                                             </a>
                                         </div>
                                     </div>
                                 </div>
-                                <a ui-sref="productDetail({id:product._id, slug:product.slug})" class="invisible">
+                                <a ui-sref="productDetail({id:product._id, slug:product.name})" class="invisible">
                                     <img src="assets/clothing/{{product.image}}" alt="" class="img-responsive">
                                 </a>
                                 <div class="text text-center">
-                                    <h3><a ui-sref="productDetail({id:product._id, slug:product.slug})">{{product.name}}</a></h3>
+                                    <h3><a ui-sref="productDetail({id:product._id, slug:product.name})">{{product.name}}</a></h3>
                                     <p class="price"><del ng-if="product.price!=product.mrp">{{product.mrp | currency : '$'}}</del> {{product.price | currency : '$'}}</p>
                                     <p class="buttons">
                                       <div class="btn-group">
-                                      <a ui-sref="productDetail({id:product._id, slug:product.slug})" class="btn btn-default">View detail</a>
-                                      <a ng-click="cart.addItem(product._id, product.name, product.slug, product.mrp, product.price, -1)" ng-hide="checkCart(product._id)" class="btn btn-info">-</a>
+                                      <a ui-sref="productDetail({id:product._id, slug:product.name})" class="btn btn-default">View detail</a>
+                                      <a ng-click="cart.addItem(product._id, product.name, product.name, product.mrp, product.price, -1)" ng-hide="checkCart(product._id)" class="btn btn-info">-</a>
 
                                       <a ng-hide="checkCart(product._id)" class="btn btn-info">{{getQuantity(product._id);}}</a>
 
-                                      <a ng-click="cart.addItem(product._id, product.name, product.slug, product.mrp, product.price, +1)" ng-hide="checkCart(product._id)" class="btn btn-info">+</a>
+                                      <a ng-click="cart.addItem(product._id, product.name, product.name, product.mrp, product.price, +1)" ng-hide="checkCart(product._id)" class="btn btn-info">+</a>
                                       </div>
-                                      <a ng-click="cart.addItem(product._id, product.name, product.slug, product.mrp, product.price, 1, product.image,product.category, true);" ng-show="checkCart(product._id)" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                      <a ng-click="cart.addItem(product._id, product.name, product.name, product.mrp, product.price, 1, product.image,product.category, true);" ng-show="checkCart(product._id)" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                     </p>
                                 </div>
                                 <!-- /.text -->

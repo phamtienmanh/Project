@@ -1,0 +1,138 @@
+
+<div class="container">
+<div class="row">
+  <div class="col-sm-12 text-center">
+    <ol class="breadcrumb">
+        <li><a ui-sref="main" href="">Home</a></li>
+        <li ng-repeat="b in breadcrumb.items | reverse">
+            <a href="" ng-if="!$last">{{b.name}}</a>
+            <span ng-if="$last">{{b.name}}</span>
+        </li>
+    </ol>
+  </div>
+    <hr class="clearfix"/>
+</div>
+</div>
+<div class="container">
+    <div class="row">
+      <div class="col-md-3">
+          <!-- *** MENUS AND FILTERS ***
+_________________________________________________________ -->
+          <div class="panel panel-default sidebar-menu">              
+                <div class="panel-heading">
+                    <h3 class="panel-title">Categories
+                      <div class="nav-search" id="nav-search">
+                              <span class="input-icon">
+                                  <input placeholder="Filter Categories ..." class="nav-search-input" ng-model="filterCat" autocomplete="off" type="text" autofocus style="width:100%">
+                                  <i class="search-icon fa fa-search nav-search-icon"></i>
+                              </span>
+                      </div>
+                    </h3>
+                </div>
+
+                <div class="panel-body brand-filter-panel">
+
+                    <form>
+                        <div class="form-group">
+                            <div class="checkbox" ng-repeat="cat in categories  | filter:filterCat">
+                                <label class="category">
+                                  <input type="checkbox" value="{{cat.name}}" checklist-model="fl.categories" checklist-value="cat" ng-click="filter();" />
+                                  {{cat.name}}<span>&nbsp;</span>
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+          </div>
+
+          <!-- *** MENUS AND FILTERS END *** -->
+
+          <div class="banner">
+              <a href="#">
+                  <img src="assets/images/banner.jpg" alt="sales 2017" class="img-responsive">
+              </a>
+          </div>
+      </div>
+
+      <div class="col-md-9">
+          <div class="row" id="productMain">
+              <div class="col-sm-6">
+                  <div id="mainImage">
+                      <img src="assets/clothing/{{product.image}}" err-src="assets/clothing/photo.png" alt="{{product.name}}" class="img-responsive">
+                  </div>
+
+                  <div class="ribbon sale">
+                      <div class="theribbon">SALE</div>
+                      <div class="ribbon-background"></div>
+                  </div>
+                  <!-- /.ribbon -->
+
+                  <div class="ribbon new">
+                      <div class="theribbon">NEW</div>
+                      <div class="ribbon-background"></div>
+                  </div>
+                  <!-- /.ribbon -->
+
+              </div>
+              <div class="col-sm-6">
+                  <div class="box">
+                      <h1 class="text-center">{{product.name}} (Author: {{product.author}})</h1>
+                      <p class="goToDescription"><a href="#details" class="scroll-to">Scroll to book details</a>
+                      </p>
+                      <p class="price"><del class="text-muted" ng-if="product.price!=product.mrp" >${{product.mrp}}</del>&nbsp;${{product.price}}</p>
+
+                      <div class="text-center buttons">
+                        <div class="btn-group text-center">
+                        <a href="" class="btn btn-default">View All products</a>
+                        <a ng-click="cart.addItem(product.id, product.name, product.slug, product.mrp, product.price, -1)" ng-hide="checkCart(product.id)" class="btn btn-primary">-</a>
+
+                        <a ng-hide="checkCart(product.id)" class="btn btn-default">{{getQuantity(product.id);}}</a>
+
+                        <a ng-click="cart.addItem(product.id, product.name, product.slug, product.mrp, product.price, +1)" ng-hide="checkCart(product.id)" class="btn btn-primary">+</a>
+                        </div>
+                        <a ng-click="cart.addItem(product.id, product.name, product.slug, product.mrp, product.price, 1, product.image,product.category, product.size ,true);" ng-show="checkCart(product.id)" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                      </div>
+
+                  </div>
+
+                  <div class="row" id="thumbs">
+                      <div class="col-xs-4">
+                          <a href="" class="thumb">
+                              <img src="assets/clothing/{{product.image}}" err-src="assets/clothing/photo.png" alt="{{product.name}}" class="img-responsive">
+                              {{product.name}} (Author: {{product.author}})
+                              <p class="price"><del class="text-muted" ng-if="product.price!=product.mrp" >${{product.mrp}}</del>&nbsp;${{products.price}}</p>
+                          </a>
+                      </div>
+
+                  </div>
+              </div>
+
+          </div>
+
+
+          <div class="box" id="details">
+              <p>
+                  <h4>Category</h4>
+                  <ul>
+                      <li><a href="Category/{{product.categoryId.name}}/{{product.categoryId.id}}">{{product.categoryId.name}}</a></li>
+                  </ul>
+                  </div>
+                  <blockquote>
+                      <p>{{product.discription}}
+                      </p>
+                  </blockquote>
+
+                  <hr>
+                  <div class="social">
+                      <h4>Show it to your friends</h4>
+                      <p>
+                          <a href="https://www.facebook.com" class="external facebook" data-animate-hover="pulse"><i class="fa fa-facebook"></i></a>
+                          <a href="" class="external gplus" data-animate-hover="pulse"><i class="fa fa-google-plus"></i></a>
+                          <a href="https://twitter.com" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a>
+                          <a href="" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
+                      </p>
+                  </div>
+          </div>
+    </div>
+</div>

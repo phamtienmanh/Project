@@ -28,7 +28,7 @@ http://www.tuckey.org/urlrewrite/
     <rule>
         <from>^/product$</from>
         <to>index.html</to>
-    </rule> 
+    </rule>
     <rule>
         <from>^/category$</from>
         <to>index.html</to>
@@ -42,7 +42,7 @@ http://www.tuckey.org/urlrewrite/
         <to>index.html</to>
     </rule>
     <rule>
-        <from>^/shop$</from>
-        <to>index.html</to>
-    </rule>  
+        <from>^/product/(.*)$</from>
+        <to>../index.html</to>
+    </rule> 
 </urlrewrite>

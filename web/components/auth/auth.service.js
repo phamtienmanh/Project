@@ -26,31 +26,17 @@ angular.module('shopnxApp')
           email: user.email,
           password: user.password
         }).
-//        success(function(data) {
-//            console.log(data);
-//          $cookieStore.put('token', data.token);
-//          currentUser = User.get();
-//          deferred.resolve(data);
-//          return cb();
-//        }).
-//        error(function(err) {
-//          this.logout();
-//          deferred.reject(err);
-//          return cb(err);
-//        }.bind(this));
-//
-//        return deferred.promise;
-//      },
         then(function onSuccess(response) {
             $cookieStore.put('token', response.data);
             currentUser = response.data;
             deferred.resolve(response);
             return cb();
-        }).catch(function onError(response) {
+        }).catch(function onError(err) {
             this.logout();
-            deferred.reject(response);
+            deferred.reject(err);
             return cb(err);
         });
+        return deferred.promise;
     },
 
       /**
@@ -106,7 +92,7 @@ angular.module('shopnxApp')
       changePassword: function(oldPassword, newPassword, callback) {
         var cb = callback || angular.noop;
 
-        return User.changePassword({ id: currentUser._id }, {
+        return User.changePassword({ id: currentUser.id }, {
           oldPassword: oldPassword,
           newPassword: newPassword
         }, function(user) {

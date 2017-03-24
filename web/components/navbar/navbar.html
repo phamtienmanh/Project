@@ -81,7 +81,7 @@ _________________________________________________________ -->
                     </form>
 
                     <p class="text-center text-muted">Not registered yet?</p>
-                    <p class="text-center text-muted"><a href="register.html"><strong>Register now</strong></a>! It is easy and done in 1&nbsp;minute and gives you access to special discounts and much more!</p>
+                    <p class="text-center text-muted"><a href="register.html"><strong>Register now</strong></a>!</p>
 
                 </div>
             </div>
@@ -101,8 +101,8 @@ _________________________________________________________ -->
         <div class="navbar-header">
 
             <a class="navbar-brand home" href="index.html" data-animate-hover="bounce">
-                <img src="assets/img/logo.gif" alt="CodeNx logo" class="hidden-xs">
-                <img src="assets/img/logo.gif" alt="CodeNx logo" class="visible-xs"><span class="sr-only">Book Store - go to homepage</span>
+                <img src="assets/img/logo.gif" alt="Shop logo" class="hidden-xs">
+                <img src="assets/img/logo.gif" alt="Shop logo" class="visible-xs"><span class="sr-only">Book Store - go to homepage</span>
             </a>
             <div class="navbar-buttons">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation" ng-click="isCollapsed1 = !isCollapsed1">
@@ -171,7 +171,7 @@ _________________________________________________________ -->
                 </script>
                 <div class="input-group">
                 <input class="form-control text-left" type="text" name="q" id="q" autocomplete="off"
-                placeholder="Search for a product, category or brand..."
+                placeholder="Search for a book"
                 ng-model="search"
                 typeahead="p as p.name for p in globalSearch($viewValue)"
                 typeahead-loading="loadingLocations"
@@ -187,6 +187,7 @@ _________________________________________________________ -->
 </span>
               </div>
             </span>
+            </div>
           </form>
 
             <!-- <form class="navbar-form" role="search">

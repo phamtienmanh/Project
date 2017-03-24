@@ -47,7 +47,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Product.findWhere6", query = "SELECT p FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower AND p.categoryId IN :categoryIds ORDER BY p.name ASC"),
     @NamedQuery(name = "Product.findWhere7", query = "SELECT p FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower AND p.categoryId IN :categoryIds ORDER BY p.name DESC"),
     @NamedQuery(name = "Product.count", query = "SELECT COUNT(p) FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower"),
-    @NamedQuery(name = "Product.count1", query = "SELECT COUNT(p) FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower AND p.categoryId IN :categoryIds")
+    @NamedQuery(name = "Product.count1", query = "SELECT COUNT(p) FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower AND p.categoryId IN :categoryIds"),
+    @NamedQuery(name = "Product.search", query = "SELECT p FROM Product p WHERE p.name LIKE :searchKey")
 })
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;

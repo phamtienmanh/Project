@@ -58,7 +58,27 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     }
     
     @GET
-    @Consumes({"application/xml", "application/json"})
+    @Path("{id}")
+    @Produces({"application/xml", "application/json"})
+    public Product find(@PathParam("id") String id) {
+        return super.find(id);
+    }
+    
+    @GET
+    @Path("search")
+    @Produces({"application/xml", "application/json"})
+    public List<Product> search(@QueryParam("limit") Integer limit, @QueryParam("searchKey") String searchKey) {
+        Query q = em.createNamedQuery("Product.search", Product.class);
+        q.setParameter("searchKey", searchKey);
+        try {
+            q.setMaxResults(limit);
+            return q.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    @GET
     @Produces({"application/xml", "application/json"})
     public List<Product> findWhere(@QueryParam("limit") Integer limit, 
                                     @QueryParam("skip") Integer skip,

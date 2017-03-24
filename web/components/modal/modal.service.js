@@ -9,8 +9,8 @@ angular.module('shopnxApp')
     $scope.data = angular.copy(data);
     $scope.options = options;
     $scope.saveItem = function(item){
-        if($scope.data._id){
-          api.update({ id:$scope.data._id }, $scope.data).$promise.then(function() {
+        if($scope.data.id){
+          api.update({ id:$scope.data.id }, $scope.data).$promise.then(function() {
 
           }, function(error) { // error handler
             if(error.data.errors){

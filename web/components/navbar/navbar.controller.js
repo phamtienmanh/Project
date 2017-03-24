@@ -8,10 +8,10 @@ angular.module('shopnxApp')
     $rootScope.cart = Cart.cart;
     $scope.menu = [{
       'title': 'Home',
-      'link': '/'
+      'link': 'index.html'
     }];
 
-    $rootScope.brands = [];//Brand.query({active:true});
+//    $rootScope.brands = Brand.query({active:true});
     $rootScope.sortOptions = SortOptions.server;
 
     $scope.isCollapsed = true;
@@ -46,11 +46,11 @@ angular.module('shopnxApp')
     };
 
     $scope.onSelectProduct = function($item){
-        $state.go('productDetail', {id:$item._id, slug:$item.slug}, {reload: false});
+        $state.go('productDetail', {id:$item.id, name:$item.name}, {reload: false});
         $scope.search = '';
     };
 
-    $scope.categories = Category.all.query();
+//    $scope.categories = Category.all.query();
 
 // // Script which calls all category from parent 0 and constructs the category hierarchy
 // // This was moved to the server and now 1 call does it all instead 1 for each parent category + 1 for parent category itself
@@ -71,7 +71,7 @@ angular.module('shopnxApp')
           input = input.toLowerCase();
             var defer = $q.defer();
             if (input){
-                Product.query({where:{nameLower: {'$regex': input}}, limit:10, select: {id: 1, name:1, slug: 1}},
+                Product.search.query({limit:10, searchKey: '%'+input+'%'},
                     function(data){
                           console.log(data);
                         if (!$scope.$$phase){ //check if digest is not in progress

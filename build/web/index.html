@@ -7,7 +7,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script>
-        document.write('<base href="' + document.location.href + '" />');
+//        document.write('<base href="' + document.location.origin + '/BookStoreProject/" />');
+        var _location = document.location.toString();
+        var applicationNameIndex = _location.indexOf('/', _location.indexOf('://') + 3);
+        var applicationName = _location.substring(0, applicationNameIndex) + '/';
+        var webFolderIndex = _location.indexOf('/', _location.indexOf(applicationName) + applicationName.length);
+        var webFolderFullPath = _location.substring(0, webFolderIndex+1);
+        document.write('<base href="' + webFolderFullPath + '" />');
     </script>
     <title></title>
     <meta name="description" content="BookStore provides fastest shopping experience">
@@ -58,7 +64,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->  
-<!--    <div class="sk-cube-grid">
+<!--    <div class="sk-cube-grid" ng-hide="endLoadding">
         <div class="sk-cube sk-cube1"></div>
         <div class="sk-cube sk-cube2"></div>
         <div class="sk-cube sk-cube3"></div>
@@ -155,7 +161,7 @@
                                 <br>CMT8 590
                                 <br>Ward 11
                                 <br>District 3
-                                <br><strong>Great Britain</strong>
+                                <br><strong>VietNam</strong>
                             </p>
 
                             <a href="contact">Go to contact page</a>

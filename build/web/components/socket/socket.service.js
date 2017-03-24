@@ -35,7 +35,7 @@ angular.module('shopnxApp')
          * Syncs item creation/updates on 'model:save'
          */
         socket.on(modelName + ':save', function (item) {
-          var oldItem = _.find(array, {_id: item._id});
+          var oldItem = _.find(array, {id: item.id});
           var index = array.indexOf(oldItem);
           var event = 'created';
 
@@ -56,7 +56,7 @@ angular.module('shopnxApp')
          */
         socket.on(modelName + ':remove', function (item) {
           var event = 'deleted';
-          _.remove(array, {_id: item._id});
+          _.remove(array, {id: item.id});
           cb(event, item, array);
         });
       },

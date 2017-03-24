@@ -13,12 +13,17 @@ angular.module('shopnxApp')
           email: $scope.user.email,
           password: $scope.user.password
         })
-        .then( function() {
+        .then( function(resp) {
           // Logged in, redirect to the page with requested a login
-          Auth.redirectToAttemptedUrl();
+            if(resp.data==""){
+                $scope.errors.other = "Check email and password again!";
+            }
+            else{
+                Auth.redirectToAttemptedUrl();
+            }
         })
         .catch( function(err) {
-          $scope.errors.other = err.message;
+          $scope.errors.other = err;
         });
       }
     };

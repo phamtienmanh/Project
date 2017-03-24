@@ -160,8 +160,8 @@ angular.module('shopnxApp')
     $scope.resetPriceRange = function(){
       $scope.priceSlider = {
           min: 0,
-          max: 1000,
-          ceil: 1000,
+          max: 100,
+          ceil: 100,
           floor: 0
       };
       $scope.filter();

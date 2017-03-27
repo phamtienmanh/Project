@@ -68,17 +68,20 @@ angular.module('shopnxApp')
        */
       createUser: function(user, callback) {
         var cb = callback || angular.noop;
+        var deferred = $q.defer();
 
-        return User.save(user,
-          function(data) {
-            $cookieStore.put('token', data.token);
-            currentUser = User.get();
-            return cb(user);
-          },
-          function(err) {
-            this.logout();
-            return cb(err);
-          }.bind(this)).$promise;
+        $http.post('api/customer/create', user).
+            then(function onSuccess(response) {
+                $cookieStore.put('token', response.data);
+                currentUser = response.data;
+                deferred.resolve(response);
+                return cb();
+            }).catch(function onError(err) {
+                this.logout();
+                deferred.reject(err);
+                return cb(err);
+            });
+        return deferred.promise;
       },
 
       /**

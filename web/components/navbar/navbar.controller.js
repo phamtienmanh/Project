@@ -73,7 +73,6 @@ angular.module('shopnxApp')
             if (input){
                 Product.search.query({limit:10, searchKey: '%'+input+'%'},
                     function(data){
-                          console.log(data);
                         if (!$scope.$$phase){ //check if digest is not in progress
                             $rootScope.$apply(function(){
                                 defer.resolve(data);

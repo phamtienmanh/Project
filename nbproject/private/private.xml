@@ -2,13 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/project_sem4/BookStoreProject/web/index.html</file>
-            <file>file:/D:/project_sem4/BookStoreProject/web/app/app.js</file>
-            <file>file:/D:/project_sem4/BookStoreProject/web/app/main/main.controller.js</file>
-            <file>file:/D:/project_sem4/BookStoreProject/web/app/main/main.js</file>
-            <file>file:/D:/project_sem4/BookStoreProject/web/app/main/product-details.html</file>
-            <file>file:/D:/project_sem4/BookStoreProject/web/WEB-INF/urlrewrite.xml</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

@@ -14,9 +14,13 @@ angular.module('shopnxApp')
           email: $scope.user.email,
           password: $scope.user.password
         })
-        .then( function() {
-          // Account created, redirect to the page with requested a signup
-          Auth.redirectToAttemptedUrl();
+        .then( function(resp) {
+            if(resp.data==""){
+                $scope.errors.password = "Something when wwong please try again!";
+            }
+            else{
+                Auth.redirectToAttemptedUrl();
+            }
         })
         .catch( function(err) {
           err = err.data;

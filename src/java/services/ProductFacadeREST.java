@@ -58,6 +58,13 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     }
     
     @GET
+    @Override
+    @Produces({"application/xml", "application/json"})
+    public List<Product> findAll() {
+        return super.findAll();
+    }
+    
+    @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
     public Product find(@PathParam("id") String id) {
@@ -79,6 +86,7 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     }
     
     @GET
+    @Path("all")
     @Produces({"application/xml", "application/json"})
     public List<Product> findWhere(@QueryParam("limit") Integer limit, 
                                     @QueryParam("skip") Integer skip,

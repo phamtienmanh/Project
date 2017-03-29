@@ -9,6 +9,7 @@ import customEntities.loginCustomer;
 import customEntities.message;
 import entities.Customer;
 import java.util.List;
+import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -58,6 +59,20 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
     @Consumes({"application/xml", "application/json"})
     public void create(Customer entity) {
         super.create(entity);
+    }
+    
+    @POST
+    @Path("create")
+    @Consumes({"application/xml", "application/json"})
+    public Customer createNew(Customer entity) {
+        try {
+            entity.setId(UUID.randomUUID().toString());
+            entity.setRole("user");
+            super.create(entity);
+            return entity;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @PUT

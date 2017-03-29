@@ -73,12 +73,18 @@ public class CategoryFacadeREST extends AbstractFacade<Category> {
 //            return null;
 //        }
 //    }
-
+    
     @GET
-    @Path("all")
     @Override
     @Produces({"application/xml", "application/json"})
     public List<Category> findAll() {
+        return super.findAll();
+    }
+    
+    @GET
+    @Path("all")
+    @Produces({"application/xml", "application/json"})
+    public List<Category> findAllMain() {
         return super.findAll();
     }
 

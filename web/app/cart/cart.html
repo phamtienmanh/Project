@@ -16,7 +16,7 @@
 
         <input type="text" placeholder="Filter Cart" class="form-control col-md-4" style="width:250px;margin-left:20px;" ng-model="filterCart" autofocus/>
 
-        <button value="Proceed to Checkout →" name="proceed" class="btn btn-primary pull-right" onclick="window.location.href='/checkout'" ng-disabled="cart.getTotalCount() <= 0" ng-click="cancel();">Proceed to Checkout →</button>
+        <button value="Proceed to Checkout →" name="proceed" class="btn btn-primary pull-right" ng-disabled="cart.getTotalCount() <= 0" ng-click="cancel();">Proceed to Checkout →</button>
 
         <div class="clearfix"></div>
     </div><br/>
@@ -37,7 +37,7 @@
             <!-- empty cart message -->
             <tr ng-hide="cart.getTotalCount() > 0" >
                 <td class="tdCenter" colspan="7">
-                    Your cart is empty. &nbsp;&nbsp;<a class="btn btn-primary" href="/" ng-click="cancel();">Shop Now</a>
+                    Your cart is empty. &nbsp;&nbsp;<a class="btn btn-primary" ng-click="cancel();">Shop Now</a>
                 </td>
             </tr>
 
@@ -45,7 +45,7 @@
                 <td>{{$index+1}}</td>
                 <td class="product-thumbnail">
                     <a>
-                        <img ng-src="assets/clothing/{{item.image}}" alt="{{item.name}}" data-err-src="images/product.jpg" width="54px"/>
+                        <img ng-src="assets/clothing/{{item.image}}" alt="{{item.name}}" data-err-src="assets/clothing/photo.png" width="54px"/>
                     </a>
                 </td>
 

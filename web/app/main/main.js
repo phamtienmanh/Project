@@ -9,7 +9,8 @@ angular.module('shopnxApp')
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl',
         params: {
-          sort: null
+          sort: null,
+          myCategory: null
         }
       })
       .state('productDetail', {

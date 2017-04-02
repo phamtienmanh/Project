@@ -28,6 +28,9 @@ angular.module('shopnxApp')
         $location.replace().path('/');
       }
     };
+    $scope.goMain = function(cat){
+        $state.go('main', {myCategory: cat});
+    }
 
     // Function to generate breadcrumb for category and brand
     // Future: Put it inside a directive
@@ -49,11 +52,6 @@ angular.module('shopnxApp')
 
   .controller('MainCtrl', function ($scope, $state, $stateParams, $location, Product, Brand, Category, Feature, socket, $rootScope, $injector, $loading) {
     $scope.categories = Category.all.query();
-    
-    if ($stateParams.productSku) { // != null
-        $scope.product = $scope.store.getProduct($stateParams.productSku);
-    }
-
 // For Price slider
     $scope.currencyFormatting = function(value){
       return  '$ ' + value.toString();
@@ -76,6 +74,10 @@ angular.module('shopnxApp')
     $scope.products.sort = $rootScope.sortOptions[0].val;
     $scope.fl = {};
     $scope.fl.categories = [];
+    if($stateParams.myCategory){
+        $scope.myCategory = $stateParams.myCategory;
+        $scope.fl.categories.push($stateParams.myCategory);
+    }
     $scope.priceSlider = {};
     $scope.navigate = function(page,params){
       // var params = params.delete('$$hashKey');
@@ -114,7 +116,9 @@ angular.module('shopnxApp')
       if($scope.fl.categories){
         if($scope.fl.categories.length>0){          
             angular.forEach($scope.fl.categories,function(category){
-                categoryIds.push(category.id);
+                if(category.id){
+                    categoryIds.push(category.id);
+                }
             });
         }
       }

@@ -65,13 +65,21 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
     @Path("create")
     @Consumes({"application/xml", "application/json"})
     public Customer createNew(Customer entity) {
+        //check if email exist
+        Query q = em.createNamedQuery("Customer.findByEmail", Customer.class);
+        q.setParameter("email", entity.getEmail());
         try {
+            Customer customer = (Customer)q.getSingleResult();
+            return null;
+        } catch (Exception e) {
+            try {
             entity.setId(UUID.randomUUID().toString());
             entity.setRole("user");
             super.create(entity);
             return entity;
-        } catch (Exception e) {
-            return null;
+            } catch (Exception ex) {
+                return null;
+            }
         }
     }
 

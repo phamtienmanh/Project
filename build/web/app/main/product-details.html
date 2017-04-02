@@ -3,10 +3,9 @@
 <div class="row">
   <div class="col-sm-12 text-center">
     <ol class="breadcrumb">
-        <li><a ui-sref="main" href="index.html">Home</a></li>
+        <li><a ui-sref="main">Home</a></li>
         <li ng-repeat="b in breadcrumb.items | reverse">
-            <a href="index.html" ng-if="!$last">{{b.name}}</a>
-            <span ng-if="$last">{{b.name}}</span>
+            <a ui-sref="main({myCategory: b})">{{b.name}}</a>
         </li>
     </ol>
   </div>
@@ -35,8 +34,8 @@ _________________________________________________________ -->
                     <form>
                         <div class="form-group">
                             <div class="checkbox" ng-repeat="cat in categories  | filter:filterCat">
-                                <label class="category">
-                                  <input type="checkbox" value="{{cat.name}}" checklist-model="fl.categories" checklist-value="cat" ng-click="filter();" />
+                                <label class="category" ng-click="goMain(cat);">
+                                  <i class="search-icon fa fa-tags nav-search-icon"></i>
                                   {{cat.name}}<span>&nbsp;</span>
                                 </label>
                             </div>

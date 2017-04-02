@@ -16,7 +16,7 @@ angular.module('shopnxApp')
         })
         .then( function(resp) {
             if(resp.data==""){
-                $scope.errors.password = "Something when wwong please try again!";
+                $scope.errors.other = "This email has already exist!";
             }
             else{
                 Auth.redirectToAttemptedUrl();

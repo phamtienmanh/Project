@@ -57,7 +57,7 @@
                   <div class="form-group">
                       <div class="checkbox" ng-repeat="cat in categories  | filter:filterCat">
                           <label class="category">
-                            <input type="checkbox" value="{{cat.name}}" checklist-model="fl.categories" checklist-value="cat" ng-click="filter();" />
+                            <input ng-checked="{{myCategory.id==cat.id}}" type="checkbox" value="{{cat.name}}" checklist-model="fl.categories" checklist-value="cat" ng-click="filter();" />
                             {{cat.name}}<span>&nbsp;</span>
                           </label>
                       </div>
@@ -134,19 +134,19 @@
                                     <img ng-src="assets/clothing/{{product.image}}" alt="" class="img-responsive">
                                 </a>
                                 <div class="text text-center">
-                                    <h3><a ui-sref="productDetail({id:product.id, slug:product.name})">{{product.name}}</a></h3>
+                                    <h4><a ui-sref="productDetail({id:product.id, slug:product.name})">{{product.name}}</a></h4>
                                     <p class="price"><del ng-if="product.price!=product.mrp">{{product.mrp | currency : '$'}}</del> {{product.price | currency : '$'}}</p>
-                                    <p class="buttons">
-                                      <div class="btn-group">
+                                    <p class="buttons"></p>
+                                    <div class="btn-group">
                                       <a ui-sref="productDetail({id:product.id, slug:product.name})" class="btn btn-default">View detail</a>
                                       <a ng-click="cart.addItem(product.id, product.name, product.name, product.mrp, product.price, -1)" ng-hide="checkCart(product.id)" class="btn btn-info">-</a>
 
                                       <a ng-hide="checkCart(product.id)" class="btn btn-info">{{getQuantity(product.id);}}</a>
 
                                       <a ng-click="cart.addItem(product.id, product.name, product.name, product.mrp, product.price, +1)" ng-hide="checkCart(product.id)" class="btn btn-info">+</a>
-                                      </div>
-                                      <a ng-click="cart.addItem(product.id, product.name, product.name, product.mrp, product.price, 1, product.image,product.category, true);" ng-show="checkCart(product.id)" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                    </p>
+                                    </div>
+                                    <a ng-click="cart.addItem(product.id, product.name, product.name, product.mrp, product.price, 1, product.image,product.category, true);" ng-show="checkCart(product.id)" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    <p></p>
                                 </div>
                                 <!-- /.text -->
                             </div>

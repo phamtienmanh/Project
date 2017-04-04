@@ -10,8 +10,13 @@ angular.module('shopnxApp')
     $scope.options = options;
     $scope.saveItem = function(item){
         if($scope.data.id){
-          api.update({ id:$scope.data.id }, $scope.data).$promise.then(function() {
-
+          api.update({ id:$scope.data.id }, $scope.data).$promise.then(function(resp) {
+              if(resp == ""){
+                  toastr.error("Category info saved fail, please try again!","Fail");                 
+              }
+              else{
+                  toastr.success("Category info saved successfully","Success");
+              }
           }, function(error) { // error handler
             if(error.data.errors){
               var err = error.data.errors;
@@ -24,8 +29,13 @@ angular.module('shopnxApp')
           });
         }
         else{
-          api.save($scope.data).$promise.then(function() {
-
+          api.save($scope.data).$promise.then(function(resp) {
+            if(resp == ""){
+                  toastr.error("Category info saved fail, please try again!","Fail");                 
+              }
+              else{
+                  toastr.success("Category info saved successfully","Success");
+              }
           }, function(error) { // error handler
             if(error.data.errors){
               var err = error.data.errors;

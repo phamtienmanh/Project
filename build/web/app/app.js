@@ -17,11 +17,12 @@ angular.module('shopnxApp', [
   'angularMoment',
   'ui.select'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $qProvider) {
     $urlRouterProvider
       .otherwise('/');
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
+    $qProvider.errorOnUnhandledRejections(false);
   })
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {

@@ -2,188 +2,190 @@
 1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
 1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
 1 verbose cli   'install',
-1 verbose cli   'angular-ui-router',
-1 verbose cli   '0.3.2' ]
+1 verbose cli   'angular',
+1 verbose cli   '1.5.8' ]
 2 info using npm@2.15.9
 3 info using node@v4.5.0
 4 verbose install initial load of D:\project_sem4\BookStoreProject\web\package.json
 5 verbose readDependencies loading dependencies from D:\project_sem4\BookStoreProject\web\package.json
-6 silly cache add args [ 'angular-ui-router', null ]
-7 verbose cache add spec angular-ui-router
-8 silly cache add args [ '0.3.2', null ]
-9 verbose cache add spec 0.3.2
+6 silly cache add args [ 'angular', null ]
+7 verbose cache add spec angular
+8 silly cache add args [ '1.5.8', null ]
+9 verbose cache add spec 1.5.8
 10 silly cache add parsed spec Result {
-10 silly cache add   raw: 'angular-ui-router',
+10 silly cache add   raw: 'angular',
 10 silly cache add   scope: null,
-10 silly cache add   name: 'angular-ui-router',
+10 silly cache add   name: 'angular',
 10 silly cache add   rawSpec: '',
 10 silly cache add   spec: 'latest',
 10 silly cache add   type: 'tag' }
-11 silly addNamed angular-ui-router@latest
-12 verbose addNamed "latest" is being treated as a dist-tag for angular-ui-router
-13 info addNameTag [ 'angular-ui-router', 'latest' ]
-14 silly mapToRegistry name angular-ui-router
+11 silly addNamed angular@latest
+12 verbose addNamed "latest" is being treated as a dist-tag for angular
+13 info addNameTag [ 'angular', 'latest' ]
+14 silly mapToRegistry name angular
 15 silly mapToRegistry using default registry
 16 silly mapToRegistry registry https://registry.npmjs.org/
 17 silly mapToRegistry data Result {
-17 silly mapToRegistry   raw: 'angular-ui-router',
+17 silly mapToRegistry   raw: 'angular',
 17 silly mapToRegistry   scope: null,
-17 silly mapToRegistry   name: 'angular-ui-router',
+17 silly mapToRegistry   name: 'angular',
 17 silly mapToRegistry   rawSpec: '',
 17 silly mapToRegistry   spec: 'latest',
 17 silly mapToRegistry   type: 'tag' }
-18 silly mapToRegistry uri https://registry.npmjs.org/angular-ui-router
-19 verbose addNameTag registry:https://registry.npmjs.org/angular-ui-router not in flight; fetching
+18 silly mapToRegistry uri https://registry.npmjs.org/angular
+19 verbose addNameTag registry:https://registry.npmjs.org/angular not in flight; fetching
 20 silly cache add parsed spec Result {
-20 silly cache add   raw: '0.3.2',
+20 silly cache add   raw: '1.5.8',
 20 silly cache add   scope: null,
-20 silly cache add   name: '0.3.2',
+20 silly cache add   name: '1.5.8',
 20 silly cache add   rawSpec: '',
 20 silly cache add   spec: 'latest',
 20 silly cache add   type: 'tag' }
-21 silly addNamed 0.3.2@latest
-22 verbose addNamed "latest" is being treated as a dist-tag for 0.3.2
-23 info addNameTag [ '0.3.2', 'latest' ]
-24 silly mapToRegistry name 0.3.2
+21 silly addNamed 1.5.8@latest
+22 verbose addNamed "latest" is being treated as a dist-tag for 1.5.8
+23 info addNameTag [ '1.5.8', 'latest' ]
+24 silly mapToRegistry name 1.5.8
 25 silly mapToRegistry using default registry
 26 silly mapToRegistry registry https://registry.npmjs.org/
 27 silly mapToRegistry data Result {
-27 silly mapToRegistry   raw: '0.3.2',
+27 silly mapToRegistry   raw: '1.5.8',
 27 silly mapToRegistry   scope: null,
-27 silly mapToRegistry   name: '0.3.2',
+27 silly mapToRegistry   name: '1.5.8',
 27 silly mapToRegistry   rawSpec: '',
 27 silly mapToRegistry   spec: 'latest',
 27 silly mapToRegistry   type: 'tag' }
-28 silly mapToRegistry uri https://registry.npmjs.org/0.3.2
-29 verbose addNameTag registry:https://registry.npmjs.org/0.3.2 not in flight; fetching
-30 verbose request uri https://registry.npmjs.org/angular-ui-router
+28 silly mapToRegistry uri https://registry.npmjs.org/1.5.8
+29 verbose addNameTag registry:https://registry.npmjs.org/1.5.8 not in flight; fetching
+30 verbose request uri https://registry.npmjs.org/1.5.8
 31 verbose request no auth needed
-32 info attempt registry request try #1 at 11:41:48 AM
-33 verbose request id 14859d4e2a2d535f
-34 http request GET https://registry.npmjs.org/angular-ui-router
-35 verbose request uri https://registry.npmjs.org/0.3.2
+32 info attempt registry request try #1 at 9:50:41 PM
+33 verbose request id 98afe9bc514ff3ee
+34 http request GET https://registry.npmjs.org/1.5.8
+35 verbose request uri https://registry.npmjs.org/angular
 36 verbose request no auth needed
-37 info attempt registry request try #1 at 11:41:48 AM
-38 http request GET https://registry.npmjs.org/0.3.2
-39 http 200 https://registry.npmjs.org/angular-ui-router
-40 verbose headers { server: 'nginx/1.10.1',
-40 verbose headers   'content-type': 'application/json',
-40 verbose headers   'last-modified': 'Wed, 01 Mar 2017 13:12:32 GMT',
-40 verbose headers   etag: 'W/"58b6c8c0-f70b"',
-40 verbose headers   'content-encoding': 'gzip',
-40 verbose headers   'cache-control': 'max-age=300',
-40 verbose headers   'content-length': '8811',
-40 verbose headers   'accept-ranges': 'bytes',
-40 verbose headers   date: 'Mon, 13 Mar 2017 04:41:47 GMT',
-40 verbose headers   via: '1.1 varnish',
-40 verbose headers   age: '145',
-40 verbose headers   connection: 'keep-alive',
-40 verbose headers   'x-served-by': 'cache-hkg6825-HKG',
-40 verbose headers   'x-cache': 'HIT',
-40 verbose headers   'x-cache-hits': '1',
-40 verbose headers   'x-timer': 'S1489380107.346973,VS0,VE0',
-40 verbose headers   vary: 'Accept-Encoding' }
-41 silly get cb [ 200,
-41 silly get   { server: 'nginx/1.10.1',
-41 silly get     'content-type': 'application/json',
-41 silly get     'last-modified': 'Wed, 01 Mar 2017 13:12:32 GMT',
-41 silly get     etag: 'W/"58b6c8c0-f70b"',
-41 silly get     'content-encoding': 'gzip',
-41 silly get     'cache-control': 'max-age=300',
-41 silly get     'content-length': '8811',
-41 silly get     'accept-ranges': 'bytes',
-41 silly get     date: 'Mon, 13 Mar 2017 04:41:47 GMT',
-41 silly get     via: '1.1 varnish',
-41 silly get     age: '145',
-41 silly get     connection: 'keep-alive',
-41 silly get     'x-served-by': 'cache-hkg6825-HKG',
-41 silly get     'x-cache': 'HIT',
-41 silly get     'x-cache-hits': '1',
-41 silly get     'x-timer': 'S1489380107.346973,VS0,VE0',
-41 silly get     vary: 'Accept-Encoding' } ]
-42 verbose get saving angular-ui-router to C:\Users\WELCOME\AppData\Roaming\npm-cache\registry.npmjs.org\angular-ui-router\.cache.json
-43 verbose correctMkdir C:\Users\WELCOME\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
-44 silly addNameTag next cb for angular-ui-router with tag latest
-45 silly addNamed angular-ui-router@0.4.2
-46 verbose addNamed "0.4.2" is a plain semver version for angular-ui-router
-47 silly mapToRegistry name angular-ui-router
-48 silly mapToRegistry using default registry
-49 silly mapToRegistry registry https://registry.npmjs.org/
-50 silly mapToRegistry data Result {
-50 silly mapToRegistry   raw: 'angular-ui-router',
-50 silly mapToRegistry   scope: null,
-50 silly mapToRegistry   name: 'angular-ui-router',
-50 silly mapToRegistry   rawSpec: '',
-50 silly mapToRegistry   spec: 'latest',
-50 silly mapToRegistry   type: 'tag' }
-51 silly mapToRegistry uri https://registry.npmjs.org/angular-ui-router
-52 verbose addRemoteTarball https://registry.npmjs.org/angular-ui-router/-/angular-ui-router-0.4.2.tgz not in flight; adding
-53 verbose addRemoteTarball [ 'https://registry.npmjs.org/angular-ui-router/-/angular-ui-router-0.4.2.tgz',
-53 verbose addRemoteTarball   'b6aed1ca69a683c82e3992898eabd4ba15868608' ]
-54 info retry fetch attempt 1 at 11:41:49 AM
-55 info attempt registry request try #1 at 11:41:49 AM
-56 http fetch GET https://registry.npmjs.org/angular-ui-router/-/angular-ui-router-0.4.2.tgz
-57 http fetch 200 https://registry.npmjs.org/angular-ui-router/-/angular-ui-router-0.4.2.tgz
-58 http 404 https://registry.npmjs.org/0.3.2
-59 verbose headers { 'content-type': 'application/json',
-59 verbose headers   'cache-control': 'max-age=0',
-59 verbose headers   'content-length': '2',
-59 verbose headers   'accept-ranges': 'bytes',
-59 verbose headers   date: 'Mon, 13 Mar 2017 04:41:48 GMT',
-59 verbose headers   via: '1.1 varnish',
-59 verbose headers   age: '0',
-59 verbose headers   connection: 'keep-alive',
-59 verbose headers   'x-served-by': 'cache-hkg6820-HKG',
-59 verbose headers   'x-cache': 'MISS',
-59 verbose headers   'x-cache-hits': '0',
-59 verbose headers   'x-timer': 'S1489380107.359490,VS0,VE901',
-59 verbose headers   vary: 'Accept-Encoding' }
-60 silly get cb [ 404,
-60 silly get   { 'content-type': 'application/json',
-60 silly get     'cache-control': 'max-age=0',
-60 silly get     'content-length': '2',
-60 silly get     'accept-ranges': 'bytes',
-60 silly get     date: 'Mon, 13 Mar 2017 04:41:48 GMT',
-60 silly get     via: '1.1 varnish',
-60 silly get     age: '0',
-60 silly get     connection: 'keep-alive',
-60 silly get     'x-served-by': 'cache-hkg6820-HKG',
-60 silly get     'x-cache': 'MISS',
-60 silly get     'x-cache-hits': '0',
-60 silly get     'x-timer': 'S1489380107.359490,VS0,VE901',
-60 silly get     vary: 'Accept-Encoding' } ]
-61 silly fetchAndShaCheck shasum b6aed1ca69a683c82e3992898eabd4ba15868608
-62 verbose addTmpTarball C:\Users\WELCOME\AppData\Local\Temp\npm-13160-f8f1ce27\registry.npmjs.org\angular-ui-router\-\angular-ui-router-0.4.2.tgz not in flight; adding
-63 verbose addTmpTarball already have metadata; skipping unpack for angular-ui-router@0.4.2
-64 verbose correctMkdir C:\Users\WELCOME\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
-65 silly cache afterAdd angular-ui-router@0.4.2
-66 verbose afterAdd C:\Users\WELCOME\AppData\Roaming\npm-cache\angular-ui-router\0.4.2\package\package.json not in flight; writing
-67 verbose correctMkdir C:\Users\WELCOME\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
-68 verbose afterAdd C:\Users\WELCOME\AppData\Roaming\npm-cache\angular-ui-router\0.4.2\package\package.json written
-69 verbose stack Error: Registry returned 404 for GET on https://registry.npmjs.org/0.3.2
-69 verbose stack     at makeError (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:264:12)
-69 verbose stack     at CachingRegistryClient.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:242:14)
-69 verbose stack     at Request._callback (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:172:14)
-69 verbose stack     at Request.self.callback (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:200:22)
-69 verbose stack     at emitTwo (events.js:87:13)
-69 verbose stack     at Request.emit (events.js:172:7)
-69 verbose stack     at Request.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:1067:10)
-69 verbose stack     at emitOne (events.js:82:20)
-69 verbose stack     at Request.emit (events.js:169:7)
-69 verbose stack     at IncomingMessage.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:988:12)
-70 verbose statusCode 404
-71 verbose pkgid 0.3.2
-72 verbose cwd D:\project_sem4\BookStoreProject\web
-73 error Windows_NT 10.0.14393
-74 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "angular-ui-router" "0.3.2"
-75 error node v4.5.0
-76 error npm  v2.15.9
-77 error code E404
-78 error 404 Registry returned 404 for GET on https://registry.npmjs.org/0.3.2
-78 error 404
-78 error 404 '0.3.2' is not in the npm registry.
-78 error 404 You should bug the author to publish it (or use the name yourself!)
-78 error 404
-78 error 404 Note that you can also install from a
-78 error 404 tarball, folder, http url, or git url.
-79 verbose exit [ 1, true ]
+37 info attempt registry request try #1 at 9:50:41 PM
+38 verbose etag W/"58bffb34-245e4"
+39 verbose lastModified Wed, 08 Mar 2017 12:38:12 GMT
+40 http request GET https://registry.npmjs.org/angular
+41 http 200 https://registry.npmjs.org/angular
+42 verbose headers { server: 'nginx/1.10.1',
+42 verbose headers   'content-type': 'application/json',
+42 verbose headers   'last-modified': 'Fri, 31 Mar 2017 09:31:58 GMT',
+42 verbose headers   etag: 'W/"58de220e-24aca"',
+42 verbose headers   'content-encoding': 'gzip',
+42 verbose headers   'cache-control': 'max-age=300',
+42 verbose headers   'content-length': '15411',
+42 verbose headers   'accept-ranges': 'bytes',
+42 verbose headers   date: 'Mon, 03 Apr 2017 14:50:42 GMT',
+42 verbose headers   via: '1.1 varnish',
+42 verbose headers   age: '0',
+42 verbose headers   connection: 'keep-alive',
+42 verbose headers   'x-served-by': 'cache-hkg6821-HKG',
+42 verbose headers   'x-cache': 'HIT',
+42 verbose headers   'x-cache-hits': '1',
+42 verbose headers   'x-timer': 'S1491231042.861169,VS0,VE197',
+42 verbose headers   vary: 'Accept-Encoding' }
+43 silly get cb [ 200,
+43 silly get   { server: 'nginx/1.10.1',
+43 silly get     'content-type': 'application/json',
+43 silly get     'last-modified': 'Fri, 31 Mar 2017 09:31:58 GMT',
+43 silly get     etag: 'W/"58de220e-24aca"',
+43 silly get     'content-encoding': 'gzip',
+43 silly get     'cache-control': 'max-age=300',
+43 silly get     'content-length': '15411',
+43 silly get     'accept-ranges': 'bytes',
+43 silly get     date: 'Mon, 03 Apr 2017 14:50:42 GMT',
+43 silly get     via: '1.1 varnish',
+43 silly get     age: '0',
+43 silly get     connection: 'keep-alive',
+43 silly get     'x-served-by': 'cache-hkg6821-HKG',
+43 silly get     'x-cache': 'HIT',
+43 silly get     'x-cache-hits': '1',
+43 silly get     'x-timer': 'S1491231042.861169,VS0,VE197',
+43 silly get     vary: 'Accept-Encoding' } ]
+44 verbose get saving angular to C:\Users\WELCOME\AppData\Roaming\npm-cache\registry.npmjs.org\angular\.cache.json
+45 verbose correctMkdir C:\Users\WELCOME\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+46 silly addNameTag next cb for angular with tag latest
+47 silly addNamed angular@1.6.4
+48 verbose addNamed "1.6.4" is a plain semver version for angular
+49 silly mapToRegistry name angular
+50 silly mapToRegistry using default registry
+51 silly mapToRegistry registry https://registry.npmjs.org/
+52 silly mapToRegistry data Result {
+52 silly mapToRegistry   raw: 'angular',
+52 silly mapToRegistry   scope: null,
+52 silly mapToRegistry   name: 'angular',
+52 silly mapToRegistry   rawSpec: '',
+52 silly mapToRegistry   spec: 'latest',
+52 silly mapToRegistry   type: 'tag' }
+53 silly mapToRegistry uri https://registry.npmjs.org/angular
+54 verbose addRemoteTarball https://registry.npmjs.org/angular/-/angular-1.6.4.tgz not in flight; adding
+55 verbose addRemoteTarball [ 'https://registry.npmjs.org/angular/-/angular-1.6.4.tgz',
+55 verbose addRemoteTarball   '03b7b15c01a0802d7e2cf593240e604054dc77fb' ]
+56 info retry fetch attempt 1 at 9:50:43 PM
+57 info attempt registry request try #1 at 9:50:43 PM
+58 http fetch GET https://registry.npmjs.org/angular/-/angular-1.6.4.tgz
+59 http fetch 200 https://registry.npmjs.org/angular/-/angular-1.6.4.tgz
+60 http 404 https://registry.npmjs.org/1.5.8
+61 verbose headers { 'content-type': 'application/json',
+61 verbose headers   'cache-control': 'max-age=0',
+61 verbose headers   'content-length': '2',
+61 verbose headers   'accept-ranges': 'bytes',
+61 verbose headers   date: 'Mon, 03 Apr 2017 14:50:43 GMT',
+61 verbose headers   via: '1.1 varnish',
+61 verbose headers   age: '0',
+61 verbose headers   connection: 'keep-alive',
+61 verbose headers   'x-served-by': 'cache-hkg6822-HKG',
+61 verbose headers   'x-cache': 'MISS',
+61 verbose headers   'x-cache-hits': '0',
+61 verbose headers   'x-timer': 'S1491231041.965335,VS0,VE1861',
+61 verbose headers   vary: 'Accept-Encoding' }
+62 silly get cb [ 404,
+62 silly get   { 'content-type': 'application/json',
+62 silly get     'cache-control': 'max-age=0',
+62 silly get     'content-length': '2',
+62 silly get     'accept-ranges': 'bytes',
+62 silly get     date: 'Mon, 03 Apr 2017 14:50:43 GMT',
+62 silly get     via: '1.1 varnish',
+62 silly get     age: '0',
+62 silly get     connection: 'keep-alive',
+62 silly get     'x-served-by': 'cache-hkg6822-HKG',
+62 silly get     'x-cache': 'MISS',
+62 silly get     'x-cache-hits': '0',
+62 silly get     'x-timer': 'S1491231041.965335,VS0,VE1861',
+62 silly get     vary: 'Accept-Encoding' } ]
+63 silly fetchAndShaCheck shasum 03b7b15c01a0802d7e2cf593240e604054dc77fb
+64 verbose addTmpTarball C:\Users\WELCOME\AppData\Local\Temp\npm-14852-3681cbd7\registry.npmjs.org\angular\-\angular-1.6.4.tgz not in flight; adding
+65 verbose addTmpTarball already have metadata; skipping unpack for angular@1.6.4
+66 verbose correctMkdir C:\Users\WELCOME\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+67 silly cache afterAdd angular@1.6.4
+68 verbose afterAdd C:\Users\WELCOME\AppData\Roaming\npm-cache\angular\1.6.4\package\package.json not in flight; writing
+69 verbose correctMkdir C:\Users\WELCOME\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+70 verbose afterAdd C:\Users\WELCOME\AppData\Roaming\npm-cache\angular\1.6.4\package\package.json written
+71 verbose stack Error: Registry returned 404 for GET on https://registry.npmjs.org/1.5.8
+71 verbose stack     at makeError (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:264:12)
+71 verbose stack     at CachingRegistryClient.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:242:14)
+71 verbose stack     at Request._callback (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:172:14)
+71 verbose stack     at Request.self.callback (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:200:22)
+71 verbose stack     at emitTwo (events.js:87:13)
+71 verbose stack     at Request.emit (events.js:172:7)
+71 verbose stack     at Request.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:1067:10)
+71 verbose stack     at emitOne (events.js:82:20)
+71 verbose stack     at Request.emit (events.js:169:7)
+71 verbose stack     at IncomingMessage.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:988:12)
+72 verbose statusCode 404
+73 verbose pkgid 1.5.8
+74 verbose cwd D:\project_sem4\BookStoreProject\web
+75 error Windows_NT 10.0.14393
+76 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "angular" "1.5.8"
+77 error node v4.5.0
+78 error npm  v2.15.9
+79 error code E404
+80 error 404 Registry returned 404 for GET on https://registry.npmjs.org/1.5.8
+80 error 404
+80 error 404 '1.5.8' is not in the npm registry.
+80 error 404 You should bug the author to publish it (or use the name yourself!)
+80 error 404
+80 error 404 Note that you can also install from a
+80 error 404 tarball, folder, http url, or git url.
+81 verbose exit [ 1, true ]

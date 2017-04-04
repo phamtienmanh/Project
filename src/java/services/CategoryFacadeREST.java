@@ -44,8 +44,13 @@ public class CategoryFacadeREST extends AbstractFacade<Category> {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") String id, Category entity) {
-        super.edit(entity);
+    public Category edit(@PathParam("id") String id, Category entity) {
+        try {
+            super.edit(entity);
+            return entity;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @DELETE

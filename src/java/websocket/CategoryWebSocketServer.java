@@ -5,6 +5,7 @@
  */
 package websocket;
 
+import entities.Category;
 import java.util.Set;
 import javax.jms.Session;
 import javax.websocket.OnClose;
@@ -12,6 +13,7 @@ import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.server.ServerEndpoint;
+import org.jboss.weld.util.collections.ArraySet;
 
 /**
  *
@@ -19,12 +21,24 @@ import javax.websocket.server.ServerEndpoint;
  */
 @ServerEndpoint("/socket.io-client")
 public class CategoryWebSocketServer {
+    private static final Set<Session> SESSIONS =  new ArraySet<Session>();
+
     @OnOpen
-    public void open(Session session) {
+    public void onOpen(Session session) {
+        SESSIONS.add(session);
+    }
+
+    public static void sendCatAll(Category cat) {
+        synchronized (SESSIONS) {
+            for (Session session : SESSIONS) {
+//                session.se;
+            }
+        }
     }
 
     @OnClose
     public void close(Session session) {
+        SESSIONS.remove(session);
     }
 
     @OnError

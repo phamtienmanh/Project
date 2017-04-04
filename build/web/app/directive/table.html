@@ -55,7 +55,7 @@
                         {{p[c.heading] | currency}}
                       </span>
                       <span ng-switch-when="image">
-                        <img src="images/{{p.image}}"/>
+                        <img ng-src="images/{{p.image}}"/>
                       </span>
                       <span ng-switch-default>
                         {{p[c.heading]}}

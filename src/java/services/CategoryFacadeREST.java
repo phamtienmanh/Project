@@ -7,10 +7,10 @@ package services;
 
 import entities.Category;
 import java.util.List;
+import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -38,7 +38,8 @@ public class CategoryFacadeREST extends AbstractFacade<Category> {
     @Override
     @Consumes({"application/xml", "application/json"})
     public void create(Category entity) {
-        super.create(entity);
+        entity.setId(UUID.randomUUID().toString());
+        super.create(entity);        
     }
 
     @PUT

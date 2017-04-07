@@ -34,11 +34,11 @@
                 <div class="form-group row">
                   <label for="id" class="col-md-2 control-label">Category</label>
                   <div class="col-md-7"> <!-- | orderBy:'name' track by option.id -->
-                     <select ng-model="product.category" ng-options="option.name for option in categories | orderBy:'name' track by option.id " class="form-control">
+                     <select ng-model="product.categoryId" ng-options="option.name for option in categories | orderBy:'name' track by option.id " class="form-control">
                         <option value="">Select Category</option>
                     </select> 
 
-                    <ui-select ng-model="product.category" theme="bootstrap" title="Select Category">
+                    <ui-select ng-model="product.categoryId" theme="bootstrap" title="Select Category">
                       <ui-select-match placeholder="Select Category...">{{$select.selected.name}} </ui-select-match>
                       <ui-select-choices repeat="c in categories | propsFilter: {name: $select.search}">
                         <span ng-bind-html="c.name | highlight: $select.search"></span>
@@ -85,7 +85,7 @@
                <div class="form-group row">
                     <label for="id" class="col-md-2 control-label">Description</label>
                   <div class="col-md-10">
-                    <textarea ng-model="product.discription" class="form-control" placeholder="Description"></textarea>
+                    <textarea ng-model="product.description" class="form-control" placeholder="Description"></textarea>
                   </div>
                 </div>
               <hr/>

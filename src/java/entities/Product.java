@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Product.findByAuthor", query = "SELECT p FROM Product p WHERE p.author = :author"),
     @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price"),
     @NamedQuery(name = "Product.findByImage", query = "SELECT p FROM Product p WHERE p.image = :image"),
-    @NamedQuery(name = "Product.findByDiscription", query = "SELECT p FROM Product p WHERE p.discription = :discription"),
+    @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description"),
     @NamedQuery(name = "Product.findByQuantity", query = "SELECT p FROM Product p WHERE p.quantity = :quantity"),
     @NamedQuery(name = "Product.findWhere", query = "SELECT p FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower ORDER BY p.price ASC"),
     @NamedQuery(name = "Product.findWhere1", query = "SELECT p FROM Product p WHERE p.price >= :priceGreater AND p.price <= :priceLower ORDER BY p.price DESC"),
@@ -74,8 +74,8 @@ public class Product implements Serializable {
     @Column(name = "image")
     private String image;
     @Size(max = 500)
-    @Column(name = "discription")
-    private String discription;
+    @Column(name = "description")
+    private String description;
     @Basic(optional = false)
     @NotNull
     @Column(name = "quantity")
@@ -144,12 +144,12 @@ public class Product implements Serializable {
         this.image = image;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDiscription(String discription) {
-        this.discription = discription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getQuantity() {

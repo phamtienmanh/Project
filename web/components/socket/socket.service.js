@@ -9,6 +9,7 @@ angular.module('shopnxApp')
       // Send auth token on connection, you will need to DI the Auth service above
       // 'query': 'token=' + Auth.getToken()
       path: 'socket.io-client'
+//      path: document.location.pathname.substring(0, document.location.pathname.indexOf('/', 2)+1) + 'api/socket.io-client'
     });
 
     var socket = socketFactory({

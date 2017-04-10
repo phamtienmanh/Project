@@ -7,13 +7,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script>
-        document.write('<base href="' + document.location.origin + '/BookStoreProject/" />');
-//        var _location = document.location.toString();
-//        var applicationNameIndex = _location.indexOf('/', _location.indexOf('://') + 3);
-//        var applicationName = _location.substring(0, applicationNameIndex) + '/';
-//        var webFolderIndex = _location.indexOf('/', _location.indexOf(applicationName) + applicationName.length);
-//        var webFolderFullPath = _location.substring(0, webFolderIndex+1);
-//        document.write('<base href="' + webFolderFullPath + '" />');
+//        document.write('<base href="' + document.location.origin + document.location.pathname.substring(0, document.location.pathname.indexOf('/', 2)+1) + '"/>');
+        document.write('<base href="' + document.location.origin + '/BookStoreProject/"/>');
     </script>
     <title></title>
     <meta name="description" content="BookStore provides fastest shopping experience">
@@ -58,7 +53,7 @@
     <!-- endbuild -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css'>
   </head>
-  <body ng-app="shopnxApp">
+  <body ng-app="shopnxApp" ng-cloak>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->

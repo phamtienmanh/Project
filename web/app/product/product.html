@@ -9,7 +9,7 @@
 
   <div class="col-md-7">
       <button type="button" class="btn btn-danger" ng-click="edit({});"><i class="fa fa-plus"></i>&nbsp;Add New</button>
-      <button type="submit" class="btn btn-info" ng-click="save(product);" ng-if="product!=null"  ><i class="fa fa-save"></i> &nbsp;Save</button>
+      <button type="submit" class="btn btn-info" ng-click="validate();" ng-if="product!=null"  ><i class="fa fa-save"></i> &nbsp;Save</button>
       <button type="button" class="btn btn-danger" ng-confirm-message="Are you sure to delete {{product.name}}?" ng-confirm-click="delete(product)" ng-if="product!=null" ><i class="fa fa-plus"></i>&nbsp;Delete</button>
       &nbsp;&nbsp;<a ui-sref="productDetail({id:product.id, slug:product.slug})" >{{product.name}}</a>
       <hr/>

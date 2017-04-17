@@ -13,7 +13,8 @@ angular.module('shopnxApp')
     ];
     // var cols = ['sku','name','nameLower','slug','status','info','uid', 'active','img'];
     $scope.products = [];
-    $scope.product = {};
+    $scope.product = null;
+    
 //    $scope.variant = {};
 //    $scope.newFeature = {};
 //    $scope.newKF = {};
@@ -87,10 +88,25 @@ angular.module('shopnxApp')
             toastr.success("Product info saved successfully","Success!");
           }, function(error) { // error handler
               var err = error.data.errors;
-              toastr.error(err[Object.keys(err)].message,err[Object.keys(err)].name);
+              toastr.error("Product info save error","Error!");
+//              toastr.error(err[Object.keys(err)].message,err[Object.keys(err)].name);
           });
         }
     };
+    $scope.delete = function(product){
+        if('id' in product){
+          Product.delete({ id:$scope.product.id }).$promise.then(function() {
+            toastr.success("Product delete successfully","Success!");
+          }, function(error) { // error handler
+            var err = error.data.errors;
+            toastr.error("Product delete failed","Error!");
+//            toastr.error(err[Object.keys(err)].message,err[Object.keys(err)].name);
+          });
+        }
+    };
+    
+    
+    
     $scope.changeActive = function(b){ // success handler
       b.active = !b.active;
       Product.update({ id:b.id }, b).$promise.then(function() {
@@ -119,7 +135,7 @@ angular.module('shopnxApp')
 
     $scope.productDetail = function(product){
         if(product){ $scope.product = product; }
-        else{ $scope.product = {}; }
+        else{ $scope.product = null; }
     };
 
   });

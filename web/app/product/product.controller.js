@@ -107,6 +107,27 @@ angular.module('shopnxApp')
         }
     };
     
+    $scope.validate = function(){
+        if ($scope.product.name.length<=0) {
+            toastr.error("Name is required","Error!");
+        }
+        else if ($scope.product.author.length<=0) {
+            toastr.error("Author is required","Error!");
+        }
+        else if ($scope.product.price.length<=0) {
+            toastr.error("Price is required","Error!");
+        }
+        else if ($scope.product.description.length<=0) {
+            toastr.error("Description is required","Error!");
+        }
+        else if ($scope.product.quantity.length<=0) {
+            toastr.error("Quantity is required","Error!");
+        }
+        else{
+            $scope.save($scope.product);
+        }
+    }; 
+    
     
     
     $scope.changeActive = function(b){ // success handler

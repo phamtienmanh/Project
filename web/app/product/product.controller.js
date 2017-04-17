@@ -97,11 +97,11 @@ angular.module('shopnxApp')
         if('id' in product){
           Product.delete({ id:$scope.product.id }).$promise.then(function() {
             toastr.success("Product delete successfully","Success!");
-            $scope.products = Product.query();
-            $scope.product = null;
+            $scope.products = Product.query(); // get list product
+            $scope.product = null; // set null
           }, function(error) { // error handler
             var err = error.data.errors;
-            toastr.error("Product delete failed","Error!");
+            toastr.error("Product delete error","Error!");
 //            toastr.error(err[Object.keys(err)].message,err[Object.keys(err)].name);
           });
         }

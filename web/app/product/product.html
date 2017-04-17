@@ -1,16 +1,17 @@
 <link rel="stylesheet" href="bower_components/angular-tablesort/tablesort.css" />
 <form name="product_form">
-    <div class="col-sm-12">
+<!--    <div class="col-sm-12">
       <div class="box">
         <h1>Products Manager</h1>
         <div class="alert alert-info">Shipping will be free, if no weight specified</div>
       </div>
-    </div>
+    </div>-->
 
   <div class="col-md-7">
       <button type="button" class="btn btn-danger" ng-click="edit({});"><i class="fa fa-plus"></i>&nbsp;Add New</button>
-      <button type="submit" class="btn btn-info" ng-click="save(product);"><i class="fa fa-save"></i> &nbsp;Save</button>
-      &nbsp;&nbsp;<a ui-sref="productDetail({id:product.id, slug:product.slug})">{{product.name}}</a>
+      <button type="submit" class="btn btn-info" ng-click="save(product);" ng-if="product!=null"  ><i class="fa fa-save"></i> &nbsp;Save</button>
+      <button type="button" class="btn btn-danger" ng-confirm-message="Are you sure to delete {{product.name}}?" ng-confirm-click="delete(product)" ng-if="product!=null" ><i class="fa fa-plus"></i>&nbsp;Delete</button>
+      &nbsp;&nbsp;<a ui-sref="productDetail({id:product.id, slug:product.slug})" >{{product.name}}</a>
       <hr/>
     <div class="box" ng-if="product.id">
     <form class="form-horizontal" role="form">
@@ -38,12 +39,12 @@
                         <option value="">Select Category</option>
                     </select> 
 
-                    <ui-select ng-model="product.categoryId" theme="bootstrap" title="Select Category">
+<!--                    <ui-select ng-model="product.categoryId" theme="bootstrap" title="Select Category">
                       <ui-select-match placeholder="Select Category...">{{$select.selected.name}} </ui-select-match>
                       <ui-select-choices repeat="c in categories | propsFilter: {name: $select.search}">
                         <span ng-bind-html="c.name | highlight: $select.search"></span>
                       </ui-select-choices>
-                    </ui-select>
+                    </ui-select>-->
 
                   </div>
 <!--                  <label for="id" class="col-md-1 control-label">Brand</label>
@@ -275,15 +276,15 @@
         <tr>
             <th ts-criteria="id">ID</th>
             <th ts-criteria="name">Name</th>
-            <th ts-criteria="active">Status</th>
+            <th ts-criteria="img">Image</th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="p in products | filter:filter" id="{{p.id}}" animate-on-change='p.price+p.quantity+p.packing+p.name' ng-animate="'animate'" ts-repeat>
             <!-- <td><img src="images/{{p.category}}/{{p.image}}"/> </td>--><td>{{$index+1}}</td><td><a href=""  ng-click="productDetail(p);">{{p.name}}</a></td>
-            <td>
+<!--            <td>
                 <button class="btn" ng-class="{true:'btn-success', false:''}[p.active]" ng-click="changeActive(p);">{{p.active | active}}</button>
-            </td>
+            </td>-->
         </tr>
     </tbody>
     </table>

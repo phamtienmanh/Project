@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="bower_components/angular-tablesort/tablesort.css" />
-<form name="product_form">
+<!--<form name="product_form">-->
 <!--    <div class="col-sm-12">
       <div class="box">
         <h1>Products Manager</h1>
@@ -9,12 +9,12 @@
 
   <div class="col-md-7">
       <button type="button" class="btn btn-danger" ng-click="edit({});"><i class="fa fa-plus"></i>&nbsp;Add New</button>
-      <button type="submit" class="btn btn-info" ng-click="validate();" ng-if="product!=null"  ><i class="fa fa-save"></i> &nbsp;Save</button>
+      <button type="button" class="btn btn-info" ng-click="validate();" ng-if="product!=null"  ><i class="fa fa-save"></i> &nbsp;Save</button>
       <button type="button" class="btn btn-danger" ng-confirm-message="Are you sure to delete {{product.name}}?" ng-confirm-click="delete(product)" ng-if="product!=null" ><i class="fa fa-plus"></i>&nbsp;Delete</button>
       &nbsp;&nbsp;<a ui-sref="productDetail({id:product.id, slug:product.slug})" >{{product.name}}</a>
       <hr/>
     <div class="box" ng-if="product.id">
-    <form class="form-horizontal" role="form">
+    <form class="form-horizontal" role="form" name="form" novalidate >
       <div class="form-group">
           <div class="col-md-12">
               <div class="form-group row">
@@ -29,18 +29,22 @@
                
               </div>
               <hr/>
-              <div class="form-group row">
+              <div class="form-group row" ng-class="{ 'has-success': form.name.$valid ,
+                                                    'has-error': form.name.$invalid  }" >
                    <label for="name" class="col-md-2 control-label ">Name</label>
                 <div class="col-md-7">
-                    <input ng-model="product.name" type="text" class="form-control" placeholder="Name"/>
+                    <input ng-model="product.name" name="name" type="text" class="form-control" placeholder="Name" required/>
+                    <span class="help-block" ng-show="form.name.$error.required">
+                    A name is required
+                    </span>
                 </div>
               </div>
               <hr/>
-                <div class="form-group row">
-                  <label for="id" class="col-md-2 control-label">Category</label>
+                <div class="form-group row" >
+                  <label for="categoryId" class="col-md-2 control-label">Category</label>
                   <div class="col-md-7"> <!-- | orderBy:'name' track by option.id -->
                      <select ng-model="product.categoryId" ng-options="option.name for option in categories | orderBy:'name' track by option.id " class="form-control">
-                        <option value="">Select Category</option>
+                        <!--<option value="">Select Category</option>-->
                     </select> 
 
 <!--                    <ui-select ng-model="product.categoryId" theme="bootstrap" title="Select Category">
@@ -66,38 +70,54 @@
                   </div>-->
               </div>
               <hr/>
-               <div class="form-group row">
-                    <label for="name" class="col-md-2 control-label ">Author</label>
+               <div class="form-group row" ng-class="{ 'has-success': form.author.$valid ,
+                                                    'has-error': form.author.$invalid }" >
+                    <label for="author" class="col-md-2 control-label ">Author</label>
                     <div class="col-md-4">
-                    <input ng-model="product.author" type="text" class="form-control" placeholder="Author"/>
+                    <input ng-model="product.author" name="author" type="text" class="form-control" placeholder="Author" required />
+                    <span class="help-block" ng-show="form.author.$error.required">
+                    An author is required
+                    </span>
+                    </div>
+                </div>
+              <hr/>
+               <div class="form-group row" ng-class="{ 'has-success': form.price.$valid ,
+                                                    'has-error': form.price.$invalid  }" >
+                    <label for="price" class="col-md-2 control-label ">Price</label>
+                    <div class="col-md-4">
+                    <input ng-model="product.price" name="price" type="text" class="form-control" placeholder="Price" required />
+                    <span class="help-block" ng-show="form.price.$error.required">
+                    A price is required
+                    </span>
                     </div>
                 </div>
               <hr/>
                <div class="form-group row">
-                    <label for="name" class="col-md-2 control-label ">Price</label>
-                    <div class="col-md-4">
-                    <input ng-model="product.price" type="text" class="form-control" placeholder="Price"/>
-                    </div>
-                </div>
-              <hr/>
-               <div class="form-group row">
-                    <label for="name" class="col-md-2 control-label ">Image</label>
+                    <label for="image" class="col-md-2 control-label ">Image</label>
                     <div class="col-md-4">
                         <img ng-src="assets/clothing/{{product.image}}" alt="" class="img-responsive">
                     </div>
                 </div>
               <hr/>
-               <div class="form-group row">
-                    <label for="id" class="col-md-2 control-label">Description</label>
+               <div class="form-group row" ng-class="{ 'has-success': form.description.$valid ,
+                                                    'has-error': form.description.$invalid  }" >
+                    <label for="description" class="col-md-2 control-label">Description</label>
                   <div class="col-md-10">
-                    <textarea ng-model="product.description" rows="5" class="form-control" placeholder="Description"></textarea>
+                    <textarea ng-model="product.description" name="description" rows="5" class="form-control" placeholder="Description" required ></textarea>
+                    <span class="help-block" ng-show="form.description.$error.required">
+                    A description is required
+                    </span>
                   </div>
                 </div>
               <hr/>
-               <div class="form-group row">
-                    <label for="name" class="col-md-2 control-label ">Quantity</label>
+               <div class="form-group row" ng-class="{ 'has-success': form.quantity.$valid ,
+                                                    'has-error': form.quantity.$invalid  }" >
+                    <label for="quantity" class="col-md-2 control-label ">Quantity</label>
                     <div class="col-md-4">
-                    <input ng-model="product.quantity" type="text" class="form-control" placeholder="Quantity"/>
+                    <input ng-model="product.quantity" name="quantity" type="number" class="form-control" placeholder="Quantity" required />
+                    <span class="help-block" ng-show="form.quantity.$error.required">
+                    A quantity is required
+                    </span>
                     </div>
                 </div>
                
@@ -297,4 +317,4 @@
 </div>
 
 </div>
-</form>
+<!--</form>-->

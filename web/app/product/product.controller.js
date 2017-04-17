@@ -76,7 +76,7 @@ angular.module('shopnxApp')
       // console.log($scope.selected.feature);
       if('id' in product){
           Product.update({ id:$scope.product.id }, $scope.product).$promise.then(function() {
-            toastr.success("Product info saved successfully","Success");
+            toastr.success("Product info saved successfully","Success!");
           }, function(error) { // error handler
             var err = error.data.errors;
             toastr.error(err[Object.keys(err)].message,err[Object.keys(err)].name);
@@ -84,7 +84,7 @@ angular.module('shopnxApp')
         }
         else{
           Product.save($scope.product).$promise.then(function() {
-            toastr.success("Product info saved successfully","Success");
+            toastr.success("Product info saved successfully","Success!");
           }, function(error) { // error handler
               var err = error.data.errors;
               toastr.error(err[Object.keys(err)].message,err[Object.keys(err)].name);

@@ -2,36 +2,86 @@
 <div class="box">
   <div class="row">
 <div class="col-md-12">
-  <h1>Orders History</h1>
-  <h3  class="bg-info well text-center">Total Spent: {{orders.total | currency}}</h3>
-<div class="panel panel-primary" ng-repeat="o in orders | orderBy : 'orderDate' : 'reverse'">
-
+    <div class="row" >
+        <div class="col-md-3">
+            <h4 ng-hide="isAdmin()">Orders History</h4>
+            <h4 ng-show="isAdmin()">Orders Management</h4>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-3 text-right"><h5>Select orders from: </h5></div>
+                <div class="col-md-3">
+                    <span class="input-group">
+                        <input type="text" class="form-control" custom-class="getDayClass(date, mode)" datepicker-popup="dd-MM-yyyy" ng-model="dt1" ng-change="loadOrders()" max-date="dt2" is-open="popup1.opened" readonly close-text="Close" />
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="popup1.opened = !popup1.opened"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span>
+                    </span>
+                </div>
+                <div class="col-md-1 text-right"><h5>To: </h5></div>
+                <div class="col-md-3">
+                    <span class="input-group">
+                        <input type="text" class="form-control" custom-class="getDayClass(date, mode, dt1, dt2)" datepicker-popup="dd-MM-yyyy" ng-model="dt2" ng-change="loadOrders()" min-date="dt1" max-date="today" is-open="popup2.opened" readonly close-text="Close" />
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="popup2.opened = !popup2.opened"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+  <h5 ng-hide="isAdmin()" class="bg-info well text-center">Total Spent: {{orders.total | currency}}</h5>
+  <h5 ng-show="isAdmin()" class="bg-info well text-center">Total Amount: {{orders.total | currency}}</h5>
+<div class="panel panel-primary" ng-repeat="o in orders | orderBy : 'productOrder.date' : 'reverse'">
       <div class="panel-heading">
-            <div class="panel-title"><button class="btn btn-warning">{{o.orderNo}}</button>&nbsp;{{o.orderDate | amCalendar}}
-            <div class="col-sm-3 pull-right" ng-if="isAdmin()">
-              <select ng-model="o.status"
-              ng-options="i.name for i in orderStatusLov track by i.val"
-              ng-change="changeStatus(o)"
-              class="form-control"></select>
-             </div>
-          </div>
+            <div class="panel-title">
+                <button class="btn btn-warning">&nbsp;{{o.productOrder.date | amCalendar}}</button>
+                
+                <span ng-show="isAdmin()">
+                    <i class="fa fa-odnoklassniki"></i> {{o.productOrder.customerId.name}}&nbsp;
+                    <i class="fa fa-phone"></i> {{o.productOrder.customerId.phone}}&nbsp;
+                    <i class="fa fa-truck"></i> {{o.productOrder.customerId.address}}
+                </span>
+                
+                <div class="col-sm-3 pull-right" ng-hide="isAdmin()">
+                    <input ng-model="o.productOrder.status"
+                           class="form-control" readonly/>
+                </div>
+                
+                <div class="col-sm-3 pull-right" ng-show="isAdmin()">                    
+                  <select   ng-model="o.productOrder.status"
+                            ng-options="status for status in orderStatusLov"
+                            ng-change="changeStatus(o)"
+                            class="form-control"></select>
+                </div>
+            </div>
       </div>
       <div class="panel-body">
-          <table class="table">
+          <table class="table" style="margin-bottom: 0 !important">
               <tbody>
                 <tr ng-repeat="i in o.items" >
-                    <td><img ng-src="assets/clothing/{{i.image}}" err-src="assets/clothing/photo.png" width="100px" />
+                    <td class="col-md-2">
+                        <a ui-sref="productDetail({id:i.productId.id, slug:i.productId.name})">
+                            <img ng-src="assets/clothing/{{i.productId.image}}" err-src="assets/clothing/photo.png" width="100px" />
+                        </a>
                     </td>
-                    <td>{{i.name}}<br/><span class="text-muted">Qty: {{i.quantity}}</span><br/><span class="text-muted">Packing: {{i.packing}}</span><br/><span class="text-muted">Unit Price: {{i.price | currency}}</span></td>
-                    <td><span class="text-muted">= {{i.quantity * i.price | currency}}</span></td>
-
+                    <td class="col-md-8">
+                        {{i.productId.name}}<br/>
+                        Author: {{i.productId.author}}<br/>
+                        <span class="text-muted">Quantity: {{i.quantity}}</span><br/>
+                        <span class="text-muted">Unit Price: {{i.productId.price | currency}}</span>
+                    </td>
+                    <td class="col-md-2">
+                        <span class="text-muted">= {{i.quantity * i.productId.price | currency}}</span>
+                    </td>
                 </tr>
-                <tr class="well">
-                <td colspan="1"></td>
-                <td class="text-right">Order Total:</td>
-                <td colspan="1">{{o.subTotal | currency}}</td>
+                <tr class="well" style="margin-bottom: 0 !important">
+                    <td colspan="1"></td>
+                    <td class="text-right">Order Total:</td>
+                    <td colspan="1">{{o.subTotal | currency}}</td>
                 </tr>
-            </tbody>
+              </tbody>
           </table>
       </div>
 </div>

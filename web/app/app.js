@@ -16,7 +16,7 @@ angular.module('shopnxApp', [
   'darthwade.dwLoading',
   'angularMoment',
   'ui.select'
-])
+]).constant('_', window._)
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $qProvider) {
     $urlRouterProvider
       .otherwise('/');

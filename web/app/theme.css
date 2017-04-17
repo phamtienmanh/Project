@@ -1649,6 +1649,9 @@ address {
 .panel-primary {
   border-color: #4fbfa8;
 }
+.panel-body {
+    padding: 15px;
+}
 .panel-primary > .panel-heading {
   color: #ffffff;
   background-color: #4fbfa8;
@@ -1666,4 +1669,39 @@ address {
 .panel-primary .panel-title a:hover {
   color: #fff;
   text-decoration: none;
+}
+.samedate button {
+    background: linear-gradient(to right, orange 50%, limegreen 50%) !important;
+}
+.datetime1 button {
+    background-color: orange !important;
+    color: black;
+}
+.datetime2 button {
+  background-color: limegreen !important;
+  color: black;
+}
+.myeye {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: #4fbfa8;
+    font-size: 1.2em;
+}
+.myasterisk {
+    position: absolute;
+    top: 14px;
+    right: 8px;
+    color: #a94442;
+    font-size: 0.6em;
+}
+.mybadge {
+    position: absolute;
+    top: 2px;
+    right: -12px;
+    font-weight: normal;
+    font-size: smaller;
+    min-width: 26px;
+    background-color: #ddd;
+    color: #4fbfa8;
 }

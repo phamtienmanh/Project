@@ -34,7 +34,10 @@
           <thead>
               <tr>
                 <th>#</th>
-                <th ng-repeat="c in cols" ts-criteria="{{c.heading}} | {{c.sortType}}">
+                <th ng-repeat="c in cols" ts-criteria="{{c.heading}} | {{c.sortType}}" ng-if="c.heading=='name'" ts-default>
+                  {{c.heading | labelCase}}
+                </th>
+                <th ng-repeat="c in cols" ts-criteria="{{c.heading}} | {{c.sortType}}" ng-if="c.heading!='name'">
                   {{c.heading | labelCase}}
                 </th>
                 <th>Edit / Remove</th>
@@ -55,7 +58,7 @@
                         {{p[c.heading] | currency}}
                       </span>
                       <span ng-switch-when="image">
-                        <img ng-src="images/{{p.image}}"/>
+                        <img ng-src="assets/clothing/{{p.image}}"/>
                       </span>
                       <span ng-switch-default>
                         {{p[c.heading]}}
@@ -64,7 +67,7 @@
                   <td>
                       <div class="btn-group">
                         <a class="btn btn-default btn-sm btn-default" ng-click="edit(p);" ng-if="!noedit"><i class="fa fa-edit"></i></a>
-                        <a class="btn btn-default btn-sm btn-danger" ng-confirm-message="Are you sure to delete?" ng-confirm-click="delete(p)" item="p" ng-if="!nodelete"><i class="fa fa-trash-o"></i></a>
+                        <a class="btn btn-default btn-sm btn-danger" ng-confirm-message="Are you sure to delete {{p.name}}?" ng-confirm-click="delete(p)" item="p" ng-if="!nodelete"><i class="fa fa-trash-o"></i></a>
                       </div>
                   </td>
               </tr>

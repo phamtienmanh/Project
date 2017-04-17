@@ -55,10 +55,10 @@
 
               <form>
                   <div class="form-group">
-                      <div class="checkbox" ng-repeat="cat in categories  | filter:filterCat">
+                      <div class="checkbox" ng-repeat="cat in categories  | filter:filterCat" style="position: relative">
                           <label class="category">
                             <input ng-checked="{{myCategory.id==cat.id}}" type="checkbox" value="{{cat.name}}" checklist-model="fl.categories" checklist-value="cat" ng-click="filter();" />
-                            {{cat.name}}<span>&nbsp;</span>
+                            {{cat.name}}<span class="badge mybadge">{{cat.count}}</span>
                           </label>
                       </div>
                   </div>

@@ -2,6 +2,7 @@
 
 angular.module('shopnxApp')
   .controller('SignupCtrl', function ($scope, Auth, $location, $window) {
+    $scope.showPassword = false;
     $scope.user = {};
     $scope.errors = {};
 
@@ -12,7 +13,9 @@ angular.module('shopnxApp')
         Auth.createUser({
           name: $scope.user.name,
           email: $scope.user.email,
-          password: $scope.user.password
+          password: $scope.user.password,
+          phone: $scope.user.phone,
+          address: $scope.user.address
         })
         .then( function(resp) {
             if(resp.data==""){

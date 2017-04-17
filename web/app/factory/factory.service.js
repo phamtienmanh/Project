@@ -75,7 +75,7 @@ angular.module('shopnxApp')
     return obj;
   }])
   .factory('Customer', ['$resource', function($resource) {
-    return $resource('api/customers/:id', null, {'update': { method:'PUT' } });
+    return $resource('api/customer/:id', null, {'update': { method:'PUT' } });
   }])
   .factory('Setting', ['$resource', function($resource) {
     return $resource('api/settings/:id', null, {'update': { method:'PUT' } });
@@ -84,15 +84,8 @@ angular.module('shopnxApp')
     var obj = {};
     obj = $resource('api/orders/:id', null, {'update': { method:'PUT' } });
     obj.my = $resource('api/orders/my', null, {'update': { method:'PUT' }});
-    obj.status = [
-      {name:'Pending Payment', val:402},
-      {name:'Order Placed', val:201},
-      {name:'Order Accepted', val:202},
-      {name:'Order Executed', val:302},
-      {name:'Shipped', val:200},
-      {name:'Delivered', val:200},
-      {name:'Cancelled', val:204},
-      {name:'Not in Stock', val:404}
-    ];
+    obj.all = $resource('api/orders/all', null, {'update': { method:'PUT' }});
+    obj.changeStatus = $resource('api/orders/changestatus', null, {'update': { method:'PUT' }});
+    obj.status = ['Order Placed', 'Order Accepted', 'Shipped', 'Delivered', 'Cancelled'];
     return obj;
   }]);

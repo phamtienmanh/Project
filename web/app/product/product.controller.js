@@ -97,6 +97,8 @@ angular.module('shopnxApp')
         if('id' in product){
           Product.delete({ id:$scope.product.id }).$promise.then(function() {
             toastr.success("Product delete successfully","Success!");
+            $scope.products = Product.query();
+            $scope.product = null;
           }, function(error) { // error handler
             var err = error.data.errors;
             toastr.error("Product delete failed","Error!");

@@ -13,7 +13,8 @@ angular.module('shopnxApp')
     ];
     // var cols = ['sku','name','nameLower','slug','status','info','uid', 'active','img'];
     $scope.products = [];
-    $scope.product = {};
+    $scope.product = null;
+    
 //    $scope.variant = {};
 //    $scope.newFeature = {};
 //    $scope.newKF = {};
@@ -87,10 +88,49 @@ angular.module('shopnxApp')
             toastr.success("Product info saved successfully","Success!");
           }, function(error) { // error handler
               var err = error.data.errors;
-              toastr.error(err[Object.keys(err)].message,err[Object.keys(err)].name);
+              toastr.error("Product info save error","Error!");
+//              toastr.error(err[Object.keys(err)].message,err[Object.keys(err)].name);
           });
         }
     };
+    $scope.delete = function(product){
+        if('id' in product){
+          Product.delete({ id:$scope.product.id }).$promise.then(function() {
+            toastr.success("Product delete successfully","Success!");
+            $scope.products = Product.query(); // get list product
+            $scope.product = null; // set null
+          }, function(error) { // error handler
+            var err = error.data.errors;
+            toastr.error("Product delete error","Error!");
+//            toastr.error(err[Object.keys(err)].message,err[Object.keys(err)].name);
+          });
+        }
+    };
+    
+    $scope.validate = function(){
+        if ($scope.product.name.length<=0) {
+//            toastr.error("Name is required","Error!");
+//            $scope.product.name.focus();
+        }
+        else if ($scope.product.author.length<=0) {
+//            toastr.error("Author is required","Error!");
+        }
+        else if ($scope.product.price.length<=0) {
+//            toastr.error("Price is required","Error!");
+        }
+        else if ($scope.product.description.length<=0) {
+//            toastr.error("Description is required","Error!");
+        }
+        else if ($scope.product.quantity.length<=0) {
+//            toastr.error("Quantity is required","Error!");
+        }
+        else{
+            $scope.save($scope.product);
+        }
+    }; 
+    
+    
+    
     $scope.changeActive = function(b){ // success handler
       b.active = !b.active;
       Product.update({ id:b.id }, b).$promise.then(function() {
@@ -119,7 +159,7 @@ angular.module('shopnxApp')
 
     $scope.productDetail = function(product){
         if(product){ $scope.product = product; }
-        else{ $scope.product = {}; }
+        else{ $scope.product = null; }
     };
 
   });

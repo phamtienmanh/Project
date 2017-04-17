@@ -2,21 +2,18 @@
 
 angular.module('shopnxApp')
 
-  .directive('crudTable',['Modal','$injector','$loading','socket','toastr', function (Modal,$injector,$loading,socket,toastr) {
+  .directive('crudTable',['Modal','$injector','$loading','socket','toastr', '_', function (Modal,$injector,$loading,socket,toastr, _) {
     return {
       templateUrl: 'app/directive/table.html',
       restrict: 'EA',
       scope: {obj:'='},
       link: function (scope, element, attrs) {
-        // var cols = ['name','info','parent','image'];
         scope.title = attrs.api+'s';
         var cols = JSON.parse(attrs.cols);
         var obj = [];
         scope.noedit = attrs.noedit;
         scope.nodelete = attrs.nodelete;
         scope.noadd = attrs.noadd;
-        // console.log();
-        // scope.disabledColumn = attrs.disabledcolumn;
         angular.forEach(cols, function(o) {
           // var k,v;
           angular.forEach(o, function(v, k) {
@@ -41,8 +38,20 @@ angular.module('shopnxApp')
           socket.syncUpdates(attrs.api.toLowerCase(), scope.data);
         });
         scope.edit = function(item) {
-          var title; if(item.id){ title = 'Editing ' + item.id;} else{ title = 'Add New';}
-          Modal.show(item,{title:title, api:attrs.api, columns: obj, disabledColumn: attrs.disabledcolumn});
+          var title; if(item.id){ title = 'Editing ' + attrs.api+ " " + item.name;} else{ title = 'Add New' + attrs.api;}
+          Modal.show(item,{title:title, api:attrs.api, columns: obj, disabledColumn: attrs.disabledcolumn}).then(function(data){
+            if(data.id){
+                var index = _.indexOf(scope.data, _.find(scope.data, {id: data.id}));
+                if(index != -1){
+                    //edit
+                    scope.data.splice(index, 1, data);
+                }
+                else{
+                    //add new
+                    scope.data.push(data);
+                }
+            }
+          });
         };
         scope.changeActive = function(b){ // success handler
           b.active = !b.active;
@@ -56,7 +65,12 @@ angular.module('shopnxApp')
         };
 
         scope.delete = function(item) {
-          api.delete({id:item.id});
+          api.delete({id:item.id}).$promise.then(function(resp) {
+            _.remove(scope.data, item);
+            toastr.success(attrs.api + " deleted successfully","Success!");
+          }, function(error) { // error handler
+            toastr.error(attrs.api + " can't be deleted","Error!");
+          });
         };
 
         scope.$on('$destroy', function () {
@@ -286,7 +300,7 @@ angular.module('shopnxApp')
 
             //*This doesn't works
 
-            var modalHtml = '<div class="modal-header">Confirm Delete</div>';
+            var modalHtml = '<div class="modal-header"><button type="button" ng-click="$dismiss()" class="close">&times;</button><h4 class="modal-title">Confirm Delete</h4></div>';
             modalHtml += '<div class="modal-body">' + message + '</div>';
             modalHtml += '<div class="modal-footer"><button class="btn btn-danger" ng-click="ok()">Delete</button><button class="btn" ng-click="cancel()">Cancel</button></div>';
 

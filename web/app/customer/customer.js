@@ -8,6 +8,9 @@ angular.module('shopnxApp')
         url: '/customer',
         templateUrl: 'app/customer/customer.html',
         controller: 'CustomerCtrl',
-        authenticate: true
+        authenticate: true,
+        params: {
+          searchCustomer: null
+        }
       });
   });

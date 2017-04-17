@@ -71,7 +71,7 @@ angular.module('shopnxApp')
     $scope.products.end = false;
     $scope.products.after = 0;
     $scope.products.items = [];
-    $scope.products.sort = $rootScope.sortOptions[0].val;
+    $scope.products.sort = {'col': 'price', 'val': 'ASC'};
     $scope.fl = {};
     $scope.fl.categories = [];
     if($stateParams.myCategory){

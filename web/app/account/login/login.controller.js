@@ -2,6 +2,7 @@
 
 angular.module('shopnxApp')
   .controller('LoginCtrl', function ($scope, Auth, $location, $window) {
+    $scope.showPassword = false;
     $scope.user = {};
     $scope.errors = {};
 

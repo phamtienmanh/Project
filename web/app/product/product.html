@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="bower_components/angular-tablesort/tablesort.css" />
-<!--<form name="product_form">-->
+<form name="product_form">
 <!--    <div class="col-sm-12">
       <div class="box">
         <h1>Products Manager</h1>
@@ -9,17 +9,17 @@
 
   <div class="col-md-7">
       <button type="button" class="btn btn-danger" ng-click="edit({});"><i class="fa fa-plus"></i>&nbsp;Add New</button>
-      <button type="button" class="btn btn-info" ng-click="validate();" ng-if="product!=null"  ><i class="fa fa-save"></i> &nbsp;Save</button>
+      <button type="button" class="btn btn-info" ng-disabled="product_form.$invalid || imgTypeError" ng-click="save(product);" ng-if="product!=null"  ><i class="fa fa-save"></i> &nbsp;Save</button>
       <button type="button" class="btn btn-danger" ng-confirm-message="Are you sure to delete {{product.name}}?" ng-confirm-click="delete(product)" ng-if="product!=null" ><i class="fa fa-plus"></i>&nbsp;Delete</button>
       &nbsp;&nbsp;<a ui-sref="productDetail({id:product.id, slug:product.slug})" >{{product.name}}</a>
       <hr/>
     <div class="box" ng-if="product.id">
-    <form class="form-horizontal" role="form" name="form" novalidate >
+    <!--<form class="form-horizontal" role="form" name="form" novalidate >-->
       <div class="form-group">
           <div class="col-md-12">
               <div class="form-group row">
                 <label for="id" class="col-md-2 control-label">ID</label>
-                <div class="col-md-2">
+                <div class="col-md-10">
                     <input ng-model="product.id" type="text" disabled="" class="form-control" placeholder="ID"/>
                 </div>
                 <!--<label for="sku" class="col-md-1 control-label">SKU</label>-->
@@ -29,20 +29,23 @@
                
               </div>
               <hr/>
-              <div class="form-group row" ng-class="{ 'has-success': form.name.$valid ,
-                                                    'has-error': form.name.$invalid  }" >
+              <div class="form-group row" ng-class="{ 'has-success': product_form.name.$valid ,
+                                                    'has-error': product_form.name.$invalid  }" >
                    <label for="name" class="col-md-2 control-label ">Name</label>
-                <div class="col-md-7">
-                    <input ng-model="product.name" name="name" type="text" class="form-control" placeholder="Name" required/>
-                    <span class="help-block" ng-show="form.name.$error.required">
-                    A name is required
+                <div class="col-md-10">
+                    <input ng-model="product.name" name="name" ng-minlength="3" type="text" class="form-control" placeholder="Name" required/>
+                    <span class="help-block" ng-show="product_form.name.$error.required">
+                    Product name is required
+                    </span>
+                    <span class="help-block" ng-show="product_form.name.$error.minlength">
+                    Product name must be at least 3 character
                     </span>
                 </div>
               </div>
               <hr/>
                 <div class="form-group row" >
                   <label for="categoryId" class="col-md-2 control-label">Category</label>
-                  <div class="col-md-7"> <!-- | orderBy:'name' track by option.id -->
+                  <div class="col-md-10"> <!-- | orderBy:'name' track by option.id -->
                      <select ng-model="product.categoryId" ng-options="option.name for option in categories | orderBy:'name' track by option.id " class="form-control">
                         <!--<option value="">Select Category</option>-->
                     </select> 
@@ -70,53 +73,77 @@
                   </div>-->
               </div>
               <hr/>
-               <div class="form-group row" ng-class="{ 'has-success': form.author.$valid ,
-                                                    'has-error': form.author.$invalid }" >
+               <div class="form-group row" ng-class="{ 'has-success': product_form.author.$valid ,
+                                                    'has-error': product_form.author.$invalid }" >
                     <label for="author" class="col-md-2 control-label ">Author</label>
-                    <div class="col-md-4">
-                    <input ng-model="product.author" name="author" type="text" class="form-control" placeholder="Author" required />
-                    <span class="help-block" ng-show="form.author.$error.required">
-                    An author is required
+                    <div class="col-md-10">
+                    <input ng-model="product.author" name="author" type="text" ng-minlength="3" class="form-control" placeholder="Author" required />
+                    <span class="help-block" ng-show="product_form.author.$error.required">
+                    Product author is required
+                    </span>
+                    <span class="help-block" ng-show="product_form.author.$error.minlength">
+                    Product author must be at least 3 character
                     </span>
                     </div>
                 </div>
               <hr/>
-               <div class="form-group row" ng-class="{ 'has-success': form.price.$valid ,
-                                                    'has-error': form.price.$invalid  }" >
+               <div class="form-group row" ng-class="{ 'has-success': product_form.price.$valid ,
+                                                    'has-error': product_form.price.$invalid  }" >
                     <label for="price" class="col-md-2 control-label ">Price</label>
-                    <div class="col-md-4">
-                    <input ng-model="product.price" name="price" type="text" class="form-control" placeholder="Price" required />
-                    <span class="help-block" ng-show="form.price.$error.required">
-                    A price is required
+                    <div class="col-md-10">
+                    <input ng-model="product.price" name="price" type="text" min="0" 
+                           ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"
+                           class="form-control" placeholder="Price" required />
+                    <span class="help-block" ng-show="product_form.price.$error.required">
+                    Product price is required
+                    </span>
+                    <span class="help-block" ng-show="product_form.price.$error.pattern">
+                    Product price must be a number with maximum of 2 decimal places. <br/>
+                    Ex: 1.23
                     </span>
                     </div>
                 </div>
               <hr/>
-               <div class="form-group row">
+               <div class="form-group row" ng-class="{ 'has-success': imgTypeError ,
+                                                    'has-error': imgTypeError }" >
                     <label for="image" class="col-md-2 control-label ">Image</label>
-                    <div class="col-md-4">
+                    <div class="col-md-10">
+                        <input ng-model="file" type="file" name="file" onchange="angular.element(this).scope().getFile(this)" ><br/>
+                        <span class="help-block" ng-show="imgTypeError">
+                        Image extension is not valid, only .png .jpg .bmp are accepted
+                        </span><br/>
                         <img ng-src="assets/clothing/{{product.image}}" alt="" class="img-responsive">
                     </div>
                 </div>
               <hr/>
-               <div class="form-group row" ng-class="{ 'has-success': form.description.$valid ,
-                                                    'has-error': form.description.$invalid  }" >
+               <div class="form-group row" ng-class="{ 'has-success': product_form.description.$valid ,
+                                                    'has-error': product_form.description.$invalid  }" >
                     <label for="description" class="col-md-2 control-label">Description</label>
                   <div class="col-md-10">
-                    <textarea ng-model="product.description" name="description" rows="5" class="form-control" placeholder="Description" required ></textarea>
-                    <span class="help-block" ng-show="form.description.$error.required">
-                    A description is required
+                    <textarea ng-model="product.description" name="description" rows="5" 
+                              ng-maxlength="1000"
+                              class="form-control" placeholder="Description" required ></textarea>
+                    <span class="help-block" ng-show="product_form.description.$error.required">
+                    Product description is required
+                    </span>
+                    <span class="help-block" ng-show="product_form.description.$error.maxlength">
+                    Product description must be maximum of 1000 characters
                     </span>
                   </div>
                 </div>
               <hr/>
-               <div class="form-group row" ng-class="{ 'has-success': form.quantity.$valid ,
-                                                    'has-error': form.quantity.$invalid  }" >
+               <div class="form-group row" ng-class="{ 'has-success': product_form.quantity.$valid ,
+                                                    'has-error': product_form.quantity.$invalid  }" >
                     <label for="quantity" class="col-md-2 control-label ">Quantity</label>
-                    <div class="col-md-4">
-                    <input ng-model="product.quantity" name="quantity" type="number" class="form-control" placeholder="Quantity" required />
-                    <span class="help-block" ng-show="form.quantity.$error.required">
-                    A quantity is required
+                    <div class="col-md-10">
+                    <input ng-model="product.quantity" name="quantity" type="text" min="0"
+                           ng-pattern="/^[0-9]+$/"
+                           class="form-control" placeholder="Quantity" required />
+                    <span class="help-block" ng-show="product_form.quantity.$error.required">
+                    Product quantity is required
+                    </span>
+                    <span class="help-block" ng-show="product_form.quantity.$error.pattern">
+                    Product quantity must be a positive integer number
                     </span>
                     </div>
                 </div>
@@ -273,7 +300,7 @@
     </table>
 </div>
 </div>-->
-  </form>
+  <!--</form>-->
 </div>
 
 <div class="box" ng-if="!product.id">
@@ -317,4 +344,4 @@
 </div>
 
 </div>
-<!--</form>-->
+</form>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('shopnxApp')
-  .controller('ProductDetailsCtrl', function ($scope, $rootScope, Product, Category, socket, $stateParams, $location, $state, $injector) {    
+  .controller('ProductDetailsCtrl', function ($scope, $rootScope, Product, Customer , Category, Wishlist, toastr , Auth , socket, $stateParams, $location, $state, $injector) {    
     var id = $stateParams.id;
     // Storing the product id into localStorage because the _id of the selected product which was passed as a hidden parameter from products won't available on page refresh
     if (localStorage !== null && JSON !== null && id !== null) {
@@ -19,6 +19,62 @@ angular.module('shopnxApp')
     $scope.changeIndex =function(i){
         $scope.i=i;
     };
+    
+    $scope.wishExisted = false;
+
+    // Add to wish list
+    $scope.addWishlist = function(){
+        var u = Auth.getCurrentUser();
+        Wishlist.save({
+            id: 0,
+            customerId: u,
+            productId: $scope.product
+        }).$promise.then(function (data){
+            var result = data[0]+data[1]+data[2]+data[3];
+            if (result=="true") { 
+                // add success
+//                alert('Add to wish list success');
+//                toastr.success("Add to wish list success","Success!");
+               $scope.wishExisted = $scope.getWishlist();
+            }else {
+                // add failed
+            }
+        });
+    };
+    
+    // Check wish list exist
+    $scope.getWishlist = function(){
+        var u = Auth.getCurrentUser();
+        var result = Wishlist.get( u.id, $scope.product.id );
+        if (result!==null) {
+            return true;
+        }else{
+            return false;
+        }
+    };
+    // Remove wish list
+    $scope.removeWishlist = function(){
+        var u = Auth.getCurrentUser();
+        $scope.wish = {};
+        Wishlist.get( u.id, $scope.product.id ).$promise.then(function (data){
+//            $scope.wish = data;
+            alert(data.id);
+
+        });
+//        Wishlist.delete($scope.wish.id).$promise.then(function (data){
+//            var result = data[0]+data[1]+data[2]+data[3];
+//            if (result=="true") {
+//                // delete success
+////                alert('Add to wish list success');
+////                toastr.success("Add to wish list success","Success!");
+//               $scope.wishExisted = $scope.getWishlist();
+//            }else {
+//                // delete fail
+//            }
+//        });
+    };
+    
+    $scope.wishExisted = $scope.getWishlist();
 
     // The main function to navigate to a page with some hidden parameters
     $scope.navigate = function(page,params){
@@ -30,7 +86,7 @@ angular.module('shopnxApp')
     };
     $scope.goMain = function(cat){
         $state.go('main', {myCategory: cat});
-    }
+    };
 
     // Function to generate breadcrumb for category and brand
     // Future: Put it inside a directive

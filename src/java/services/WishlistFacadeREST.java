@@ -92,9 +92,9 @@ public class WishlistFacadeREST extends AbstractFacade<Wishlist> {
 //    }
 
     @GET
-    @Path("{customerId}/{productId}")
+    @Path("findByCustomerAndProduct")
     @Produces({"application/xml", "application/json"})
-    public Wishlist findByProductAndCustomer(@QueryParam("customerId") String customerId, @QueryParam("productId") String productId) {
+    public Wishlist findByProductAndCustomer(@PathParam("customerId") Customer customerId, @PathParam("productId") Product productId) {
         Query q = em.createNamedQuery("Wishlist.findByCustomerAndProduct", Wishlist.class);
         q.setParameter("customerId", customerId);
         q.setParameter("productId", productId);

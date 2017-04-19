@@ -45,7 +45,8 @@ angular.module('shopnxApp')
     // Check wish list exist
     $scope.getWishlist = function(){
         var u = Auth.getCurrentUser();
-        var result = Wishlist.get( u.id, $scope.product.id );
+        var result = Wishlist.get(u , $scope.product );
+        
         if (result!==null) {
             return true;
         }else{
@@ -55,12 +56,10 @@ angular.module('shopnxApp')
     // Remove wish list
     $scope.removeWishlist = function(){
         var u = Auth.getCurrentUser();
-        $scope.wish = {};
-        Wishlist.get( u.id, $scope.product.id ).$promise.then(function (data){
-//            $scope.wish = data;
-            alert(data.id);
+        $scope.wish = Wishlist.get(u , $scope.product );
 
-        });
+        alert( $scope.wish.id);
+
 //        Wishlist.delete($scope.wish.id).$promise.then(function (data){
 //            var result = data[0]+data[1]+data[2]+data[3];
 //            if (result=="true") {

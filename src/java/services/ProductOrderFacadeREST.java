@@ -5,11 +5,14 @@
  */
 package services;
 
+import entities.Category;
 import entities.ProductOrder;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,13 +21,14 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 /**
  *
  * @author KID
  */
 @Stateless
-@Path("entities.productorder")
+@Path("orders")
 public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
     @PersistenceContext(unitName = "BookStoreProjectPU")
     private EntityManager em;
@@ -43,8 +47,28 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") String id, ProductOrder entity) {
-        super.edit(entity);
+    public ProductOrder edit(@PathParam("id") String id, ProductOrder entity) {
+        try {
+            super.edit(entity);
+            return entity;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    @PUT
+    @Path("changestatus")
+    @Consumes({"application/xml", "application/json"})
+    public ProductOrder changeStatus(ProductOrder entity) {
+        try {
+            Query q = em.createNamedQuery("ProductOrder.updateStatus", ProductOrder.class);
+            q.setParameter("status", entity.getStatus());
+            q.setParameter("id", entity.getId());
+            q.executeUpdate();
+            return entity;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @DELETE
@@ -56,15 +80,39 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
-    public ProductOrder find(@PathParam("id") String id) {
+    public ProductOrder find(@QueryParam("id") String id) {
         return super.find(id);
     }
 
     @GET
-    @Override
+    @Path("all")
     @Produces({"application/xml", "application/json"})
-    public List<ProductOrder> findAll() {
-        return super.findAll();
+    public List<ProductOrder> findAllOrder(@QueryParam("from") long from, @QueryParam("to") long to) {//select by datetime
+        try {
+            Query q = em.createNamedQuery("ProductOrder.findAll", Category.class);
+            q.setParameter("from", new Date(from*1000));
+            q.setParameter("to", new Date(to*1000));            
+            List<ProductOrder> listOrder = q.getResultList();
+            return listOrder;
+        } catch (Exception e) {
+            return null;
+        }        
+    }
+    
+    @GET
+    @Path("my")
+    @Produces({"application/xml", "application/json"})
+    public List<ProductOrder> findMy(@QueryParam("customerId") String customerId, @QueryParam("from") long from, @QueryParam("to") long to) {
+        try {
+            Query q = em.createNamedQuery("ProductOrder.findByCustomerId", Category.class);
+            q.setParameter("customerId", customerId);
+            q.setParameter("from", new Date(from*1000));
+            q.setParameter("to", new Date(to*1000));                
+            List<ProductOrder> listOrder = q.getResultList();
+            return listOrder;
+        } catch (Exception e) {
+            return null;
+        }       
     }
 
     @GET

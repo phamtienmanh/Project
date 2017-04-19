@@ -24,6 +24,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -32,12 +33,17 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "productOrder")
 @XmlRootElement
+@XmlType(propOrder = { "id", "date", "status", "customerId", "orderDetailCollection"})
 @NamedQueries({
-    @NamedQuery(name = "ProductOrder.findAll", query = "SELECT p FROM ProductOrder p"),
-    @NamedQuery(name = "ProductOrder.findById", query = "SELECT p FROM ProductOrder p WHERE p.id = :id"),
+    @NamedQuery(name = "ProductOrder.findAll", query = "SELECT p FROM ProductOrder p WHERE p.date >= :from AND p.date <= :to"),
+    @NamedQuery(name = "ProductOrder.findByCustomerId", query = "SELECT p FROM ProductOrder p WHERE p.customerId = :customerId AND p.date >= :from AND p.date <= :to"),
     @NamedQuery(name = "ProductOrder.findByDate", query = "SELECT p FROM ProductOrder p WHERE p.date = :date"),
-    @NamedQuery(name = "ProductOrder.findByStatus", query = "SELECT p FROM ProductOrder p WHERE p.status = :status")})
+    @NamedQuery(name = "ProductOrder.findByStatus", query = "SELECT p FROM ProductOrder p WHERE p.status = :status"),
+    @NamedQuery(name = "ProductOrder.updateStatus", query = "UPDATE ProductOrder p SET p.status = :status WHERE p.id = :id")
+})
 public class ProductOrder implements Serializable {
+    @OneToMany(mappedBy = "productOrderid")
+    private Collection<OrderDetail> orderDetailCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -46,16 +52,15 @@ public class ProductOrder implements Serializable {
     @Column(name = "_id")
     private String id;
     @Column(name = "date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
+    @Size(max = 100)
     @Column(name = "status")
-    private Integer status;
+    private String status;
     @JoinColumn(name = "customer_id", referencedColumnName = "_id")
     @ManyToOne
     private Customer customerId;
-    @OneToMany(mappedBy = "productOrderid")
-    private Collection<OrderDetail> orderDetailCollection;
-
+        
     public ProductOrder() {
     }
 
@@ -79,11 +84,11 @@ public class ProductOrder implements Serializable {
         this.date = date;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -93,15 +98,6 @@ public class ProductOrder implements Serializable {
 
     public void setCustomerId(Customer customerId) {
         this.customerId = customerId;
-    }
-
-    @XmlTransient
-    public Collection<OrderDetail> getOrderDetailCollection() {
-        return orderDetailCollection;
-    }
-
-    public void setOrderDetailCollection(Collection<OrderDetail> orderDetailCollection) {
-        this.orderDetailCollection = orderDetailCollection;
     }
 
     @Override
@@ -127,6 +123,14 @@ public class ProductOrder implements Serializable {
     @Override
     public String toString() {
         return "entities.ProductOrder[ id=" + id + " ]";
+    }
+
+    public Collection<OrderDetail> getOrderDetailCollection() {
+        return orderDetailCollection;
+    }
+
+    public void setOrderDetailCollection(Collection<OrderDetail> orderDetailCollection) {
+        this.orderDetailCollection = orderDetailCollection;
     }
     
 }

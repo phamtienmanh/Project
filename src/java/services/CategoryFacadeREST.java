@@ -11,6 +11,7 @@ import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -35,11 +36,15 @@ public class CategoryFacadeREST extends AbstractFacade<Category> {
     }
 
     @POST
-    @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Category entity) {
-        entity.setId(UUID.randomUUID().toString());
-        super.create(entity);        
+    public Category add(Category entity) {
+        try {
+            entity.setId(UUID.randomUUID().toString());
+        super.create(entity); 
+        return entity;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @PUT
@@ -67,31 +72,32 @@ public class CategoryFacadeREST extends AbstractFacade<Category> {
         return super.find(id);
     }
     
-//    @GET
-//    @Path("{active}")
-//    @Produces({"application/xml", "application/json"})
-//    public List<Category> findActive(@PathParam("active") Boolean isActive) {
-//        Query q = em.createNamedQuery("Category.findByIsActive", Category.class);
-//        q.setParameter("isActive", isActive);
-//        try {
-//            return q.getResultList();
-//        } catch (Exception e) {
-//            return null;
-//        }
-//    }
-    
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
     public List<Category> findAll() {
-        return super.findAll();
+        Query q = em.createNamedQuery("Category.findAll", Category.class);
+        try {
+            return q.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
     }
     
     @GET
     @Path("all")
     @Produces({"application/xml", "application/json"})
     public List<Category> findAllMain() {
-        return super.findAll();
+        Query q = em.createNamedQuery("Category.findAll", Category.class);
+        try {
+            List<Category> listCat = q.getResultList();
+            for(Category cat: listCat){
+                cat.setCount(cat.getProductCollection().size());
+            }
+            return listCat;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @GET

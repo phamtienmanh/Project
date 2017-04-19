@@ -6,7 +6,6 @@
 package services;
 
 import customEntities.loginCustomer;
-import customEntities.message;
 import entities.Customer;
 import java.util.List;
 import java.util.UUID;
@@ -47,7 +46,6 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
         q.setParameter("password", lc.getPassword());
         try {
             Customer customer = (Customer)q.getSingleResult();
-//            customer.setPassword(null);
             return customer;
         } catch (Exception e) {
             return null;

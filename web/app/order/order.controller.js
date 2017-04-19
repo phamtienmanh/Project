@@ -30,9 +30,9 @@ angular.module('shopnxApp')
             var total=0;
             for(var i=0;i<res.length;i++){
                 var subTotal = 0;
-                for(var j=0;j<res[i].items.length;j++){
-                    subTotal += res[i].items[j].productId.price * parseInt(res[i].items[j].quantity);
-                    total += res[i].items[j].productId.price * parseInt(res[i].items[j].quantity);
+                for(var j=0;j<res[i].orderDetailCollection.length;j++){
+                    subTotal += res[i].orderDetailCollection[j].productId.price * parseInt(res[i].orderDetailCollection[j].quantity);
+                    total += res[i].orderDetailCollection[j].productId.price * parseInt(res[i].orderDetailCollection[j].quantity);
                 }
                 res[i].subTotal = subTotal;
             }
@@ -44,9 +44,9 @@ angular.module('shopnxApp')
             var total=0;
             for(var i=0;i<res.length;i++){
                 var subTotal = 0;
-                for(var j=0;j<res[i].items.length;j++){
-                    subTotal += res[i].items[j].productId.price * parseInt(res[i].items[j].quantity);
-                    total += res[i].items[j].productId.price * parseInt(res[i].items[j].quantity);
+                for(var j=0;j<res[i].orderDetailCollection.length;j++){
+                    subTotal += res[i].orderDetailCollection[j].productId.price * parseInt(res[i].orderDetailCollection[j].quantity);
+                    total += res[i].orderDetailCollection[j].productId.price * parseInt(res[i].orderDetailCollection[j].quantity);
                 }
                 res[i].subTotal = subTotal;
             }
@@ -57,7 +57,7 @@ angular.module('shopnxApp')
     $scope.loadOrders();
     
     $scope.changeStatus = function(order){
-      Order.changeStatus.update(order.productOrder).$promise.then(function(res) {
+      Order.changeStatus.update(order).$promise.then(function(res) {
           toastr.success("Order's status updated successfully","Success!");
       }, function(error) { // error handler
         toastr.error("Order's status updated fail","Error!");

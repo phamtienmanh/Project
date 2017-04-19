@@ -16,30 +16,20 @@ _________________________________________________________ -->
                   </a>
                 <ul class="dropdown-menu" role="menu">
                   <li ng-show="isAdmin()" ng-class="{active: isActive('product')}">
-                    <a href="product"><i class="fa fa-truck">&nbsp;</i>Products</a>
+                    <a href="product"><i class="fa fa-book">&nbsp;</i>Products</a>
                   </li>
                   <li ng-show="isAdmin()" ng-class="{active: isActive('category')}">
                     <a href="category"><i class="fa fa-ticket">&nbsp;</i>Categories</a>
                   </li>
-<!--                  <li ng-show="isAdmin()" ng-class="{active: isActive('brand')}">
-                    <a href="/brand"><i class="fa fa-tag">&nbsp;</i>Brands</a>
-                  </li>
-                  <li ng-show="isAdmin()" ng-class="{active: isActive('feature')}">
-                    <a href="/feature"><i class="fa fa-tag">&nbsp;</i>Features</a>
-                  </li>
-                  <li ng-show="isAdmin()" ng-class="{active: isActive('coupon')}">
-                    <a href="/coupon"><i class="fa fa-tag">&nbsp;</i>Coupons</a>
-                  </li>-->
                   <li ng-show="isLoggedIn()" ng-class="{active: isActive('order')}">
                     <a href="order"><i class="fa fa-road">&nbsp;</i>Orders</a>
-                  </li>
-                  <li class="divider"></li>
-                  <!-- <li ng-show="isAdmin()" ng-class="{active: isActive('/admin')}">
-                    <a href="/admin"><i class="fa fa-user">&nbsp;</i>Shop Settings</a>
-                  </li> -->
+                  </li>                  
                   <li ng-show="isAdmin()" ng-class="{active: isActive('customer')}">
                     <a href="customer"><i class="fa fa-user">&nbsp;</i>Customers</a>
                   </li>
+                  
+                  <li class="divider"></li>
+                  
 <!--                  <li ng-show="isLoggedIn()" ng-class="{active: isActive('/paymentMethod')}">
                     <a href="/paymentMethod"><i class="fa fa-wrench">&nbsp;</i>Payment Method</a>
                   </li>-->
@@ -101,19 +91,18 @@ _________________________________________________________ -->
         <div class="navbar-header">
 
             <a class="navbar-brand home" href="index.html" data-animate-hover="bounce">
-                <img src="assets/img/logo.gif" alt="Shop logo" class="hidden-xs">
-                <img src="assets/img/logo.gif" alt="Shop logo" class="visible-xs"><span class="sr-only">Book Store - go to homepage</span>
+                <img src="assets/images/unicorn.png" width="200px" alt="Shop logo" class="hidden-xs">
+                <img src="assets/images/unicorn.png" width="200px" alt="Shop logo" class="visible-xs"><span class="sr-only">Book Store - go to homepage</span>
             </a>
             <div class="navbar-buttons">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation" ng-click="isCollapsed1 = !isCollapsed1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <i class="fa fa-align-justify"></i>
-                </button>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#search">
                     <span class="sr-only">Toggle search</span>
                     <i class="fa fa-search"></i>
                 </button>
-                <a class="btn btn-default navbar-toggle" ng-click="openCart(cart,'lg');" href=""><i class="fa fa-shopping-cart">&nbsp;</i> <span class="hidden-xs">Cart ({{cart.getTotalCount()}}) - {{cart.getTotalPrice() | currency:"$"}}</span></a>
+                <a class="btn btn-default navbar-toggle" ng-click="openCart(cart,'lg');" href="">
+                    <i class="fa fa-shopping-cart">&nbsp;</i> 
+                    <span class="hidden-xs">Cart ({{cart.getTotalCount()}}) - {{cart.getTotalPrice() | currency:"$"}}</span>
+                </a>
 
             </div>
         </div>

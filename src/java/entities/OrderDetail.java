@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -76,7 +77,7 @@ public class OrderDetail implements Serializable {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
+    @XmlTransient
     public ProductOrder getProductOrderid() {
         return productOrderid;
     }

@@ -24,7 +24,7 @@ import javax.ws.rs.Produces;
  * @author KID
  */
 @Stateless
-@Path("entities.orderdetail")
+@Path("orderDetail")
 public class OrderDetailFacadeREST extends AbstractFacade<OrderDetail> {
     @PersistenceContext(unitName = "BookStoreProjectPU")
     private EntityManager em;
@@ -66,7 +66,7 @@ public class OrderDetailFacadeREST extends AbstractFacade<OrderDetail> {
     public List<OrderDetail> findAll() {
         return super.findAll();
     }
-
+    
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})

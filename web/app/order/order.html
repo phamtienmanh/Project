@@ -33,24 +33,18 @@
     
   <h5 ng-hide="isAdmin()" class="bg-info well text-center">Total Spent: {{orders.total | currency}}</h5>
   <h5 ng-show="isAdmin()" class="bg-info well text-center">Total Amount: {{orders.total | currency}}</h5>
-<div class="panel panel-primary" ng-repeat="o in orders | orderBy : 'productOrder.date' : 'reverse'">
+<div class="panel panel-primary" ng-repeat="o in orders | orderBy : 'date' : 'reverse'">
       <div class="panel-heading">
             <div class="panel-title">
-                <button class="btn btn-warning">&nbsp;{{o.productOrder.date | amCalendar}}</button>
-                
-                <span ng-show="isAdmin()">
-                    <i class="fa fa-odnoklassniki"></i> {{o.productOrder.customerId.name}}&nbsp;
-                    <i class="fa fa-phone"></i> {{o.productOrder.customerId.phone}}&nbsp;
-                    <i class="fa fa-truck"></i> {{o.productOrder.customerId.address}}
-                </span>
-                
+                &nbsp;{{o.date | amCalendar}}                                
+                <button class="btn btn-default" style="visibility: hidden;">a</button>
                 <div class="col-sm-3 pull-right" ng-hide="isAdmin()">
-                    <input ng-model="o.productOrder.status"
+                    <input ng-model="o.status"
                            class="form-control" readonly/>
                 </div>
                 
                 <div class="col-sm-3 pull-right" ng-show="isAdmin()">                    
-                  <select   ng-model="o.productOrder.status"
+                  <select   ng-model="o.status"
                             ng-options="status for status in orderStatusLov"
                             ng-change="changeStatus(o)"
                             class="form-control"></select>
@@ -60,7 +54,7 @@
       <div class="panel-body">
           <table class="table" style="margin-bottom: 0 !important">
               <tbody>
-                <tr ng-repeat="i in o.items" >
+                <tr ng-repeat="i in o.orderDetailCollection" >
                     <td class="col-md-2">
                         <a ui-sref="productDetail({id:i.productId.id, slug:i.productId.name})">
                             <img ng-src="assets/clothing/{{i.productId.image}}" err-src="assets/clothing/photo.png" width="100px" />
@@ -75,6 +69,17 @@
                     <td class="col-md-2">
                         <span class="text-muted">= {{i.quantity * i.productId.price | currency}}</span>
                     </td>
+                </tr>
+                <tr class="divider">
+                    <td></td>
+                    <td>
+                        <span ng-show="isAdmin()">
+                            <i class="fa fa-user"></i> {{o.customerId.name}}&nbsp;</br>
+                            <i class="fa fa-phone"></i> {{o.customerId.phone}}&nbsp;</br>
+                            <i class="fa fa-truck"></i> {{o.customerId.address}}
+                        </span>
+                    </td>
+                    <td></td>
                 </tr>
                 <tr class="well" style="margin-bottom: 0 !important">
                     <td colspan="1"></td>

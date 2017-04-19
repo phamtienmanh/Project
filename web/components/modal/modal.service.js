@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('shopnxApp')
-.factory('Modal',['$rootScope','$modal', function ($rootScope, $modal) {
+.factory('Modal',['$rootScope','$modal', '$q', function ($rootScope, $modal, $q) {
 
   var obj = {};
   var selectModalInstanceCtrl = function ($scope,$modalInstance, $injector, data, options, toastr) {
@@ -10,13 +10,15 @@ angular.module('shopnxApp')
     $scope.options = options;
     $scope.saveItem = function(item){
         if($scope.data.id){
+            //edit
           api.update({ id:$scope.data.id }, $scope.data).$promise.then(function(resp) {
               if(resp == ""){
-                  toastr.error("Category info saved fail, please try again!","Fail");                 
+                  toastr.error($scope.options.api + " info saved fail, please try again","Error!");                 
               }
               else{
-                  toastr.success("Category info saved successfully","Success");
+                  toastr.success($scope.options.api + " info saved successfully","Success!");
               }
+              $modalInstance.close(resp);
           }, function(error) { // error handler
             if(error.data.errors){
               var err = error.data.errors;
@@ -29,13 +31,15 @@ angular.module('shopnxApp')
           });
         }
         else{
+            //add new
           api.save($scope.data).$promise.then(function(resp) {
             if(resp == ""){
-                  toastr.error("Category info saved fail, please try again!","Fail");                 
+                  toastr.error($scope.options.api + " added fail, please try again","Error!");                 
               }
               else{
-                  toastr.success("Category info saved successfully","Success");
-              }
+                  toastr.success($scope.options.api + " added successfully","Success!");
+              } 
+              $modalInstance.close(resp);
           }, function(error) { // error handler
             if(error.data.errors){
               var err = error.data.errors;
@@ -47,7 +51,6 @@ angular.module('shopnxApp')
             }
           });
         }
-        $modalInstance.close(item);
     };
 
     $scope.cancel = function () {
@@ -59,6 +62,7 @@ angular.module('shopnxApp')
   selectModalInstanceCtrl.$inject = ['$scope', '$modalInstance', '$injector', 'data', 'options', 'toastr'];
 
   obj.show = function(data,options){
+      var deferred = $q.defer();      
       var modalOptions = {
           templateUrl: 'components/modal/modal.html',
           controller: selectModalInstanceCtrl,
@@ -69,9 +73,13 @@ angular.module('shopnxApp')
               options : function () { return options; }
           }
       };
-      $modal.open(modalOptions);
-
-  };
+      $modal.open(modalOptions).result.then(function (data) {
+          deferred.resolve(data);
+      }, function () {
+          deferred.resolve(data);
+      });
+      return deferred.promise;
+  };  
 
   return obj;
 

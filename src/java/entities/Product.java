@@ -51,6 +51,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Product.search", query = "SELECT p FROM Product p WHERE p.name LIKE :searchKey")
 })
 public class Product implements Serializable {
+    @OneToMany(mappedBy = "productId")
+    private Collection<OrderDetail> orderDetailCollection;
+    @OneToMany(mappedBy = "productId")
+    private Collection<Wishlist> wishlistCollection;
+    @OneToMany(mappedBy = "productId")
+    private Collection<Rating> ratingCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -73,7 +79,7 @@ public class Product implements Serializable {
     @Size(max = 500)
     @Column(name = "image")
     private String image;
-    @Size(max = 500)
+    @Size(max = 1000)
     @Column(name = "description")
     private String description;
     @Basic(optional = false)
@@ -83,12 +89,6 @@ public class Product implements Serializable {
     @JoinColumn(name = "category_id", referencedColumnName = "_id")
     @ManyToOne
     private Category categoryId;
-    @OneToMany(mappedBy = "productId")
-    private Collection<OrderDetail> orderDetailCollection;
-    @OneToMany(mappedBy = "productId")
-    private Collection<Wishlist> wishlistCollection;
-    @OneToMany(mappedBy = "productId")
-    private Collection<Rating> ratingCollection;
 
     public Product() {
     }
@@ -168,6 +168,31 @@ public class Product implements Serializable {
         this.categoryId = categoryId;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Product)) {
+            return false;
+        }
+        Product other = (Product) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "entities.Product[ id=" + id + " ]";
+    }
+
     @XmlTransient
     public Collection<OrderDetail> getOrderDetailCollection() {
         return orderDetailCollection;
@@ -193,31 +218,6 @@ public class Product implements Serializable {
 
     public void setRatingCollection(Collection<Rating> ratingCollection) {
         this.ratingCollection = ratingCollection;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Product)) {
-            return false;
-        }
-        Product other = (Product) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "entities.Product[ id=" + id + " ]";
     }
     
 }

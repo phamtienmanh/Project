@@ -1705,3 +1705,6 @@ address {
     background-color: #ddd;
     color: #4fbfa8;
 }
+button:disabled {
+  pointer-events: all !important;
+}

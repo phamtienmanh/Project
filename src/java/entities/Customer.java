@@ -115,7 +115,7 @@ public class Customer implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @XmlTransient
     public String getPassword() {
         return password;
     }

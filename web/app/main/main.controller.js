@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('shopnxApp')
-  .controller('ProductDetailsCtrl', function ($scope, $rootScope, Product, Category, socket, $stateParams, $location, $state, $injector) {    
+  .controller('ProductDetailsCtrl', function ($scope, $rootScope, Product, Category, socket, $stateParams, $location, $state, $injector) {        
     var id = $stateParams.id;
     // Storing the product id into localStorage because the _id of the selected product which was passed as a hidden parameter from products won't available on page refresh
     if (localStorage !== null && JSON !== null && id !== null) {
@@ -154,7 +154,12 @@ angular.module('shopnxApp')
           if(data.length>=5) { $scope.products.after = $scope.products.after + data.length; } else { $scope.products.end = true;}
           $scope.products.busy = false;
           $loading.finish('products');
-      }, function(){ $scope.products.busy = false; $loading.finish('products');});
+          $rootScope.endLoadding = true;
+      }, function(){ 
+          $scope.products.busy = false; 
+          $loading.finish('products'); 
+          $rootScope.endLoadding = true;
+      });
 
       Product.count.query(q, function(res){
         $scope.products.count = res[0].count;

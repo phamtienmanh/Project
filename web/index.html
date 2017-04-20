@@ -56,26 +56,23 @@
   <body ng-app="shopnxApp" ng-cloak>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-
-    <!-- Add your site or application content here -->  
-<!--    <div class="sk-cube-grid" ng-hide="endLoadding">
-        <div class="sk-cube sk-cube1"></div>
-        <div class="sk-cube sk-cube2"></div>
-        <div class="sk-cube sk-cube3"></div>
-        <div class="sk-cube sk-cube4"></div>
-        <div class="sk-cube sk-cube5"></div>
-        <div class="sk-cube sk-cube6"></div>
-        <div class="sk-cube sk-cube7"></div>
-        <div class="sk-cube sk-cube8"></div>
-        <div class="sk-cube sk-cube9"></div>
-    </div>  -->
+    <![endif]-->      
     <div ng-include="'components/navbar/navbar.html'"></div>
     <div id="all">
         <div id="content">
             <div class="container">
               <div ui-view="">
-                  
+                <div class="sk-cube-grid" ng-hide="endLoadding">
+                    <div class="sk-cube sk-cube1"></div>
+                    <div class="sk-cube sk-cube2"></div>
+                    <div class="sk-cube sk-cube3"></div>
+                    <div class="sk-cube sk-cube4"></div>
+                    <div class="sk-cube sk-cube5"></div>
+                    <div class="sk-cube sk-cube6"></div>
+                    <div class="sk-cube sk-cube7"></div>
+                    <div class="sk-cube sk-cube8"></div>
+                    <div class="sk-cube sk-cube9"></div>
+                </div>
               </div>
             </div>
   <!-- /.container -->
@@ -84,7 +81,7 @@
 
             <!-- *** FOOTER ***
      _________________________________________________________ -->
-            <div id="footer" data-animate="fadeInUp">
+<!--            <div id="footer" data-animate="fadeInUp">
                 <div class="container">
                         <div class="col-md-3 col-sm-6">
                             <h4>Pages</h4>
@@ -114,7 +111,7 @@
                             <hr class="hidden-md hidden-lg hidden-sm">
 
                         </div>
-                        <!-- /.col-md-3 -->
+                         /.col-md-3 
 
                         <div class="col-md-3 col-sm-6">
 
@@ -146,7 +143,7 @@
                             <hr class="hidden-md hidden-lg">
 
                         </div>
-                        <!-- /.col-md-3 -->
+                         /.col-md-3 
 
                         <div class="col-md-3 col-sm-6">
 
@@ -164,7 +161,7 @@
                             <hr class="hidden-md hidden-lg">
 
                         </div>
-                        <!-- /.col-md-3 -->
+                         /.col-md-3 
 
 
 
@@ -172,7 +169,7 @@
 
                             <h4>Get the news</h4>
 
-                            <!--<p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>-->
+                            <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
 
                             <form>
                                 <div class="input-group">
@@ -186,7 +183,7 @@
     			</span>
 
                                 </div>
-                                <!-- /input-group -->
+                                 /input-group 
                             </form>
 
                             <hr>
@@ -203,11 +200,11 @@
 
 
                         </div>
-                        <!-- /.col-md-3 -->
+                         /.col-md-3 
 
                 </div>
-                <!-- /.container -->
-            </div>
+                 /.container 
+            </div>-->
             <!-- /#footer -->
 
             <!-- *** FOOTER END *** -->
@@ -217,36 +214,36 @@
 
             <!-- *** COPYRIGHT ***
      _________________________________________________________ -->
-            <div id="copyright">
+<!--            <div id="copyright">
                 <div class="container">
                     <div class="col-md-12">
                         <p class=""><a href="">© 2017 BookStore Project</a></p>
                     </div>
-<!--                    <div class="col-md-6">
+                    <div class="col-md-6">
                         <p class="pull-right"> Template by <a href="http://www.bootstrapious.com">Responsive Templates</a> with support from <a href="http://kakusei.cz">Designové předměty</a>
                         Photos by <a href="https://pixabay.com/">Pixabay</a>
                              Not removing these links is part of the licence conditions of the template. Thanks for understanding :) 
                         </p>
-                    </div>-->
+                    </div>
                 </div>
-            </div>
+                </div>-->
         </div>
         <!-- /#all -->
         <!--Stripe payment -->
         <!-- <script src="js/jquery.form.js"></script>
         <script src="js/jquery.blockUI.js"></script> -->
-        <script
+<!--        <script
         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
         data-key="pk_test_srKHaSHynBIVLX03r33xLszb"
         data-name="ShopNx"
         data-description="2 widgets"
         data-amount="2000"
         data-locale="auto">
-        </script>
+        </script>-->
         <!--Stripe payment -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-    <script>
+<!--    <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -255,7 +252,7 @@
       ga('create', 'UA-49421899-2', 'auto');
       ga('send', 'pageview');
 
-    </script>
+    </script>-->
 
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>

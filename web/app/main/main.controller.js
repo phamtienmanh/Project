@@ -209,7 +209,12 @@ angular.module('shopnxApp')
           if(data.length>=5) { $scope.products.after = $scope.products.after + data.length; } else { $scope.products.end = true;}
           $scope.products.busy = false;
           $loading.finish('products');
-      }, function(){ $scope.products.busy = false; $loading.finish('products');});
+          $rootScope.endLoadding = true;
+      }, function(){ 
+          $scope.products.busy = false; 
+          $loading.finish('products'); 
+          $rootScope.endLoadding = true;
+      });
 
       Product.count.query(q, function(res){
         $scope.products.count = res[0].count;

@@ -1708,3 +1708,6 @@ address {
 button:disabled {
   pointer-events: all !important;
 }
+.mycalendar {
+    cursor: pointer !important;
+}

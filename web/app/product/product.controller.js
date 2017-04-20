@@ -106,29 +106,23 @@ angular.module('shopnxApp')
           });
         }
     };
-    
-    $scope.validate = function(){
-        if ($scope.product.name.length<=0) {
-//            toastr.error("Name is required","Error!");
-//            $scope.product.name.focus();
-        }
-        else if ($scope.product.author.length<=0) {
-//            toastr.error("Author is required","Error!");
-        }
-        else if ($scope.product.price.length<=0) {
-//            toastr.error("Price is required","Error!");
-        }
-        else if ($scope.product.description.length<=0) {
-//            toastr.error("Description is required","Error!");
-        }
-        else if ($scope.product.quantity.length<=0) {
-//            toastr.error("Quantity is required","Error!");
-        }
-        else{
-            $scope.save($scope.product);
-        }
-    }; 
-    
+    $scope.imgTypeError=false;
+    $scope.getFile = function(element){
+         $scope.$apply(function($scope) {
+            $scope.theFile = element.files[0];
+                    if ($scope.theFile.type!=="image/png" && $scope.theFile.type!=="image/jpg" && $scope.theFile.type!=="image/bmp") {
+                        $scope.imgTypeError=true;
+                    }
+                    else{
+                        $scope.imgTypeError=false;
+                        // gắn img vào product.image
+                        $scope.product.image = $scope.theFile.name;
+                    }
+            
+//            toastr.error($scope.theFile.name,"Error!");
+
+        });
+    };
     
     
     $scope.changeActive = function(b){ // success handler

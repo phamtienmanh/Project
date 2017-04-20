@@ -81,7 +81,10 @@ _________________________________________________________ -->
 
                       <div class="text-center buttons">
                         <div class="btn-group text-center">
-                        <a href="#details" class="btn btn-default">Book details</a>
+                        <!--<a href="#details" class="btn btn-default">Book details</a>--> 
+                        <a href="#" ng-click="addWishlist()" ng-hide="wishExisted" class="btn btn-primary">Add to wish list</a>
+                        <a href="#" ng-click="removeWishlist()" ng-hide="!wishExisted" class="btn btn-danger">Remove from wish list</a>
+
                         <a ng-click="cart.addItem(product.id, product.name, product.slug, product.mrp, product.price, -1)" ng-hide="checkCart(product.id)" class="btn btn-primary">-</a>
 
                         <a ng-hide="checkCart(product.id)" class="btn btn-default">{{getQuantity(product.id);}}</a>

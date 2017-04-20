@@ -54,7 +54,12 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") String id) {
-        super.remove(super.find(id));
+        try{
+            super.remove(super.find(id));
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
     
     @GET

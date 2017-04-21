@@ -19,7 +19,8 @@ angular.module('shopnxApp')
     $scope.changeIndex =function(i){
         $scope.i=i;
     };
-    
+    $scope.wishlist = Wishlist.query();
+    $scope.wish = {};
     $scope.wishExisted = false;
 
     // Add to wish list
@@ -35,7 +36,8 @@ angular.module('shopnxApp')
                 // add success
 //                alert('Add to wish list success');
 //                toastr.success("Add to wish list success","Success!");
-               $scope.wishExisted = $scope.getWishlist();
+                $scope.wishlist= Wishlist.query();
+                $scope.wishExisted = true;
             }else {
                 // add failed
             }
@@ -43,37 +45,43 @@ angular.module('shopnxApp')
     };
     
     // Check wish list exist
-    $scope.getWishlist = function(){
+    $scope.checkWishlist = function(){
         var u = Auth.getCurrentUser();
-        var result = Wishlist.get(u , $scope.product );
-        
-        if (result!==null) {
-            return true;
+        var result = false;
+        angular.forEach($scope.wishlist, function (data){
+            if (data.customerId.id==u.id && data.productId.id==$scope.product.id) {
+                result = true;
+                $scope.wish = {
+                    id:data.id,
+                    customerId:data.customerId.id,
+                    productId:data.productId.id
+                };
+            }
+        });
+        if (result==true) {
+            $scope.wishExisted=true;
         }else{
-            return false;
+            $scope.wishExisted = false;
         }
+        return $scope.wishExisted;
     };
     // Remove wish list
     $scope.removeWishlist = function(){
         var u = Auth.getCurrentUser();
-        $scope.wish = Wishlist.get(u , $scope.product );
-
-        alert( $scope.wish.id);
-
-//        Wishlist.delete($scope.wish.id).$promise.then(function (data){
-//            var result = data[0]+data[1]+data[2]+data[3];
-//            if (result=="true") {
-//                // delete success
-////                alert('Add to wish list success');
-////                toastr.success("Add to wish list success","Success!");
-//               $scope.wishExisted = $scope.getWishlist();
-//            }else {
-//                // delete fail
-//            }
-//        });
+        Wishlist.delete({id:$scope.wish.id}).$promise.then(function (data){
+            var result = data[0]+data[1]+data[2]+data[3];
+            if (result=="true") {
+                // delete success
+//                alert('Add to wish list success');
+//                toastr.success("Add to wish list success","Success!");
+                $scope.wishlist= Wishlist.query();
+                $scope.wish = {};
+                $scope.wishExisted = false;
+            }else {
+                // delete fail
+            }
+        });
     };
-    
-    $scope.wishExisted = $scope.getWishlist();
 
     // The main function to navigate to a page with some hidden parameters
     $scope.navigate = function(page,params){

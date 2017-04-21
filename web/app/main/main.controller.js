@@ -26,7 +26,13 @@ angular.module('shopnxApp')
     // Add to wish list
     $scope.addWishlist = function(){
         var u = Auth.getCurrentUser();
-        Wishlist.save({
+        // User must login to add wish list
+        if (!u.id) {
+            alert('Please login to do this action');
+        }
+        else if (u.id) {
+            
+            Wishlist.save({
             id: 0,
             customerId: u,
             productId: $scope.product
@@ -42,6 +48,8 @@ angular.module('shopnxApp')
                 // add failed
             }
         });
+    }
+        
     };
     
     // Check wish list exist

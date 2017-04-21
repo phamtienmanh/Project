@@ -25,7 +25,7 @@
           <div class="panel-footer">
             <div class="row">
               <div class="col-xs-12" dw-loading="crudTable" dw-loading-options="{text: ''}">
-                <button type="button" class="btn btn-danger" ng-click="edit({});" ng-if="!noadd">Add New <i class="fa fa-plus"></i> </button>
+                <button type="button" class="btn btn-success" ng-click="edit({});" ng-if="!noadd">Add New <i class="fa fa-plus"></i> </button>
               </div>
             </div>
           </div>
@@ -58,10 +58,15 @@
                         {{p[c.heading] | currency}}
                       </span>
                       <span ng-switch-when="image">
-                        <img ng-src="assets/clothing/{{p.image}}"/>
+                        <img ng-src="assets/books/{{p.image}}"/>
                       </span>
                       <span ng-switch-default>
-                        {{p[c.heading]}}
+                          <div ng-if="c.heading=='password'">
+                              ******
+                          </div>
+                          <div ng-if="c.heading!='password'">
+                              {{p[c.heading]}}
+                          </div>
                       </span>
                   </td>
                   <td>

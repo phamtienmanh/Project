@@ -7,8 +7,6 @@ angular.module('shopnxApp')
     $scope.errors = {};
 
     $scope.register = function(form) {
-      $scope.submitted = true;
-
       if(form.$valid) {
         Auth.createUser({
           name: $scope.user.name,
@@ -18,8 +16,8 @@ angular.module('shopnxApp')
           address: $scope.user.address
         })
         .then( function(resp) {
-            if(resp.data==""){
-                $scope.errors.other = "This email has already exist!";
+            if(resp.data && resp.data.message!=""){
+                $scope.errors.other = resp.data.message;
             }
             else{
                 Auth.redirectToAttemptedUrl();

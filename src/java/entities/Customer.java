@@ -15,6 +15,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -78,6 +79,17 @@ public class Customer implements Serializable {
     @OneToMany(mappedBy = "customerId")
     private Collection<Rating> ratingCollection;
 
+    @Transient
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    
     public Customer() {
     }
 
@@ -115,7 +127,7 @@ public class Customer implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    @XmlTransient
+//    @XmlTransient
     public String getPassword() {
         return password;
     }

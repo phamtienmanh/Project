@@ -40,7 +40,7 @@ angular.module('shopnxApp')
         scope.edit = function(item) {
           var title; if(item.id){ title = 'Editing ' + attrs.api+ " " + item.name;} else{ title = 'Add New' + attrs.api;}
           Modal.show(item,{title:title, api:attrs.api, columns: obj, disabledColumn: attrs.disabledcolumn}).then(function(data){
-            if(data.id){
+            if(data && data.id){
                 var index = _.indexOf(scope.data, _.find(scope.data, {id: data.id}));
                 if(index != -1){
                     //edit

@@ -1,34 +1,187 @@
 <div class="modal-header">
-  <button type="button" ng-click="$dismiss()" class="close">&times;</button>
-  <h4 ng-if="options.title" ng-bind="options.title" class="modal-title"></h4>
+    <button type="button" ng-click="$dismiss()" class="close">&times;</button>
+    <h4 ng-if="options.title" ng-bind="options.title" class="modal-title"></h4>
 </div>
 
-<form name="modal-form" class="form-horizontal" role="form" novalidate>
-<div class="modal-body">
-  <p ng-if="options.body" ng-bind="options.body"></p>
-  <div class="form-group" ng-repeat="i in options.columns" ng-if="options.columns">
-    <label class="col-sm-3 control-label no-padding-right">{{i.heading | labelCase}}</label>
-    <div class="col-sm-7">
-      <span class="block input-icon input-icon-right">
-        <input type="text" class="form-control" name="name" ng-model="data[i.heading]" ng-disabled="i.heading=='id' || (i.heading==options.disabledColumn && options.title==='Add New')" autofocus="i.heading=='name'" placeholder="{{i.heading | labelCase}}" ng-if="i.sortType==='parseFloat'" only-numbers>
-        <input type="text" class="form-control" name="name" ng-model="data[i.heading]" ng-disabled="i.heading=='id' || (i.heading==options.disabledColumn && data.id)" autofocus="i.heading=='name'" placeholder="{{i.heading | labelCase}}"  ng-if="i.sortType!=='parseFloat' && i.dataType!=='boolean'">
-        <input type="checkbox" ng-model="data[i.heading]" ng-if="i.dataType==='boolean'" class="form-control">
-      </span>
-    </div>
-  </div>
+<form name="modalform" class="form-horizontal" role="form">
+    <div class="modal-body">
+        <p ng-if="options.body" ng-bind="options.body"></p>
+        <div ng-if="options.columns"
+             class="form-group" 
+             ng-repeat="i in options.columns" 
+             ng-switch="i.dataType"
+             ng-class="{ 'has-success': modalform[i.heading].$valid && modalform[i.heading].$dirty || imgTypeError && i.heading=='image' && modalform[i.heading].$dirty,
+                        'has-error': modalform[i.heading].$invalid && modalform[i.heading].$dirty || imgTypeError && i.heading=='image' && modalform[i.heading].$dirty  }">
+            <label class="col-sm-3 control-label no-padding-right">{{i.heading| labelCase}}</label>
 
-  <div class="form-group" ng-repeat="(i, name) in data track by $index" ng-if="!options.columns">
-    <label class="col-sm-3 control-label no-padding-right">{{i}}</label>
-    <div class="col-sm-7">
-      <span class="block input-icon input-icon-right">
-        <input type="text" class="form-control" name="name" ng-model="data[i]" ng-disabled="i=='id'" autofocus="i=='name'">
-      </span>
+            <div class="col-sm-7"
+                 ng-switch-when="text">
+                <span class="block input-icon input-icon-right">
+                    <input type="text"
+                           class="form-control"
+                           name="{{i.heading}}"
+                           ng-model="data[i.heading]"                             
+                           ng-minlength="3" required                             
+                           autofocus="i.heading=='name'"                           
+                           placeholder="{{i.heading| labelCase}}"/>
+                    <span class="help-block" ng-show="modalform[i.heading].$error.required && modalform[i.heading].$dirty">
+                        {{i.heading| labelCase}} is required
+                    </span>
+                    <span class="help-block" ng-show="modalform[i.heading].$error.minlength && modalform[i.heading].$dirty && !modalform[i.heading].$error.required">
+                        {{i.heading| labelCase}} must be at least 3 character
+                    </span>
+                </span>
+            </div>
+            <div class="col-sm-7"
+                 ng-switch-when="email">
+                <span class="block input-icon input-icon-right">
+                    <input type="email"
+                           class="form-control"
+                           name="{{i.heading}}"
+                           ng-model="data[i.heading]"                             
+                           ng-minlength="3" required                             
+                           autofocus="i.heading=='name'"                           
+                           placeholder="{{i.heading| labelCase}}"/>
+                    <span class="help-block" ng-show="modalform[i.heading].$error.required && modalform[i.heading].$dirty">
+                        What's your email address?
+                    </span>
+                    <span class="help-block" ng-show="modalform[i.heading].$error.email && modalform[i.heading].$dirty && !modalform[i.heading].$error.required">
+                        Doesn't look like a valid email.
+                    </span>
+                </span>
+            </div>
+            <div class="col-sm-7"
+                 ng-switch-when="password" style="position: relative;">
+                <span class="block input-icon input-icon-right">
+                    <input ng-attr-type="{{ showPassword ? 'text' : 'password' }}"
+                           class="form-control"
+                           name="{{i.heading}}"
+                           ng-model="data[i.heading]"                             
+                           ng-minlength="3" required                             
+                           autofocus="i.heading=='name'"                           
+                           placeholder="{{i.heading| labelCase}}"/>
+                    <i ng-mousedown="showPassword = !showPassword" ng-mouseup="showPassword = !showPassword" class="myeye fa fa-eye" style="right: 20px !important"></i>
+                    <span class="help-block" ng-show="modalform[i.heading].$error.required && modalform[i.heading].$dirty">
+                         A password is required.
+                    </span>
+                    <span class="help-block" ng-show="modalform[i.heading].$error.minlength && modalform[i.heading].$dirty && !modalform[i.heading].$error.required">
+                        Password must be at least 3 characters.
+                    </span>
+                </span>
+            </div>
+            <div class="col-sm-7"
+                 ng-switch-when="selectCat">
+                <span class="block input-icon input-icon-right">
+                    <select ng-model="data.categoryId" 
+                            ng-options="option.name for option in categories | orderBy:'name' track by option.id " 
+                            class="form-control"
+                            name="{{i.heading}}"
+                            required>
+                        <option disabled value="">--- Select A Category ---</option>
+                    </select> 
+                    <span class="help-block" ng-show="modalform[i.heading].$error.required && modalform[i.heading].$dirty">
+                        {{i.heading| labelCase}} is required
+                    </span>
+                </span>
+            </div>
+            <div class="col-sm-7"
+                 ng-switch-when="selectRole">
+                <span class="block input-icon input-icon-right">
+                    <select ng-model="data[i.heading]" 
+                            ng-options="role for role in roles | orderBy:'role' track by role " 
+                            class="form-control"
+                            name="{{i.heading}}"
+                            required>
+                        <option disabled value="">--- Select A Role ---</option>
+                    </select> 
+                    <span class="help-block" ng-show="modalform[i.heading].$error.required && modalform[i.heading].$dirty">
+                        {{i.heading| labelCase}} is required
+                    </span>
+                </span>
+            </div>
+            <div class="col-sm-7"
+                 ng-switch-when="phone">
+                <span class="block input-icon input-icon-right">
+                    <input type="text"
+                           class="form-control"
+                           name="{{i.heading}}"
+                           ng-model="data[i.heading]"                             
+                           ng-pattern="/^(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{3,5}$/" required                             
+                           placeholder="{{i.heading| labelCase}}"/>
+                    <span class="help-block" ng-show="modalform[i.heading].$error.required && modalform[i.heading].$dirty">
+                        {{i.heading| labelCase}} is required
+                    </span>
+                    <span class="help-block" ng-show="modalform[i.heading].$error.pattern && modalform[i.heading].$dirty && !modalform[i.heading].$error.required">
+                        Phone number must have format xxx-xxx-xxx... Ex: 093-252-7777<br/>
+                    </span>
+                </span>
+            </div>
+            <div class="col-sm-7"
+                 ng-switch-when="price">
+                <span class="block input-icon input-icon-right">
+                    <input type="text"
+                           class="form-control"
+                           name="{{i.heading}}"
+                           ng-model="data[i.heading]"                             
+                           min="0" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" required                             
+                           placeholder="{{i.heading| labelCase}}"/>
+                    <span class="help-block" ng-show="modalform[i.heading].$error.required && modalform[i.heading].$dirty">
+                        {{i.heading| labelCase}} is required
+                    </span>
+                    <span class="help-block" ng-show="modalform[i.heading].$error.pattern && modalform[i.heading].$dirty && !modalform[i.heading].$error.required">
+                        {{i.heading| labelCase}} must be a number with maximum of 2 decimal places. <br/>
+                        Ex: 1.23
+                    </span>
+                </span>
+            </div>
+            <div class="col-md-7"
+                 ng-switch-when="image">
+                <label class="btn btn-sm btn-default">
+                    Browse
+                    <input ng-model="file" 
+                           type="file" name="{{i.heading}}"
+                           onchange="angular.element(this).scope().getFile(this)" 
+                           style="display:none;"/><br/>
+                </label>
+                &nbsp;{{data.image}}
+                <span class="help-block" ng-show="imgTypeError && modalform[i.heading].$dirty">
+                    Image extension is not valid, only .png .jpg .bmp are accepted
+                </span>
+                <br/>
+                <span><img ng-src="assets/books/{{data.image}}" 
+                           style="max-width: 100px" alt="" class="img-responsive"/></span>
+            </div>
+            <div class="col-sm-7"
+                 ng-switch-when="quantity">
+                <span class="block input-icon input-icon-right">
+                    <input type="text"
+                           class="form-control"
+                           name="{{i.heading}}"
+                           ng-model="data[i.heading]"                             
+                           ng-pattern="/^[0-9]+$/" required                             
+                           placeholder="{{i.heading| labelCase}}"/>
+                    <span class="help-block" ng-show="modalform[i.heading].$error.required && modalform[i.heading].$dirty">
+                        {{i.heading| labelCase}} is required
+                    </span>
+                    <span class="help-block" ng-show="modalform[i.heading].$error.pattern && modalform[i.heading].$dirty && !modalform[i.heading].$error.required">
+                        {{i.heading| labelCase}} must be a positive integer number
+                    </span>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group" ng-repeat="(i, name) in data track by $index" ng-if="!options.columns">
+            <label class="col-sm-3 control-label no-padding-right">{{i}}</label>
+            <div class="col-sm-7">
+                <span class="block input-icon input-icon-right">
+                    <input type="text" class="form-control" name="name" ng-model="data[i]" ng-disabled="i == 'id'" autofocus="i=='name'">
+                </span>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-<div class="modal-footer">
-  <!-- <button ng-repeat="button in options.buttons" ng-class="button.classes" ng-click="button.click($event)" ng-bind="button.text" class="btn"></button> -->
-  <!-- <button type="button" class="btn" ng-click="cancel();">Cancel</button> -->
-  <button class="btn btn-primary" ng-click="saveItem(data);" type="submit">Save</button>
-</div>
+    <div class="modal-footer">
+        <!-- <button ng-repeat="button in options.buttons" ng-class="button.classes" ng-click="button.click($event)" ng-bind="button.text" class="btn"></button> -->
+        <button type="button" class="btn" ng-click="cancel();">Cancel</button> 
+        <button class="btn btn-primary" ng-disabled="modalform.$invalid || imgTypeError" ng-click="saveItem(data);" type="submit">Save</button>
+    </div>
 </form>

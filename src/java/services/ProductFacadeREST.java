@@ -9,6 +9,7 @@ import customEntities.count;
 import entities.Product;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -38,28 +39,38 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     }
 
     @POST
-    @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Product entity) {
-        super.create(entity);
+    public Product add(Product entity) {
+        try {
+            entity.setId(UUID.randomUUID().toString());
+            super.create(entity); 
+        } catch (Exception e) {
+            entity.setMessage("Add Product fail, please try again!");
+        }
+        return entity;
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") String id, Product entity) {
-        super.edit(entity);
+    public Product edit(@PathParam("id") String id, Product entity) {
+        try {
+            super.edit(entity);
+        } catch (Exception e) {
+            entity.setMessage("Update Product info fail, please try again!");
+        }
+        return entity;
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") String id) {
-        try{
+    public Product remove(@PathParam("id") String id) {
+        try {
             super.remove(super.find(id));
+        } catch (Exception e) {
+            super.find(id).setMessage("Delete Product fail, please try again!");
         }
-        catch(Exception e){
-            e.printStackTrace();
-        }
+        return super.find(id);
     }
     
     @GET

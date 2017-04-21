@@ -12,30 +12,34 @@
             <hr>
 
             <form ng-submit="register(form)" novalidate name="form">
-                <div class="form-group" ng-class="{ 'has-success': form.name.$valid && submitted,
-                                                    'has-error': form.name.$invalid && submitted }">
+                <div class="form-group" ng-class="{ 'has-success': form.name.$valid && form.name.$dirty,
+                                                    'has-error': form.name.$invalid && form.name.$dirty }">
                   <div style="position: relative;">
                       <input type="text" name="name" class="form-control" ng-model="user.name"
-                         required placeholder="Your name"/>
+                             ng-minlength="3"
+                            required placeholder="Your name"/>
                       <i class="myasterisk fa fa-asterisk"></i>
                   </div>
-                  <p class="help-block" ng-show="form.name.$error.required && submitted">
-                    A name is required
+                  <p class="help-block" ng-show="form.name.$error.required && form.name.$dirty">
+                    A name is required.
+                  </p>
+                  <p class="help-block" ng-show="form.name.$error.minlength && form.name.$dirty && !form.name.$error.required">
+                    Name must be at least 3 character.
                   </p>
                 </div>
 
-                <div class="form-group" ng-class="{ 'has-success': form.email.$valid && submitted,
-                                                    'has-error': form.email.$invalid && submitted }">
+                <div class="form-group" ng-class="{ 'has-success': form.email.$valid && form.email.$dirty,
+                                                    'has-error': form.email.$invalid && form.email.$dirty }">
                   <div style="position: relative;">
                       <input type="email" name="email" class="form-control" ng-model="user.email"
                          required
                          mongoose-error placeholder="Email Address"/>
                       <i class="myasterisk fa fa-asterisk"></i>
                   </div>                  
-                  <p class="help-block" ng-show="form.email.$error.email && submitted">
+                  <p class="help-block" ng-show="form.email.$error.email && form.email.$dirty && !form.email.$error.required">
                     Doesn't look like a valid email.
                   </p>
-                  <p class="help-block" ng-show="form.email.$error.required && submitted">
+                  <p class="help-block" ng-show="form.email.$error.required && form.email.$dirty">
                     What's your email address?
                   </p>
                   <p class="help-block" ng-show="form.email.$error.mongoose">
@@ -46,8 +50,8 @@
                   <p class="help-block">{{ errors.other }}</p>
                 </div>
 
-                <div class="form-group" ng-class="{ 'has-success': form.password.$valid && submitted,
-                                                    'has-error': form.password.$invalid && submitted }">
+                <div class="form-group" ng-class="{ 'has-success': form.password.$valid && form.password.$dirty,
+                                                    'has-error': form.password.$invalid && form.password.$dirty }">
                   <div style="position: relative;">
                       <input ng-attr-type="{{ showPassword ? 'text' : 'password' }}" name="password" class="form-control" ng-model="user.password"
                          ng-minlength="3"
@@ -55,8 +59,11 @@
                          mongoose-error placeholder="Password"/>
                       <i ng-mousedown="showPassword = !showPassword" ng-mouseup="showPassword = !showPassword" class="myeye fa fa-eye"></i>
                   </div>
+                  <p class="help-block" ng-show="form.password.$error.required && form.password.$dirty">
+                    A password is required.
+                  </p>
                   <p class="help-block"
-                     ng-show="(form.password.$error.minlength || form.password.$error.required) && submitted">
+                     ng-show="form.password.$error.minlength && form.password.$dirty && !form.password.$error.required">
                     Password must be at least 3 characters.
                   </p>
                   <p class="help-block" ng-show="form.password.$error.mongoose">
@@ -64,32 +71,36 @@
                   </p>                
                 </div>
                 
-                <div class="form-group" ng-class="{ 'has-success': form.phone.$valid && submitted,
-                                                  'has-error': form.phone.$invalid && submitted }">
+                <div class="form-group" ng-class="{ 'has-success': form.phone.$valid && form.phone.$dirty,
+                                                  'has-error': form.phone.$invalid && form.phone.$dirty }">
                     <div style="position: relative;">
                         <input type="text" name="phone" class="form-control" ng-model="user.phone"
-                           required placeholder="Your phone number"/>
+                           ng-pattern="(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}" required placeholder="Your phone number"/>
                         <i class="myasterisk fa fa-asterisk"></i>
                     </div>
-                    <p class="help-block" ng-show="form.phone.$error.required && submitted">
+                    <p class="help-block" ng-show="form.phone.$error.required && form.phone.$dirty">
                       Phone number is required
                     </p>
+                    <span class="help-block" ng-show="modalform[i.heading].$error.pattern && modalform[i.heading].$dirty && !modalform[i.heading].$error.required">
+                        Phone can only contain numbers and letter -<br/>
+                    </span>
                 </div>
                 
-                <div class="form-group" ng-class="{ 'has-success': form.address.$valid && submitted,
-                                                  'has-error': form.address.$invalid && submitted }">
+                <div class="form-group" ng-class="{ 'has-success': form.address.$valid && form.address.$dirty,
+                                                  'has-error': form.address.$invalid && form.address.$dirty }">
                     <div style="position: relative;">
                         <input type="text" name="address" class="form-control" ng-model="user.address"
                            required placeholder="Your Shipping Address"/>
                         <i class="myasterisk fa fa-asterisk"></i>
                     </div>
-                    <p class="help-block" ng-show="form.address.$error.required && submitted">
+                    <p class="help-block" ng-show="form.address.$error.required && form.address.$dirty">
                       Shipping address is required
                     </p>
                 </div>
                 
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-user-md"></i> Sign up</button>
+                    <button type="submit" class="btn btn-primary"
+                            ng-disabled="form.$invalid"><i class="fa fa-user-md"></i> Sign up</button>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="" href="login">Login</a>
                 </div>
             </form>

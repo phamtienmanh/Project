@@ -40,11 +40,11 @@ public class CategoryFacadeREST extends AbstractFacade<Category> {
     public Category add(Category entity) {
         try {
             entity.setId(UUID.randomUUID().toString());
-        super.create(entity); 
-        return entity;
+            super.create(entity); 
         } catch (Exception e) {
-            return null;
+            entity.setMessage("Add Category fail, please try again!");
         }
+        return entity;
     }
 
     @PUT
@@ -53,16 +53,21 @@ public class CategoryFacadeREST extends AbstractFacade<Category> {
     public Category edit(@PathParam("id") String id, Category entity) {
         try {
             super.edit(entity);
-            return entity;
         } catch (Exception e) {
-            return null;
+            entity.setMessage("Update Category fail, please try again!");
         }
+        return entity;
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") String id) {
-        super.remove(super.find(id));
+    public Category remove(@PathParam("id") String id) {
+        try {
+            super.remove(super.find(id));
+        } catch (Exception e) {
+            super.find(id).setMessage("Delete Category fail, please try again!");
+        }
+        return super.find(id);
     }
 
     @GET

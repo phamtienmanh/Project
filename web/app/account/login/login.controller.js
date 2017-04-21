@@ -7,8 +7,6 @@ angular.module('shopnxApp')
     $scope.errors = {};
 
     $scope.login = function(form) {
-      $scope.submitted = true;
-
       if(form.$valid) {
         Auth.login({
           email: $scope.user.email,
@@ -16,8 +14,8 @@ angular.module('shopnxApp')
         })
         .then( function(resp) {
           // Logged in, redirect to the page with requested a login
-            if(resp.data==""){
-                $scope.errors.other = "Check email and password again!";
+            if(resp.data && resp.data.message){
+                $scope.errors.other = resp.data.message;
             }
             else{
                 Auth.redirectToAttemptedUrl();

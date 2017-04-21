@@ -44,19 +44,33 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
         Query q = em.createNamedQuery("Customer.login", Customer.class);
         q.setParameter("email", lc.getEmail());
         q.setParameter("password", lc.getPassword());
+        Customer customer = new Customer();
         try {
-            Customer customer = (Customer)q.getSingleResult();
-            return customer;
+            customer = (Customer)q.getSingleResult();
         } catch (Exception e) {
-            return null;
+            customer.setMessage("Check your email and password again!");
         }
+        return customer;
     }
 
     @POST
-    @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Customer entity) {
-        super.create(entity);
+    public Customer adminCreate(Customer entity) {
+        Query q = em.createNamedQuery("Customer.findByEmail", Customer.class);
+        q.setParameter("email", entity.getEmail());
+        try {
+            //check if email exist
+            q.getSingleResult();
+            entity.setMessage("This email has already exist!");
+        } catch (Exception e) {
+            try {
+                entity.setId(UUID.randomUUID().toString());
+                super.create(entity);
+            } catch (Exception ex) {
+                entity.setMessage("Sign up fail, please try again!");
+            }
+        }
+        return entity;
     }
     
     @POST
@@ -67,31 +81,60 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
         Query q = em.createNamedQuery("Customer.findByEmail", Customer.class);
         q.setParameter("email", entity.getEmail());
         try {
-            Customer customer = (Customer)q.getSingleResult();
-            return null;
+            //check if email exist
+            q.getSingleResult();
+            entity.setMessage("This email has already exist!");
         } catch (Exception e) {
             try {
-            entity.setId(UUID.randomUUID().toString());
-            entity.setRole("user");
-            super.create(entity);
-            return entity;
+                entity.setId(UUID.randomUUID().toString());
+                entity.setRole("user");
+                super.create(entity);
             } catch (Exception ex) {
-                return null;
+                entity.setMessage("Sign up fail, please try again!");
             }
         }
+        return entity;
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") String id, Customer entity) {
-        super.edit(entity);
+    public Customer edit(@PathParam("id") String id, Customer entity) {
+        //check if email exist
+        Query q = em.createNamedQuery("Customer.findByEmail", Customer.class);
+        q.setParameter("email", entity.getEmail());
+        try {
+            //check if email exist
+            Customer check = (Customer)q.getSingleResult();
+            if(!check.getId().equals(entity.getId())){
+                entity.setMessage("This email has already exist!");
+            }
+            else{
+                try {
+                    super.edit(entity);
+                } catch (Exception ex) {
+                    entity.setMessage("Update user info fail, please try again!");
+                } 
+            }
+        } catch (Exception e) {
+            try {
+                super.edit(entity);
+            } catch (Exception ex) {
+                entity.setMessage("Update user info fail, please try again!");
+            }
+        }
+        return entity;
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") String id) {
-        super.remove(super.find(id));
+    public Customer remove(@PathParam("id") String id) {
+        try {
+            super.remove(super.find(id));
+        } catch (Exception e) {
+            super.find(id).setMessage("Delete user info fail, please try again!");
+        }
+        return super.find(id);
     }
 
     @GET

@@ -120,7 +120,7 @@ angular.module('shopnxApp')
        * @return {Boolean}
        */
       isLoggedIn: function() {
-        return currentUser.hasOwnProperty('role');
+        return currentUser.hasOwnProperty('roleId');
       },
 
       /**
@@ -133,7 +133,7 @@ angular.module('shopnxApp')
           }).catch(function() {
             cb(false);
           });
-        } else if(currentUser.hasOwnProperty('role')) {
+        } else if(currentUser.hasOwnProperty('roleId')) {
           cb(true);
         } else {
           cb(false);
@@ -146,7 +146,7 @@ angular.module('shopnxApp')
        * @return {Boolean}
        */
       isAdmin: function() {
-        return currentUser.role === 'admin';
+        return currentUser.roleId.name === 'admin';
       },
 
       /**

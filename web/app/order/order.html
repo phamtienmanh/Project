@@ -21,7 +21,7 @@
                 <div class="col-md-1 text-right"><h5>To: </h5></div>
                 <div class="col-md-3">
                     <span class="input-group" ng-click="popup2.opened = !popup2.opened">
-                        <input type="text" class="form-control mycalendar" custom-class="getDayClass(date, mode, dt1, dt2)" datepicker-popup="dd-MM-yyyy" ng-model="dt2" ng-change="loadOrders()" min-date="dt1" max-date="today" is-open="popup2.opened" readonly close-text="Close" />
+                        <input type="text" class="form-control mycalendar" custom-class="getDayClass(date, mode)" datepicker-popup="dd-MM-yyyy" ng-model="dt2" ng-change="loadOrders()" min-date="dt1" max-date="today" is-open="popup2.opened" readonly close-text="Close" />
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
                       </span>
@@ -31,8 +31,8 @@
         </div>
     </div>
     
-  <h5 ng-hide="isAdmin()" class="bg-info well text-center">Total Spent: {{orders.total | currency}}</h5>
-  <h5 ng-show="isAdmin()" class="bg-info well text-center">Total Amount: {{orders.total | currency}}</h5>
+  <h4 ng-hide="isAdmin()" class="bg-info well text-center">Total Spent: {{orders.total | currency}}</h4>
+  <h4 ng-show="isAdmin()" class="bg-info well text-center">Total Amount: {{orders.total | currency}}</h4>
 <div class="panel panel-primary" ng-repeat="o in orders | orderBy : 'date' : 'reverse'">
       <div class="panel-heading">
             <div class="panel-title">
@@ -54,14 +54,14 @@
           <table class="table" style="margin-bottom: 0 !important">
               <tbody>
                 <tr ng-repeat="i in o.orderDetailCollection" >
-                    <td class="col-md-2">
-                        <a ui-sref="productDetail({id:i.productId.id, slug:i.productId.name})">
-                            <img ng-src="assets/books/{{i.productId.image}}" err-src="assets/images/photo.png" width="100px" />
+                    <td class="col-md-2 text-center">
+                        <a ui-sref="productDetail({id:i.productId.id, name:i.productId.name})">
+                            <img ng-src="assets/books/{{i.productId.image}}" err-src="assets/images/photo.png" width="70px" />
                         </a>
                     </td>
                     <td class="col-md-8">
                         {{i.productId.name}}<br/>
-                        Author: {{i.productId.author}}<br/>
+                        <span class="text-muted">Author: {{i.productId.author}}</span><br/>
                         <span class="text-muted">Quantity: {{i.quantity}}</span><br/>
                         <span class="text-muted">Unit Price: {{i.productId.price | currency}}</span>
                     </td>
@@ -73,9 +73,9 @@
                     <td></td>
                     <td>
                         <span ng-show="isAdmin()">
-                            <i class="fa fa-user"></i> {{o.customerId.name}}&nbsp;</br>
-                            <i class="fa fa-phone"></i> {{o.customerId.phone}}&nbsp;</br>
-                            <i class="fa fa-truck"></i> {{o.customerId.address}}
+                            <i class="fa fa-user"></i>&nbsp;&nbsp; {{o.customerId.name}}&nbsp;</br>
+                            <i class="fa fa-phone-square"></i>&nbsp;&nbsp; {{o.customerId.phone}}&nbsp;</br>
+                            <i class="fa fa-truck fa-flip-horizontal"></i>&nbsp;&nbsp; {{o.customerId.address}}
                         </span>
                     </td>
                     <td></td>

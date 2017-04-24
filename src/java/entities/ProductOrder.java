@@ -24,7 +24,6 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -34,7 +33,6 @@ import javax.xml.bind.annotation.XmlType;
 @Entity
 @Table(name = "productOrder")
 @XmlRootElement
-@XmlType(propOrder = { "id", "date", "status", "customerId", "orderDetailCollection"})
 @NamedQueries({
     @NamedQuery(name = "ProductOrder.findAll", query = "SELECT p FROM ProductOrder p WHERE p.date >= :from AND p.date <= :to"),
     @NamedQuery(name = "ProductOrder.findByCustomerId", query = "SELECT p FROM ProductOrder p WHERE p.customerId = :customerId AND p.date >= :from AND p.date <= :to"),
@@ -43,6 +41,9 @@ import javax.xml.bind.annotation.XmlType;
     @NamedQuery(name = "ProductOrder.updateStatus", query = "UPDATE ProductOrder p SET p.status = :status WHERE p.id = :id")
 })
 public class ProductOrder implements Serializable {
+    @JoinColumn(name = "coupon_id", referencedColumnName = "_id")
+    @ManyToOne
+    private Coupon couponId;
     @OneToMany(mappedBy = "productOrderid")
     private Collection<OrderDetail> orderDetailCollection;
     private static final long serialVersionUID = 1L;
@@ -143,6 +144,14 @@ public class ProductOrder implements Serializable {
 
     public void setOrderDetailCollection(Collection<OrderDetail> orderDetailCollection) {
         this.orderDetailCollection = orderDetailCollection;
+    }
+
+    public Coupon getCouponId() {
+        return couponId;
+    }
+
+    public void setCouponId(Coupon couponId) {
+        this.couponId = couponId;
     }
     
 }

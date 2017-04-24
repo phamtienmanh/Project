@@ -10,8 +10,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -25,16 +23,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author KID
  */
 @Entity
-@Table(name = "rating")
+@Table(name = "role")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Rating.findAll", query = "SELECT r FROM Rating r"),
-    @NamedQuery(name = "Rating.findById", query = "SELECT r FROM Rating r WHERE r.id = :id"),
-    @NamedQuery(name = "Rating.findByStar", query = "SELECT r FROM Rating r WHERE r.star = :star")})
-public class Rating implements Serializable {
-    @Size(max = 500)
-    @Column(name = "comment")
-    private String comment;
+    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r"),
+    @NamedQuery(name = "Role.findById", query = "SELECT r FROM Role r WHERE r.id = :id"),
+    @NamedQuery(name = "Role.findByName", query = "SELECT r FROM Role r WHERE r.name = :name")})
+public class Role implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -44,14 +39,9 @@ public class Rating implements Serializable {
     private String id;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "star")
-    private int star;
-    @JoinColumn(name = "product_id", referencedColumnName = "_id")
-    @ManyToOne
-    private Product productId;
-    @JoinColumn(name = "customer_id", referencedColumnName = "_id")
-    @ManyToOne
-    private Customer customerId;
+    @Size(min = 1, max = 100)
+    @Column(name = "name")
+    private String name;
 
     @Transient
     private String message;
@@ -64,16 +54,16 @@ public class Rating implements Serializable {
         this.message = message;
     }
     
-    public Rating() {
+    public Role() {
     }
 
-    public Rating(String id) {
+    public Role(String id) {
         this.id = id;
     }
 
-    public Rating(String id, int star) {
+    public Role(String id, String name) {
         this.id = id;
-        this.star = star;
+        this.name = name;
     }
 
     public String getId() {
@@ -84,28 +74,12 @@ public class Rating implements Serializable {
         this.id = id;
     }
 
-    public int getStar() {
-        return star;
+    public String getName() {
+        return name;
     }
 
-    public void setStar(int star) {
-        this.star = star;
-    }
-
-    public Product getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Product productId) {
-        this.productId = productId;
-    }
-
-    public Customer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Customer customerId) {
-        this.customerId = customerId;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -118,10 +92,10 @@ public class Rating implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Rating)) {
+        if (!(object instanceof Role)) {
             return false;
         }
-        Rating other = (Rating) object;
+        Role other = (Role) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -130,15 +104,7 @@ public class Rating implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Rating[ id=" + id + " ]";
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
+        return "entities.Role[ id=" + id + " ]";
     }
     
 }

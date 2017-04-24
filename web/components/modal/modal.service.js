@@ -4,14 +4,15 @@ angular.module('shopnxApp')
         .factory('Modal', ['$rootScope', '$modal', '$q', function ($rootScope, $modal, $q) {
 
                 var obj = {};
-                var selectModalInstanceCtrl = function ($scope, $modalInstance, $injector, data, options, toastr, Category) {
+                var selectModalInstanceCtrl = function ($scope, $modalInstance, $injector, data, options, toastr, Category, Role) {
                     var api = $injector.get(options.api);
                     $scope.showPassword = false;
                     $scope.data = angular.copy(data);
                     $scope.options = options;
                     $scope.categories = Category.query(function () {
                     });
-                    $scope.roles = ['admin', 'user'];
+                    $scope.roles = Role.query(function () {
+                    });
                     $scope.saveItem = function (item) {
                         if ($scope.data.id) {
                             //edit
@@ -61,7 +62,7 @@ angular.module('shopnxApp')
                     $scope.getFile = function (element) {
                         $scope.$apply(function ($scope) {
                             $scope.theFile = element.files[0];
-                            if($scope.theFile){
+                            if ($scope.theFile) {
                                 if ($scope.theFile.type !== "image/png" && $scope.theFile.type !== "image/jpg" && $scope.theFile.type !== "image/bmp") {
                                     $scope.imgTypeError = true;
                                     $scope.data.image = "";
@@ -77,10 +78,37 @@ angular.module('shopnxApp')
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
                     };
+
+                    $scope.data.fromDate = moment($scope.data.fromDate)._d || moment().startOf('day')._d;
+                    $scope.data.toDate = moment($scope.data.toDate)._d || moment().endOf('day').add(7, "days")._d;
+                    $scope.today = moment().startOf('day')._d;
+                    $scope.getDayClass = function (date, mode) {
+                        if (mode === 'day') {
+                            var dayToCheck = new Date(date).setHours(0, 0, 0, 0);
+                            var currentDay1 = new Date($scope.data.fromDate).setHours(0, 0, 0, 0);
+                            var currentDay2 = new Date($scope.data.toDate).setHours(0, 0, 0, 0);
+                            if (dayToCheck === currentDay1 && currentDay1 === currentDay2) {
+                                return 'samedate';
+                            }
+                            if (dayToCheck === currentDay1) {
+                                return 'datetime1';
+                            }
+                            if (dayToCheck === currentDay2) {
+                                return 'datetime2';
+                            }
+                        }
+                        return '';
+                    };
+                    $scope.popup1 = {
+                        opened: false
+                    };
+                    $scope.popup2 = {
+                        opened: false
+                    };
                 };
 
                 // We need to manually inject to be minsafe
-                selectModalInstanceCtrl.$inject = ['$scope', '$modalInstance', '$injector', 'data', 'options', 'toastr', 'Category'];
+                selectModalInstanceCtrl.$inject = ['$scope', '$modalInstance', '$injector', 'data', 'options', 'toastr', 'Category', 'Role'];
 
                 obj.show = function (data, options) {
                     var deferred = $q.defer();

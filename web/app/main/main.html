@@ -115,14 +115,14 @@
                                 <div class="flip-container">
                                     <div class="flipper">
                                         <div class="front">
-                                            <a ui-sref="productDetail({id:product.id, slug:product.name})">
+                                            <a ui-sref="productDetail({id:product.id, name:product.name})">
                                                 <img ng-src="assets/books/{{product.image}}"
                                                     err-src="assets/books/photo.png"
                                                     alt="{{product.name}}" class="img-responsive">
                                             </a>
                                         </div>
                                         <div class="back">
-                                            <a ui-sref="productDetail({id:product.id, slug:product.name})">
+                                            <a ui-sref="productDetail({id:product.id, name:product.name})">
                                                 <img ng-src="assets/books/{{product.image}}"
                                                     err-src="assets/books/photo.png"
                                                     alt="{{product.name}}" class="img-responsive">
@@ -130,23 +130,24 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a ui-sref="productDetail({id:product.id, slug:product.name})" class="invisible">
+                                <a ui-sref="productDetail({id:product.id, name:product.name})" class="invisible">
                                     <img ng-src="assets/books/{{product.image}}" alt="" class="img-responsive">
                                 </a>
                                 <div class="text text-center">
-                                    <h4><a ui-sref="productDetail({id:product.id, slug:product.name})">{{product.name}}</a></h4>
+                                    <h4 class="myTitle">
+                                        <a ui-sref="productDetail({id:product.id, name:product.name})">{{product.name}}</a>                                        
+                                    </h4>                                          
                                     <p class="price"><del ng-if="product.price!=product.mrp">{{product.mrp | currency : '$'}}</del> {{product.price | currency : '$'}}</p>
+                                    <a ng-if="product.quantity > 0">{{product.quantity}} in stock</a>
+                                    <h5 ng-if="product.quantity == 0" class="help-block">Out of stock</h5>
                                     <p class="buttons"></p>
                                     <div class="btn-group">
-                                      <a ui-sref="productDetail({id:product.id, slug:product.name})" class="btn btn-default">View detail</a>
-                                      <a ng-click="cart.addItem(product.id, product.name, product.name, product.mrp, product.price, -1)" ng-hide="checkCart(product.id)" class="btn btn-info">-</a>
-
+                                      <a ui-sref="productDetail({id:product.id, name:product.name})" class="btn btn-default">View detail</a>
+                                      <a ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, -1)" ng-hide="checkCart(product.id)" class="btn btn-info">-</a>
                                       <a ng-hide="checkCart(product.id)" class="btn btn-info">{{getQuantity(product.id);}}</a>
-
-                                      <a ng-click="cart.addItem(product.id, product.name, product.name, product.mrp, product.price, +1)" ng-hide="checkCart(product.id)" class="btn btn-info">+</a>
+                                      <a ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, +1)" ng-hide="checkCart(product.id)" ng-disabled="getQuantity(product.id)>=product.quantity" class="btn btn-info">+</a>
                                     </div>
-                                    <a ng-click="cart.addItem(product.id, product.name, product.name, product.mrp, product.price, 1, product.image,product.category, true);" ng-show="checkCart(product.id)" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                    <p></p>
+                                    <a ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, 1, product.image,product.category, true);" ng-show="checkCart(product.id)" class="btn btn-primary" ng-disabled="product.quantity == 0"><i class="fa fa-shopping-cart"></i>Add to cart</a>                                    
                                 </div>
                                 <!-- /.text -->
                             </div>

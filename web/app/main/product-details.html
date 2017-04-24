@@ -85,13 +85,13 @@ _________________________________________________________ -->
                         <a href="#" ng-click="addWishlist()" ng-hide="wishExisted" class="btn btn-primary">Add to wish list</a>
                         <a href="#" ng-click="removeWishlist()" ng-hide="!wishExisted" class="btn btn-danger">Remove from wish list</a>
 
-                        <a ng-click="cart.addItem(product.id, product.name, product.slug, product.mrp, product.price, -1)" ng-hide="checkCart(product.id)" class="btn btn-primary">-</a>
+                        <a ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, -1)" ng-hide="checkCart(product.id)" class="btn btn-primary">-</a>
 
                         <a ng-hide="checkCart(product.id)" class="btn btn-default">{{getQuantity(product.id);}}</a>
 
-                        <a ng-click="cart.addItem(product.id, product.name, product.slug, product.mrp, product.price, +1)" ng-hide="checkCart(product.id)" class="btn btn-primary">+</a>
+                        <a ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, +1)" ng-hide="checkCart(product.id)" ng-disabled="getQuantity(product.id)>=product.quantity" class="btn btn-primary">+</a>
                         </div>
-                        <a ng-click="cart.addItem(product.id, product.name, product.slug, product.mrp, product.price, 1, product.image,product.category, product.size ,true);" ng-show="checkCart(product.id)" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        <a ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, 1, product.image,product.category, product.size ,true);" ng-show="checkCart(product.id)" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                       </div>
 
                   </div>

@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -34,11 +36,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Customer.findByName", query = "SELECT c FROM Customer c WHERE c.name = :name"),
     @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email"),
     @NamedQuery(name = "Customer.findByPassword", query = "SELECT c FROM Customer c WHERE c.password = :password"),
-    @NamedQuery(name = "Customer.findByRole", query = "SELECT c FROM Customer c WHERE c.role = :role"),
+    @NamedQuery(name = "Customer.findByRoleId", query = "SELECT c FROM Customer c WHERE c.roleId = :roleId"),
     @NamedQuery(name = "Customer.findByPhone", query = "SELECT c FROM Customer c WHERE c.phone = :phone"),
     @NamedQuery(name = "Customer.findByAddress", query = "SELECT c FROM Customer c WHERE c.address = :address"),
     @NamedQuery(name = "Customer.login", query = "SELECT c FROM Customer c WHERE c.email = :email AND c.password = :password")})
 public class Customer implements Serializable {
+    @JoinColumn(name = "role_id", referencedColumnName = "_id")
+    @ManyToOne
+    private Role roleId;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -62,9 +67,6 @@ public class Customer implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "password")
     private String password;
-    @Size(max = 100)
-    @Column(name = "role")
-    private String role;
     // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Size(max = 100)
     @Column(name = "phone")
@@ -136,14 +138,6 @@ public class Customer implements Serializable {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -210,6 +204,14 @@ public class Customer implements Serializable {
     @Override
     public String toString() {
         return "entities.Customer[ id=" + id + " ]";
+    }
+
+    public Role getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Role roleId) {
+        this.roleId = roleId;
     }
     
 }

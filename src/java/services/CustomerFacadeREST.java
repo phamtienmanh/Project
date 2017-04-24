@@ -55,6 +55,7 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
 
     @POST
     @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
     public Customer adminCreate(Customer entity) {
         Query q = em.createNamedQuery("Customer.findByEmail", Customer.class);
         q.setParameter("email", entity.getEmail());
@@ -76,6 +77,7 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
     @POST
     @Path("create")
     @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
     public Customer createNew(Customer entity) {
         //check if email exist
         Query q = em.createNamedQuery("Customer.findByEmail", Customer.class);
@@ -87,7 +89,6 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
         } catch (Exception e) {
             try {
                 entity.setId(UUID.randomUUID().toString());
-                entity.setRole("user");
                 super.create(entity);
             } catch (Exception ex) {
                 entity.setMessage("Sign up fail, please try again!");
@@ -99,6 +100,7 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
     public Customer edit(@PathParam("id") String id, Customer entity) {
         //check if email exist
         Query q = em.createNamedQuery("Customer.findByEmail", Customer.class);
@@ -128,6 +130,7 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
 
     @DELETE
     @Path("{id}")
+    @Produces({"application/xml", "application/json"})
     public Customer remove(@PathParam("id") String id) {
         try {
             super.remove(super.find(id));

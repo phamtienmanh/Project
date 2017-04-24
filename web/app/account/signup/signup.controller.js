@@ -1,16 +1,20 @@
 'use strict';
 
 angular.module('shopnxApp')
-  .controller('SignupCtrl', function ($scope, Auth, $location, $window) {
+  .controller('SignupCtrl', function ($scope, Auth, $location, $window, Role) {
     $scope.showPassword = false;
     $scope.user = {};
     $scope.errors = {};
+    Role.query(function (resp) {
+        $scope.userRole = _.find(resp, {name: 'user'});
+    });
 
     $scope.register = function(form) {
       if(form.$valid) {
         Auth.createUser({
           name: $scope.user.name,
           email: $scope.user.email,
+          roleId: $scope.userRole || {id: '2'},
           password: $scope.user.password,
           phone: $scope.user.phone,
           address: $scope.user.address

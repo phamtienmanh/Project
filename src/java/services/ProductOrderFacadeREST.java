@@ -9,6 +9,7 @@ import entities.Category;
 import entities.ProductOrder;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -38,10 +39,15 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
     }
 
     @POST
-    @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(ProductOrder entity) {
-        super.create(entity);
+    public ProductOrder add(ProductOrder entity) {
+        try {
+            entity.setId(UUID.randomUUID().toString());
+            super.create(entity); 
+        } catch (Exception e) {
+//            entity.setMessage("Order fail, please try again!");
+        }
+        return entity;
     }
 
     @PUT
@@ -50,10 +56,10 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
     public ProductOrder edit(@PathParam("id") String id, ProductOrder entity) {
         try {
             super.edit(entity);
-            return entity;
         } catch (Exception e) {
-            return null;
+//            entity.setMessage("Update Order info fail, please try again!");
         }
+        return entity;
     }
     
     @PUT
@@ -65,16 +71,21 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
             q.setParameter("status", entity.getStatus());
             q.setParameter("id", entity.getId());
             q.executeUpdate();
-            return entity;
         } catch (Exception e) {
-            return null;
+//            entity.setMessage("Update Order's status fail, please try again!");
         }
+        return entity;
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") String id) {
-        super.remove(super.find(id));
+    public ProductOrder remove(@PathParam("id") String id) {
+        try {
+            super.remove(super.find(id));
+        } catch (Exception e) {
+//            super.find(id).setMessage("Delete Product fail, please try again!");
+        }
+        return super.find(id);
     }
 
     @GET

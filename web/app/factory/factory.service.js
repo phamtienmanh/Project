@@ -89,6 +89,9 @@ angular.module('shopnxApp')
   .factory('Setting', ['$resource', function($resource) {
     return $resource('api/settings/:id', null, {'update': { method:'PUT' } });
   }])
+  .factory('Role', ['$resource', function($resource) {
+    return $resource('api/roles/:id', null, {'update': { method:'PUT' } });
+  }])
   .factory('Order', ['$resource', function($resource) {
     var obj = {};
     obj = $resource('api/orders/:id', null, {'update': { method:'PUT' } });

@@ -75,13 +75,13 @@
                                                   'has-error': form.phone.$invalid && form.phone.$dirty }">
                     <div style="position: relative;">
                         <input type="text" name="phone" class="form-control" ng-model="user.phone"
-                           ng-pattern="(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}" required placeholder="Your phone number"/>
+                           ng-pattern="/^(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{3,5}$/" required placeholder="Your phone number"/>
                         <i class="myasterisk fa fa-asterisk"></i>
                     </div>
                     <p class="help-block" ng-show="form.phone.$error.required && form.phone.$dirty">
                       Phone number is required
                     </p>
-                    <span class="help-block" ng-show="modalform[i.heading].$error.pattern && modalform[i.heading].$dirty && !modalform[i.heading].$error.required">
+                    <span class="help-block" ng-show="form.$error.pattern && form.$dirty && !form.$error.required">
                         Phone can only contain numbers and letter -<br/>
                     </span>
                 </div>

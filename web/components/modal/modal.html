@@ -87,8 +87,8 @@
             <div class="col-sm-7"
                  ng-switch-when="selectRole">
                 <span class="block input-icon input-icon-right">
-                    <select ng-model="data[i.heading]" 
-                            ng-options="role for role in roles | orderBy:'role' track by role " 
+                    <select ng-model="data.roleId" 
+                            ng-options="role.name for role in roles | orderBy:'name' track by role.id " 
                             class="form-control"
                             name="{{i.heading}}"
                             required>
@@ -165,6 +165,28 @@
                     </span>
                     <span class="help-block" ng-show="modalform[i.heading].$error.pattern && modalform[i.heading].$dirty && !modalform[i.heading].$error.required">
                         {{i.heading| labelCase}} must be a positive integer number
+                    </span>
+                </span>
+            </div>
+            <div class="col-sm-7"
+                 ng-switch-when="fromDate">
+                <span class="block input-icon input-icon-right">
+                    <span class="input-group" ng-click="popup1.opened = !popup1.opened">
+                        <input type="text" class="form-control mycalendar" custom-class="getDayClass(date, mode)" datepicker-popup="dd-MM-yyyy" ng-model="data.fromDate" max-date="data.toDate" is-open="popup1.opened" readonly close-text="Close" />
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span>
+                    </span>
+                </span>
+            </div>
+            <div class="col-sm-7"
+                 ng-switch-when="toDate">
+                <span class="block input-icon input-icon-right">
+                    <span class="input-group" ng-click="popup2.opened = !popup2.opened">
+                        <input type="text" class="form-control mycalendar" custom-class="getDayClass(date, mode)" datepicker-popup="dd-MM-yyyy" ng-model="data.toDate" min-date="data.fromDate" is-open="popup2.opened" readonly close-text="Close" />
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span>
                     </span>
                 </span>
             </div>

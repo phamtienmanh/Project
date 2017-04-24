@@ -75,7 +75,8 @@ public class WishlistFacadeREST extends AbstractFacade<Wishlist> {
 //    }
     @DELETE
     @Path("{id}")
-    public boolean removeWishlist(@PathParam("id") String id) {
+    @Produces(MediaType.TEXT_PLAIN)
+    public boolean remove(@PathParam("id") String id) {
         try {
             super.remove(super.find(id));
             return true;
@@ -94,15 +95,16 @@ public class WishlistFacadeREST extends AbstractFacade<Wishlist> {
     @GET
     @Path("findByCustomerAndProduct")
     @Produces({"application/xml", "application/json"})
-    public Wishlist findByProductAndCustomer(@PathParam("customerId") Customer customerId, @PathParam("productId") Product productId) {
+    public String findByProductAndCustomer(@QueryParam("customerId") String customerId, @QueryParam("productId") String productId) {
         Query q = em.createNamedQuery("Wishlist.findByCustomerAndProduct", Wishlist.class);
         q.setParameter("customerId", customerId);
         q.setParameter("productId", productId);
         Wishlist w = null;
-        if (q.getResultList().size() > 0) {
-            w = (Wishlist) q.getResultList().get(0);
-        }
-        return w;
+//        if (q.getResultList().size() > 0) {
+//            w = (Wishlist) q.getResultList().get(0);
+//        }
+        w= (Wishlist) q.getSingleResult();
+        return w.getId();
     }
 
     @GET

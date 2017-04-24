@@ -54,19 +54,26 @@
                       <span ng-switch-when="date">
                         {{p[c.heading] | amCalendar}}
                       </span>
+                      <span ng-switch-when="fromDate">
+                        {{p[c.heading] | date: 'dd-MM-yyyy'}}
+                      </span>
+                      <span ng-switch-when="toDate">
+                        {{p[c.heading] | date: 'dd-MM-yyyy'}}
+                      </span>
                       <span ng-switch-when="currency">
                         {{p[c.heading] | currency}}
                       </span>
                       <span ng-switch-when="image">
                         <img ng-src="assets/books/{{p.image}}"/>
                       </span>
+                      <span ng-switch-when="password">
+                        ******
+                      </span>
+                      <span ng-switch-when="selectRole">
+                        {{p.roleId.name}}
+                      </span>
                       <span ng-switch-default>
-                          <div ng-if="c.heading=='password'">
-                              ******
-                          </div>
-                          <div ng-if="c.heading!='password'">
-                              {{p[c.heading]}}
-                          </div>
+                          {{p[c.heading]}}
                       </span>
                   </td>
                   <td>

@@ -42,7 +42,15 @@ http://www.tuckey.org/urlrewrite/
         <to>index.html</to>
     </rule>
     <rule>
-        <from>^/checkout</from>
+        <from>^/checkout$</from>
+        <to>index.html</to>
+    </rule>
+    <rule>
+        <from>^/coupon$</from>
+        <to>index.html</to>
+    </rule>
+    <rule>
+        <from>^/role$</from>
         <to>index.html</to>
     </rule>
     <rule>

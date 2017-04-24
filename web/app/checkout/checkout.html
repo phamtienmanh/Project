@@ -1,118 +1,66 @@
 <div class="col-md-12">
     <ul class="breadcrumb">
-        <script>
-            document.write('<li><a href="' + document.location.href + '">Home</a></li>');
-        </script>                
-        <li>Checkout</li>
+        <li><a ui-sref="main" href="">Home</a></li>
     </ul>
 </div>
+<div class="col-md-12" ng-show="cart.getTotalCount() == 0">
+    <div class="box"><a href="main">{{msg}}</a></div>
+</div>
+<div class="col-md-7" id="checkout" ng-show="cart.getTotalCount() > 0">
+    <div class="box">        
+        <div class="panel-heading">
+            <h4>Order details</h4>
+        </div>
+        <div class="panel-body">                
+            <table class="cart table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th></th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- empty cart message -->
+                    <tr ng-hide="cart.getTotalCount() > 0" >
+                        <td class="tdCenter" colspan="7">
+                            Your cart is empty. &nbsp;&nbsp;<a class="btn btn-primary" href="main">Shop Now</a>
+                        </td>
+                    </tr>
 
-<div class="col-md-7" id="checkout">
+                    <tr ng-repeat="item in cart.items| filter: filterCart">
+                        <td>{{$index + 1}}</td>
+                        <td class="product-thumbnail">
+                            <a>
+                                <img ng-src="assets/books/{{item.image}}" alt="{{item.name}}" data-err-src="assets/images/photo.png" width="54px"/>
+                            </a>
+                        </td>
 
-    <div class="box">
-      <form name="checkout_form" class="form-horizontal" role="form" novalidate ng-show="cart.getTotalCount() > 0">
-        <ul class="nav nav-pills nav-justified">
-            <li class="active"><a href="#"><i class="fa fa-map-marker"></i><br>Address</a>
-            </li>
-            <li class="disabled"><a href="#"><i class="fa fa-truck"></i><br>Delivery Method</a>
-            </li>
-            <li class="disabled"><a href="#"><i class="fa fa-money"></i><br>Payment Method</a>
-            </li>
-            <li class="disabled"><a href="#"><i class="fa fa-eye"></i><br>Order Review</a>
-            </li>
-        </ul>
-      <div class="panel-heading">
-            <h3 class="panel-title">Enter shipping details</h3>
-      </div>
-      <div class="panel-body">
-          <div class="form-group">
-              <label class="col-sm-3 control-label no-padding-right"> Phone </label>
-              <div class="col-sm-7">
-                 <span class="block input-icon input-icon-right">
-                      <input type="text" name="phone" class="form-control" placeholder="Your phone number" ng-model="customer.phone" required="" tabindex="1" autofocus>
-  <small class="errorMessage" ng-show="checkout_form.phone.$dirty && checkout_form.phone.$error.isCustomer"> Your phone number required.</small>
-                  </span>
-              </div>
-          </div>
-          <div class="form-group">
-              <label class="col-sm-3 control-label no-padding-right"> Name </label>
-              <div class="col-sm-7">
-                 <span class="block input-icon input-icon-right">
-                      <input type="text" ng-model="customer.name" name="name" class="form-control" required placeholder="Your name here" tabindex="2"/>
-      <small class="errorMessage"
-       ng-show="checkout_form.name.$dirty && checkout_form.name.$invalid"> Your name required.</small>
-                  </span>
-              </div>
-          </div>
+                        <td class="product-name">
+                            <a ui-sref="productDetail({id:item.sku, name:item.name})" ng-click="cancel();">{{item.name}}</a>
+                        </td>
 
-          <div class="form-group">
-              <label class="col-sm-3 control-label no-padding-right"> Address </label>
-              <div class="col-sm-7">
-                 <span class="block input-icon input-icon-right">
-                     <textarea name="address" ng-model="customer.address" class="form-control" required placeholder="Address"  tabindex="4"></textarea>
-     <small class="errorMessage"
-       ng-show="checkout_form.address.$dirty && checkout_form.address.$invalid"> We need your address to deliver.</small>
-                  </span>
-              </div>
-          </div>
-          <div class="form-group">
-              <label class="col-sm-3 control-label no-padding-right"> City </label>
-              <div class="col-sm-7">
-                 <span class="block input-icon input-icon-right">
-                      <input type="text" name="city" ng-model="customer.city" class="form-control" placeholder="Your city" tabindex="5"/>
-  <small class="errorMessage"
-       ng-show="checkout_form.city.$dirty && checkout_form.city.$invalid"> Please select your city.</small>
-                  </span>
-              </div>
-          </div>
-          <div class="form-group">
-              <label class="col-sm-3 control-label no-padding-right"> Country </label>
-              <div class="col-sm-7">
-                 <span class="block input-icon input-icon-right">
-                      <select name="paymentMethod" ng-model="customer.country" class="form-control" required="" ng-options="option.name for option in countries | orderBy:'name' track by option.code" ng-change="calculateShipping(customer.country);" class="form-control">
-                      </select>
+                        <td>{{item.price| currency}}</td>
 
-                      <div ng-if="!shipping.id">Sorry... We do not ship to this Country.</div>
-  <small class="errorMessage"
-       ng-show="checkout_form.country.$dirty && checkout_form.country.$invalid"> Please select your country.</small>
-                  </span>
-              </div>
-          </div>
-          <div class="form-group">
-              <label class="col-sm-3 control-label no-padding-right"> Payment Method </label>
-              <div class="col-sm-7">
-                 <span class="block input-icon input-icon-right">
-                      <select name="paymentMethod" ng-model="customer.paymentMethod" class="form-control" required="" ng-options="option.name for option in paymentMethods | orderBy:'name' track by option.id" class="form-control">
-                      </select>
-  <small class="errorMessage"
-       ng-show="checkout_form.paymentMethod.$dirty && checkout_form.paymentMethod.$invalid"> Please select payment method.</small>
-                  </span>
-              </div>
-          </div>
+                        <td class="text-center">
+                            {{item.quantity}}
+                        </td>
 
-          <div class="form-group">
-              <label class="col-sm-3 control-label no-padding-right"> Coupon </label>
-              <div class="col-sm-7">
-                 <span class="block input-icon input-icon-right">
-                      <input type="text" name="coupon" ng-model="customer.coupon" class="form-control" placeholder="Discount Coupon" tabindex="5" ng-change="checkCoupon(customer.coupon, cart.getTotalPrice());"/>
-                      <span class="text-muted text-success" ng-if="coupon.code">{{coupon.type}} of {{coupon.amount | currency}} was applied to the cart</span>
-  <small class="errorMessage"
-       ng-show="checkout_form.coupon.$dirty && checkout_form.coupon.$invalid"> Discount coupon was expired.</small>
-                  </span>
-              </div>
-          </div>
+                        <td><span><strong>{{item.price * item.quantity| currency}}</strong></span></td>
 
-            </div>
-            <div class="box-footer">
-                <div class="pull-left">
-                    <a href="/" class="btn btn-default"><i class="fa fa-chevron-left"></i>Back to basket</a>
-                </div>
-                <div class="pull-right">
-                    <button type="submit" class="btn btn-primary" ng-click="placeOrder(cart.items);cart.checkout(customer.paymentMethod);cart.clearItems();" ng-disabled="checkout_form.$invalid || !shipping.id" tabindex="6">Make Payment<i class="fa fa-chevron-right"></i>
-                    </button>
-                </div>
-            </div>
-            </form>
+                        <td class="product-actions">
+                            <a title="Remove this item" class="remove" href="" ng-click="cart.addItem(item.sku, item.name, item.pquantity, item.mrp, item.price, -10000000)">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>                
+        </div>            
     </div>
     <!-- /.box -->
 
@@ -120,49 +68,53 @@
 </div>
 <!-- /.col-md-9 -->
 
-<div class="col-md-5">
-
-    <div class="box" id="order-summary" ng-if="cart.getTotalCount()>0">
-        <div class="box-header">
-            <h3>Order summary</h3>
+<div class="col-md-5" ng-show="cart.getTotalCount() > 0">
+    <div class="box" id="order-summary">
+        <div class="panel-heading">
+            <h4>Order summary</h4>
         </div>
-        <p class="text-muted">Shipping and additional costs are calculated based on the values you have entered.</p>
-
         <div class="table-responsive">
             <table class="table">
                 <tbody>
                     <tr>
                         <td>Order subtotal</td>
+                        <td></td>
                         <th>{{cart.getTotalPrice() | currency}}</th>
                     </tr>
                     <tr>
-                        <td>Shipping and handling</td>
-                        <td ng-if="cart.getTotalPrice()>=shipping.minOrderValue">
-                            Free Shipping
+                        <td>Discount Coupon</td>
+                        <td>
+                            <span class="block input-icon input-icon-right">
+                                <input type="text" name="coupon" ng-model="couponCode" class="form-control" placeholder="Discount Coupon" ng-change="checkCoupon(couponCode, cart.getTotalPrice());"/>
+                                <span class="text-muted text-success" ng-if="couponCode && coupon.message==''">{{coupon.name}}, {{coupon.amount| currency}} discount was applied to the cart.</span>
+                                <small class="errorMessage"
+                                       ng-if="coupon.message"> {{coupon.message}}</small>
+                            </span>
                         </td>
-                        <td ng-if="cart.getTotalPrice()<=shipping.minOrderValue">
-                            {{shipping.charge | currency}} <br/>
-                            <small><i><a href="/">Shop</a> {{shipping.minOrderValue-cart.getTotalPrice() | currency}} more for free shipping</i></small>
-                        </td>
-                    </tr>
-                    <tr ng-if="coupon.amount">
-                        <td>Coupon Discount</td>
-                        <td><small>{{coupon.amount | currency}}</small></td>
+                        <td><small ng-if="coupon.amount"> - {{coupon.amount| currency}}</small></td>
                     </tr>
 
                     <tr class="total">
                         <td>Total</td>
-                        <th ng-if="cart.getTotalPrice() >= shipping.minOrderValue">
+                        <td></td>
+                        <th>
                             {{cart.getTotalPrice() - coupon.amount | currency}}
-                        </th>
-                        <th ng-if="cart.getTotalPrice() < shipping.minOrderValue">
-                            {{cart.getTotalPrice() + shipping.charge - coupon.amount | currency}}
                         </th>
                     </tr>
                 </tbody>
             </table>
         </div>
-
+        <div class="box-footer">
+            <div class="pull-right">
+                <button type="submit" class="btn btn-primary" 
+                        ng-click="placeOrder(cart.items);
+                            cart.checkout(customer.paymentMethod);
+                            cart.clearItems();" 
+                        ng-disabled="checkout_form.$invalid">
+                    Place order<i class="fa fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
 </div>

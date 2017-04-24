@@ -13,10 +13,10 @@
     //----------------------------------------------------------------
     // items in the cart
     //
-    function CartItem(sku, name, slug, mrp, price, quantity, image, category, packing) {
+    function CartItem(sku, name, pquantity, mrp, price, quantity, image, category, packing) {
         this.sku = sku;
         this.name = name;
-        this.slug = slug;
+        this.pquantity = pquantity * 1;
         this.image = image;
         this.category = category;
         this.packing = packing;
@@ -45,7 +45,7 @@
               for (var i = 0; i < items.length; i++) {
                   var item = items[i];
                   if (item.sku !== null && item.name !== null && item.price !== null) {
-                      item = new CartItem(item.sku, item.name, item.slug, item.mrp, item.price, item.quantity, item.image, item.category, item.packing, item.status);
+                      item = new CartItem(item.sku, item.name, item.pquantity, item.mrp, item.price, item.quantity, item.image, item.category, item.packing, item.status);
                       this.items.push(item);
                       this.skuArray.push(item.sku);
                   }
@@ -66,7 +66,7 @@
   };
 
   // adds an item to the cart
-  ShoppingCart.prototype.addItem = function (sku, name, slug, mrp, price, quantity, image, category, packing) {
+  ShoppingCart.prototype.addItem = function (sku, name, pquantity, mrp, price, quantity, image, category, packing) {
       quantity = this.toNumber(quantity);
       if (quantity !== 0) {
           // update quantity for existing item
@@ -85,7 +85,7 @@
 
           // new item, add now
           if (!found) {
-              var itm = new CartItem(sku, name, slug, mrp, price, quantity, image, category, packing, 0);
+              var itm = new CartItem(sku, name, pquantity, mrp, price, quantity, image, category, packing, 0);
               this.items.push(itm);
               this.skuArray.push(itm.sku);
           }
@@ -110,8 +110,8 @@
   ShoppingCart.prototype.getTotalPriceAfterShipping = function () { //Total Price Including Shipping
       var total = 0;
       total = this.getTotalPrice() ;
-      if(total<500){
-        total+=20;
+      if(total<10){
+        total+=1;
       }
       return total;
   };

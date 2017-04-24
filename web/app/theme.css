@@ -708,7 +708,7 @@ h1 {
 #content #basket .table tbody tr td input,
 #content #customer-order .table tbody tr td input {
   width: 50px;
-  text-align: right;
+  /*text-align: right;*/
 }
 #content #checkout .table tbody tr td img,
 #content #basket .table tbody tr td img,
@@ -1582,7 +1582,7 @@ h3,
 p,
 ul,
 ol {
-  margin: 0 0 20px;
+  margin: 0 0 10px;
 }
 .lead {
   margin-bottom: 20px;
@@ -1705,9 +1705,12 @@ address {
     background-color: #ddd;
     color: #4fbfa8;
 }
-button:disabled {
+button:disabled, .btn[disabled]{
   pointer-events: all !important;
 }
 .mycalendar {
     cursor: pointer !important;
+}
+.myTitle {
+    margin-top: -15px;
 }

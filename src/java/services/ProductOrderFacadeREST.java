@@ -6,6 +6,8 @@
 package services;
 
 import entities.Category;
+import entities.OrderDetail;
+import entities.Product;
 import entities.ProductOrder;
 import java.util.Date;
 import java.util.List;
@@ -43,9 +45,30 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
     public ProductOrder add(ProductOrder entity) {
         try {
             entity.setId(UUID.randomUUID().toString());
+            entity.setDate(new Date());
+            entity.setStatus("Order Placed");
+            if(entity.getCouponId().getId()==null){
+                entity.setCouponId(null);
+            }            
+            for(OrderDetail od: entity.getOrderDetailCollection()){
+                od.setId(UUID.randomUUID().toString());
+                od.setProductOrderid(entity);
+                Product product = em.find(Product.class, od.getProductId().getId());
+                if(product.getQuantity()==0){
+                    entity.setMessage(product.getName() + " is out of stock, remove it from your shop cart!");
+                    return entity;
+                }
+                else if(product.getQuantity()<od.getQuantity()){
+                    entity.setMessage(product.getName() + " has only " + product.getQuantity() + " left, reduce it's quantity to " + product.getQuantity() + " as maximum!");
+                    return entity;
+                }
+                else{
+                    product.setQuantity(product.getQuantity()-od.getQuantity());
+                }
+            }
             super.create(entity); 
         } catch (Exception e) {
-//            entity.setMessage("Order fail, please try again!");
+            entity.setMessage("Order fail, please try again!");
         }
         return entity;
     }

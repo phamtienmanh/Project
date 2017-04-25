@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -44,7 +45,7 @@ public class ProductOrder implements Serializable {
     @JoinColumn(name = "coupon_id", referencedColumnName = "_id")
     @ManyToOne
     private Coupon couponId;
-    @OneToMany(mappedBy = "productOrderid")
+    @OneToMany(cascade= CascadeType.PERSIST, mappedBy = "productOrderid")
     private Collection<OrderDetail> orderDetailCollection;
     private static final long serialVersionUID = 1L;
     @Id

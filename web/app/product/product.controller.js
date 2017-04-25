@@ -46,14 +46,24 @@ angular.module('shopnxApp')
             $scope.save = function (product) {
                 if ('id' in product) {
                     Product.update({id: $scope.product.id}, $scope.product).$promise.then(function (resp) {
-                        toastr.success("Product info saved successfully", "Success!");
+                        if(resp && resp.message){
+                             toastr.error(resp.message, "Error!");
+                        }
+                        else{
+                            toastr.success("Product info saved successfully", "Success!");
+                        }
                     }, function (error) { // error handler
                         toastr.error("Product info saved fail, try again", "Error!");
                     });
                 }
                 else {
                     Product.save($scope.product).$promise.then(function (resp) {
-                        toastr.success("Product info added successfully", "Success!");
+                        if(resp && resp.message){
+                             toastr.error(resp.message, "Error!");
+                        }
+                        else{
+                            toastr.success("Product info added successfully", "Success!");
+                        }
                     }, function (error) { // error handler
                         var err = error.data.errors;
                         toastr.error("Product info added fail, try again", "Error!");
@@ -62,10 +72,15 @@ angular.module('shopnxApp')
             };
             $scope.delete = function (product) {
                 if ('id' in product) {
-                    Product.delete({id: $scope.product.id}).$promise.then(function () {
-                        toastr.success("Product delete successfully", "Success!");
-                        $scope.products = Product.query(); // get list product
-                        $scope.product = null; // set null
+                    Product.delete({id: $scope.product.id}).$promise.then(function (resp) {
+                        if(resp && resp.message){
+                             toastr.error(resp.message, "Error!");
+                        }
+                        else{
+                            toastr.success("Product delete successfully", "Success!");
+                            $scope.products = Product.query(); // get list product
+                            $scope.product = null; // set null
+                        }
                     }, function (error) { // error handler
                         var err = error.data.errors;
                         toastr.error("Product delete error", "Error!");

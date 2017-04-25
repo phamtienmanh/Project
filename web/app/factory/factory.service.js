@@ -66,7 +66,10 @@ angular.module('shopnxApp')
     return $resource('api/brand/:id', null, {'update': { method:'PUT' } });
   }])
   .factory('Coupon', ['$resource', function($resource) {
-    return $resource('api/coupons/:id', null, {'update': { method:'PUT' } });
+    var obj = {};
+    obj = $resource('api/coupons/:id', null, {'update': { method:'PUT' } });
+    obj.find = $resource('api/coupons/find', null, {'update': { method:'PUT' }});
+    return obj;
   }])
   // .factory('Shipping', ['$resource', function($resource) {
   //   return $resource('api/shippings/:id', null, {'update': { method:'PUT' } });

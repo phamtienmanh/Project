@@ -40,7 +40,9 @@
                 <th ng-repeat="c in cols" ts-criteria="{{c.heading}} | {{c.sortType}}" ng-if="c.heading!='name'">
                   {{c.heading | labelCase}}
                 </th>
-                <th>Edit / Remove</th>
+                <th ng-if="!noedit && !nodelete " >
+                    Edit / Remove
+                </th>
               </tr>
           </thead>
           <tbody>
@@ -71,6 +73,18 @@
                       </span>
                       <span ng-switch-when="selectRole">
                         {{p.roleId.name}}
+                      </span>
+                      <span ng-switch-when="wishlistCustomer">
+                        {{p.customerId.name}}
+                      </span>
+                      <span ng-switch-when="wishlistProduct">
+                        {{p.productId.name}}
+                      </span>
+                      <span ng-switch-when="ratingStar">
+                        {{p.star}}
+                      </span>
+                      <span ng-switch-when="ratingComment">
+                        {{p.comment}}
                       </span>
                       <span ng-switch-default>
                           {{p[c.heading]}}

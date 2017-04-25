@@ -92,20 +92,20 @@ public class WishlistFacadeREST extends AbstractFacade<Wishlist> {
 //        return super.find(id);
 //    }
 
-    @GET
-    @Path("findByCustomerAndProduct")
-    @Produces({"application/xml", "application/json"})
-    public String findByProductAndCustomer(@QueryParam("customerId") String customerId, @QueryParam("productId") String productId) {
-        Query q = em.createNamedQuery("Wishlist.findByCustomerAndProduct", Wishlist.class);
-        q.setParameter("customerId", customerId);
-        q.setParameter("productId", productId);
-        Wishlist w = null;
-//        if (q.getResultList().size() > 0) {
-//            w = (Wishlist) q.getResultList().get(0);
-//        }
-        w= (Wishlist) q.getSingleResult();
-        return w.getId();
-    }
+//    @GET
+//    @Path("findByCustomerAndProduct")
+//    @Produces({"application/xml", "application/json"})
+//    public String findByProductAndCustomer(@QueryParam("customerId") String customerId, @QueryParam("productId") String productId) {
+//        Query q = em.createNamedQuery("Wishlist.findByCustomerAndProduct", Wishlist.class);
+//        q.setParameter("customerId", customerId);
+//        q.setParameter("productId", productId);
+//        Wishlist w = null;
+////        if (q.getResultList().size() > 0) {
+////            w = (Wishlist) q.getResultList().get(0);
+////        }
+//        w= (Wishlist) q.getSingleResult();
+//        return w.getId();
+//    }
 
     @GET
     @Override

@@ -80,6 +80,12 @@
                       <span ng-switch-when="wishlistProduct">
                         {{p.productId.name}}
                       </span>
+                      <span ng-switch-when="ratingStar">
+                        {{p.star}}
+                      </span>
+                      <span ng-switch-when="ratingComment">
+                        {{p.comment}}
+                      </span>
                       <span ng-switch-default>
                           {{p[c.heading]}}
                       </span>

@@ -132,12 +132,19 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
     public Customer remove(@PathParam("id") String id) {
+        Customer cus = new Customer();
         try {
+            cus = super.find(id);
+            if(cus.getRoleId().getName().equalsIgnoreCase("admin")){
+                cus.setMessage("You can not delete adminitrator account!");
+                return cus;
+            }
             super.remove(super.find(id));
         } catch (Exception e) {
-            super.find(id).setMessage("Delete user info fail, please try again!");
+            cus.setMessage("Delete user info fail, please try again!");
+            return cus;
         }
-        return super.find(id);
+        return null;
     }
 
     @GET

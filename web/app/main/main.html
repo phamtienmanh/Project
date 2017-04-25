@@ -138,7 +138,8 @@
                                         <a ui-sref="productDetail({id:product.id, name:product.name})">{{product.name}}</a>                                        
                                     </h4>                                          
                                     <p class="price"><del ng-if="product.price!=product.mrp">{{product.mrp | currency : '$'}}</del> {{product.price | currency : '$'}}</p>
-                                    <a ng-if="product.quantity > 0">{{product.quantity}} in stock</a>
+                                    <a ng-if="product.quantity > 5">{{product.quantity}} in stock</a>
+                                    <a ng-if="product.quantity <= 5 && product.quantity >= 1">Only {{product.quantity}} left</a>
                                     <h5 ng-if="product.quantity == 0" class="help-block">Out of stock</h5>
                                     <p class="buttons"></p>
                                     <div class="btn-group">
@@ -147,7 +148,7 @@
                                       <a ng-hide="checkCart(product.id)" class="btn btn-info">{{getQuantity(product.id);}}</a>
                                       <a ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, +1)" ng-hide="checkCart(product.id)" ng-disabled="getQuantity(product.id)>=product.quantity" class="btn btn-info">+</a>
                                     </div>
-                                    <a ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, 1, product.image,product.category, true);" ng-show="checkCart(product.id)" class="btn btn-primary" ng-disabled="product.quantity == 0"><i class="fa fa-shopping-cart"></i>Add to cart</a>                                    
+                                    <a ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, 1, product.image,product.category, product);" ng-show="checkCart(product.id)" class="btn btn-primary" ng-disabled="product.quantity == 0"><i class="fa fa-shopping-cart"></i>Add to cart</a>                                    
                                 </div>
                                 <!-- /.text -->
                             </div>

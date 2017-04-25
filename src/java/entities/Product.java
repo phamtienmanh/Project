@@ -8,6 +8,7 @@ package entities;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -54,7 +55,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Product implements Serializable {
     @OneToMany(mappedBy = "productId")
     private Collection<OrderDetail> orderDetailCollection;
-    @OneToMany(mappedBy = "productId")
+    @OneToMany(cascade= CascadeType.PERSIST, mappedBy = "productId")
     private Collection<Wishlist> wishlistCollection;
     @OneToMany(mappedBy = "productId")
     private Collection<Rating> ratingCollection;

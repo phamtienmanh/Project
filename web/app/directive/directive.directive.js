@@ -75,8 +75,8 @@ angular.module('shopnxApp')
 
                         scope.delete = function (item) {
                             api.delete({id: item.id}).$promise.then(function (resp) {
-                                if (resp.data && resp.data.message) {
-                                    toastr.error(resp.data.message, "Error!");
+                                if (resp && resp.message) {
+                                    toastr.error(resp.message, "Error!");
                                 }
                                 else {
                                     _.remove(scope.data, item);

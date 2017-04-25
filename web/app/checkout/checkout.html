@@ -21,7 +21,6 @@
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Total</th>
-                        <th>Remove</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,12 +50,6 @@
                         </td>
 
                         <td><span><strong>{{item.price * item.quantity| currency}}</strong></span></td>
-
-                        <td class="product-actions">
-                            <a title="Remove this item" class="remove" href="" ng-click="cart.addItem(item.sku, item.name, item.pquantity, item.mrp, item.price, -10000000)">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </td>
                     </tr>
                 </tbody>
             </table>                
@@ -85,20 +78,28 @@
                         <td>Discount Coupon</td>
                         <td>
                             <span class="block input-icon input-icon-right">
-                                <input type="text" name="coupon" ng-model="couponCode" class="form-control" placeholder="Discount Coupon" ng-change="checkCoupon(couponCode, cart.getTotalPrice());"/>
-                                <span class="text-muted text-success" ng-if="couponCode && coupon.message==''">{{coupon.name}}, {{coupon.amount| currency}} discount was applied to the cart.</span>
+                                <input type="text" name="coupon" 
+                                       ng-model="couponCode" 
+                                       class="form-control" 
+                                       placeholder="Discount Coupon" 
+                                       ng-change="checkCoupon(couponCode, cart.getTotalPrice());"
+                                       ng-model-options="{debounce: 500}"/>
+                                <small class="text-muted text-success" ng-if="couponCode && !coupon.message">{{coupon.eventName}} coupon discount was applied to the cart.</small>
                                 <small class="errorMessage"
-                                       ng-if="coupon.message"> {{coupon.message}}</small>
+                                       ng-if="couponCode && coupon.message"> {{coupon.message}}</small>
                             </span>
                         </td>
-                        <td><small ng-if="coupon.amount"> - {{coupon.amount| currency}}</small></td>
+                        <td ng-if="coupon.amount && !coupon.message"> - {{coupon.amount| currency}}</td>
                     </tr>
 
                     <tr class="total">
                         <td>Total</td>
                         <td></td>
-                        <th>
+                        <th ng-if="coupon.amount && !coupon.message">
                             {{cart.getTotalPrice() - coupon.amount | currency}}
+                        </th>
+                        <th ng-if="!couponCode || coupon.message">
+                            {{cart.getTotalPrice() | currency}}
                         </th>
                     </tr>
                 </tbody>
@@ -107,10 +108,7 @@
         <div class="box-footer">
             <div class="pull-right">
                 <button type="submit" class="btn btn-primary" 
-                        ng-click="placeOrder(cart.items);
-                            cart.checkout(customer.paymentMethod);
-                            cart.clearItems();" 
-                        ng-disabled="checkout_form.$invalid">
+                        ng-click="placeOrder(cart.items);">
                     Place order<i class="fa fa-chevron-right"></i>
                 </button>
             </div>

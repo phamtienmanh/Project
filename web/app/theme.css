@@ -6,7 +6,7 @@ button {
 }
 a i.fa,
 button i.fa {
-  margin: 0 5px;
+  margin: 0 3px;
 }
 .clickable {
   cursor: pointer;
@@ -606,10 +606,9 @@ h1 {
   text-decoration: underline;
 }
 #content #productMain .price {
-  font-size: 30px;
+  font-size: 18px;
   font-weight: 300;
   text-align: center;
-  margin-top: 40px;
 }
 #content #productMain .buttons {
   margin-bottom: 0;
@@ -1713,4 +1712,8 @@ button:disabled, .btn[disabled]{
 }
 .myTitle {
     margin-top: -15px;
+}
+/*override angular-material.css*/
+html, body {
+    height: auto !important;
 }

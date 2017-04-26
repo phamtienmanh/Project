@@ -49,8 +49,14 @@ public class OrderDetailFacadeREST extends AbstractFacade<OrderDetail> {
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") String id) {
-        super.remove(super.find(id));
+    public OrderDetail remove(@PathParam("id") String id) {
+        try {
+            super.remove(super.find(id));
+        } catch (Exception e) {
+            super.find(id).setMessage("Delete Order detail fail, please try again!");
+            return super.find(id);
+        }
+        return null;
     }
 
     @GET

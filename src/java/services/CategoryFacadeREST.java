@@ -66,8 +66,9 @@ public class CategoryFacadeREST extends AbstractFacade<Category> {
             super.remove(super.find(id));
         } catch (Exception e) {
             super.find(id).setMessage("Delete Category fail, please try again!");
+            return super.find(id);
         }
-        return super.find(id);
+        return null;
     }
 
     @GET
@@ -81,8 +82,8 @@ public class CategoryFacadeREST extends AbstractFacade<Category> {
     @Override
     @Produces({"application/xml", "application/json"})
     public List<Category> findAll() {
-        Query q = em.createNamedQuery("Category.findAll", Category.class);
         try {
+            Query q = em.createNamedQuery("Category.findAll", Category.class);
             return q.getResultList();
         } catch (Exception e) {
             return null;
@@ -93,8 +94,8 @@ public class CategoryFacadeREST extends AbstractFacade<Category> {
     @Path("all")
     @Produces({"application/xml", "application/json"})
     public List<Category> findAllMain() {
-        Query q = em.createNamedQuery("Category.findAll", Category.class);
         try {
+            Query q = em.createNamedQuery("Category.findAll", Category.class);
             List<Category> listCat = q.getResultList();
             for(Category cat: listCat){
                 cat.setCount(cat.getProductCollection().size());

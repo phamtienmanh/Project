@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Wishlist.findAll", query = "SELECT w FROM Wishlist w"),
     @NamedQuery(name = "Wishlist.findById", query = "SELECT w FROM Wishlist w WHERE w.id = :id"),
-    @NamedQuery(name = "Wishlist.findByCustomerAndProduct", query = "SELECT w FROM Wishlist w WHERE w.customerId.id = :customerId AND w.productId.id = :productId")})
+    @NamedQuery(name = "Wishlist.findByCustomerAndProduct", query = "SELECT w FROM Wishlist w WHERE w.customerId = :customerId AND w.productId = :productId")})
 public class Wishlist implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

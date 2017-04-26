@@ -1,0 +1,45 @@
+<md-dialog class="md-blue-theme md-transition-in" role="dialog">
+    <div layout="row" class="layout-row">
+        <md-content layout="column" class="_md md-blue-theme layout-column flex">
+            <section layout="column" layout-align="center center" class="layout-align-center-center layout-column flex">
+                <h1>Rating &amp; Review</h1>
+                <form name="form" ng-submit="save(review)" novalidate="">
+                    <section class="section layout-column" layout="column">
+                        <rating rating="review.rating">
+                            <div class="angular-material-rating layout-row" layout="row">  
+                                <a class="button star-button md-blue-theme" 
+                                   ng-class="item.class" 
+                                   ng-mouseover="setMouseOverRating($index + 1)" 
+                                   ng-mouseleave="setMouseOverRating(rating)" 
+                                   ng-click="setRating($index + 1)" 
+                                   ng-repeat="item in starsArray">
+                                    <ng-md-icon icon="star"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg></ng-md-icon>  
+                                </a>
+                            </div>
+                        </rating><br>
+                            
+                        <md-input-container md-is-error="(form.message.$error.required || form.message.$error.message) && form.message.$dirty" class="md-blue-theme">
+                            <label for="input_8">Message</label>
+                            <div class="md-resize-wrapper">
+                                <textarea name="review" 
+                                    ng-model="review.message" class="md-input md-autofocus" style="height: 29px;"></textarea>
+                                <div class="md-resize-handle" style="touch-action: pan-y;"></div>
+                            </div>
+                            <div class="md-errors-spacer"></div>
+                        </md-input-container>
+                    </section>
+                    <div class="md-dialog-actions layout-align-center-center layout-column">
+                        <div class="error layout-align-center-center"></div>
+                        <div class="layout-row">
+                            <button class="md-raised circular-progress-button md-primary md-button md-blue-theme md-ink-ripple" type="submit" ng-transclude="" ng-disabled="!form.$valid || vm.loading" aria-label="Save Review">
+                                <span ng-show="!vm.loading" class="ng-scope" aria-hidden="false"><ng-md-icon icon="save"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"></path></svg></ng-md-icon>Save</span>
+                                <md-progress-circular md-mode="indeterminate" md-diameter="25" ng-show="vm.loading" class="md-accent md-hue-1 ng-scope ng-isolate-scope md-blue-theme md-mode-indeterminate ng-hide" aria-valuemin="0" aria-valuemax="100" role="progressbar" aria-hidden="true" style="width: 25px; height: 25px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" style="width: 25px; height: 25px; transform-origin: 12.5px 12.5px 12.5px;"><path fill="none" d="M23.749999989290792,12.499509126148032A11.25,11.25 0 0,1 23.528414279630013,14.721841235744087" style="stroke-width: 2.5px;"></path></svg></md-progress-circular><span ng-show="vm.loading" class="ng-scope ng-hide" aria-hidden="true" style="">Loading...</span>
+                            </button>
+                            <button class="btn btn-default btn-lg btn-register md-button md-blue-theme md-ink-ripple" type="button" ng-transclude="" ng-click="cancel()" aria-label="Cancel Review"><span class="ng-scope"> Cancel </span></button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </md-content>
+    </div>
+</md-dialog>

@@ -24,7 +24,7 @@ import javax.ws.rs.Produces;
  * @author KID
  */
 @Stateless
-@Path("entities.rating")
+@Path("rating")
 public class RatingFacadeREST extends AbstractFacade<Rating> {
     @PersistenceContext(unitName = "BookStoreProjectPU")
     private EntityManager em;

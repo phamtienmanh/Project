@@ -25,6 +25,15 @@ angular.module('shopnxApp')
     obj.search = $resource('api/wishlist/search', null, {'update': { method:'PUT' }});
     return obj;
   }])
+  
+  .factory('Rating', ['$resource', function($resource) {
+    var obj = {};
+    obj = $resource('api/rating/:id', null, {'update': { method:'PUT' } });
+    obj.count = $resource('api/rating/count', null, {'update': { method:'PUT' }});
+    obj.search = $resource('api/rating/search', null, {'update': { method:'PUT' }});
+    obj.all = $resource('api/rating/all', null, {'update': { method:'PUT' }});
+    return obj;
+  }])
 
   .factory('Shipping', ['$resource', function($resource) {
     var obj = {};

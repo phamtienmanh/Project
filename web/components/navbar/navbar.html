@@ -27,6 +27,12 @@ _________________________________________________________ -->
                   <li ng-show="isAdmin()" ng-class="{active: isActive('coupon')}">
                     <a href="coupon"><i class="fa fa-money">&nbsp;</i>Coupons</a>
                   </li>
+                  <li ng-show="isAdmin()" ng-class="{active: isActive('wishlist')}">
+                    <a href="wishlist"><i class="fa fa-heart">&nbsp;</i>Wishlist</a>
+                  </li>
+                  <li ng-show="isAdmin()" ng-class="{active: isActive('rating')}">
+                    <a href="rating"><i class="fa fa-star">&nbsp;</i>Rating</a>
+                  </li>
                   <li class="divider"></li>
                   <li ng-show="isAdmin()" ng-class="{active: isActive('role')}">
                     <a href="role"><i class="fa fa-users">&nbsp;</i>Roles</a>

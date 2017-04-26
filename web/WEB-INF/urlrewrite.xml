@@ -62,6 +62,10 @@ http://www.tuckey.org/urlrewrite/
         <to>index.html</to>
     </rule>
     <rule>
+        <from>^/statistics$</from>
+        <to>index.html</to>
+    </rule>
+    <rule>
         <from>^/product/(.*)$</from>
         <to>../index.html</to>
     </rule> 

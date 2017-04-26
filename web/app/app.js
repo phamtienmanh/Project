@@ -16,6 +16,7 @@ angular.module('shopnxApp', [
   'darthwade.dwLoading',
   'angularMoment',
   'ui.select',
+  'chart.js'
 ]).constant('_', window._)
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $qProvider) {
     $urlRouterProvider

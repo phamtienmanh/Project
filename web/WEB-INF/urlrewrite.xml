@@ -54,6 +54,14 @@ http://www.tuckey.org/urlrewrite/
         <to>index.html</to>
     </rule>
     <rule>
+        <from>^/wishlist$</from>
+        <to>index.html</to>
+    </rule>
+    <rule>
+        <from>^/rating$</from>
+        <to>index.html</to>
+    </rule>
+    <rule>
         <from>^/product/(.*)$</from>
         <to>../index.html</to>
     </rule> 

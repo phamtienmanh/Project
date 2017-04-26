@@ -41,10 +41,10 @@ public class CouponFacadeREST extends AbstractFacade<Coupon> {
     @POST
     @Consumes({"application/xml", "application/json"})
     public Coupon add(Coupon entity) {
-        Query q = em.createNamedQuery("Coupon.findByCode", Coupon.class);
-        q.setParameter("code", entity.getCode());
         try {
             //check if code exist
+            Query q = em.createNamedQuery("Coupon.findByCode", Coupon.class);
+            q.setParameter("code", entity.getCode());
             q.getSingleResult();
             entity.setMessage("This code has already exist!");
         } catch (Exception e) {
@@ -61,11 +61,11 @@ public class CouponFacadeREST extends AbstractFacade<Coupon> {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public Coupon edit(@PathParam("id") String id, Coupon entity) {
-        //check if email exist
-        Query q = em.createNamedQuery("Coupon.findByCode", Coupon.class);
-        q.setParameter("code", entity.getCode());
+    public Coupon edit(@PathParam("id") String id, Coupon entity) {        
         try {
+            //check if email exist
+            Query q = em.createNamedQuery("Coupon.findByCode", Coupon.class);
+            q.setParameter("code", entity.getCode());
             //check if code exist
             Coupon check = (Coupon)q.getSingleResult();
             if(!check.getId().equals(entity.getId())){
@@ -90,19 +90,25 @@ public class CouponFacadeREST extends AbstractFacade<Coupon> {
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") String id) {
-        super.remove(super.find(id));
+    public Coupon remove(@PathParam("id") String id) {
+        try {
+            super.remove(super.find(id));
+        } catch (Exception e) {
+            super.find(id).setMessage("Delete Coupon fail, please try again!");
+            return super.find(id);
+        }
+        return null;
     }
 
     @GET
     @Path("find")
     @Produces({"application/xml", "application/json"})
     public List<Coupon> findByCode(@QueryParam("code") String code, @QueryParam("cartValue") double cartValue) {
-        long timeNow = new Date().getTime();
-        Query q = em.createNamedQuery("Coupon.findByCode", Coupon.class);
-        q.setParameter("code", code);
         Coupon coupon = new Coupon();
         try {
+            long timeNow = new Date().getTime();
+            Query q = em.createNamedQuery("Coupon.findByCode", Coupon.class);
+            q.setParameter("code", code);
             coupon = (Coupon)q.getSingleResult();
             if(timeNow < coupon.getFromDate().getTime() || timeNow > coupon.getToDate().getTime()){
                 coupon.setMessage("Your coupon had expired!");

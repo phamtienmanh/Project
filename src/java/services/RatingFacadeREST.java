@@ -49,8 +49,14 @@ public class RatingFacadeREST extends AbstractFacade<Rating> {
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") String id) {
-        super.remove(super.find(id));
+    public Rating remove(@PathParam("id") String id) {
+        try {
+            super.remove(super.find(id));
+        } catch (Exception e) {
+            super.find(id).setMessage("Delete Rating fail, please try again!");
+            return super.find(id);
+        }
+        return null;
     }
 
     @GET

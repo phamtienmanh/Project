@@ -146,7 +146,7 @@ angular.module('shopnxApp')
        * @return {Boolean}
        */
       isAdmin: function() {
-        return currentUser.roleId.name === 'admin';
+        return currentUser.roleId ? currentUser.roleId.name === 'admin' : false;
       },
 
       /**

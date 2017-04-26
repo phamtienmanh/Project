@@ -80,7 +80,7 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
         try {
             super.edit(entity);
         } catch (Exception e) {
-//            entity.setMessage("Update Order info fail, please try again!");
+            entity.setMessage("Update Order info fail, please try again!");
         }
         return entity;
     }
@@ -95,7 +95,7 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
             q.setParameter("id", entity.getId());
             q.executeUpdate();
         } catch (Exception e) {
-//            entity.setMessage("Update Order's status fail, please try again!");
+            entity.setMessage("Update Order's status fail, please try again!");
         }
         return entity;
     }
@@ -106,9 +106,10 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
         try {
             super.remove(super.find(id));
         } catch (Exception e) {
-//            super.find(id).setMessage("Delete Product fail, please try again!");
+            super.find(id).setMessage("Delete Order fail, please try again!");
+            return super.find(id);
         }
-        return super.find(id);
+        return null;
     }
 
     @GET

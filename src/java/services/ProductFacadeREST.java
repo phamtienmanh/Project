@@ -31,6 +31,7 @@ import javax.ws.rs.QueryParam;
 @Stateless
 @Path("products")
 public class ProductFacadeREST extends AbstractFacade<Product> {
+
     @PersistenceContext(unitName = "BookStoreProjectPU")
     private EntityManager em;
 
@@ -43,7 +44,7 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     public Product add(Product entity) {
         try {
             entity.setId(UUID.randomUUID().toString());
-            super.create(entity); 
+            super.create(entity);
         } catch (Exception e) {
             entity.setMessage("Add Product fail, please try again!");
         }
@@ -69,76 +70,73 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
             super.remove(super.find(id));
         } catch (Exception e) {
             super.find(id).setMessage("Delete Product fail, please try again!");
+            return super.find(id);
         }
-        return super.find(id);
+        return null;
     }
-    
+
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
     public List<Product> findAll() {
         return super.findAll();
     }
-    
+
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
     public Product find(@PathParam("id") String id) {
         return super.find(id);
     }
-    
+
     @GET
     @Path("search")
     @Produces({"application/xml", "application/json"})
     public List<Product> search(@QueryParam("limit") Integer limit, @QueryParam("searchKey") String searchKey) {
-        Query q = em.createNamedQuery("Product.search", Product.class);
-        q.setParameter("searchKey", searchKey);
         try {
+            Query q = em.createNamedQuery("Product.search", Product.class);
+            q.setParameter("searchKey", searchKey);
             q.setMaxResults(limit);
             return q.getResultList();
         } catch (Exception e) {
             return null;
         }
     }
-    
+
     @GET
     @Path("all")
     @Produces({"application/xml", "application/json"})
-    public List<Product> findWhere(@QueryParam("limit") Integer limit, 
-                                    @QueryParam("skip") Integer skip,
-                                    @QueryParam("priceGreater") Integer priceGreater,
-                                    @QueryParam("priceLower") Integer priceLower,
-                                    @QueryParam("categoryIds") List<String> categoryIds,
-                                    @QueryParam("sortColumn") String sortColumn,
-                                    @QueryParam("sortValue") String sortValue) {
-        Query q = em.createNamedQuery("Product.findWhere", Product.class);
-        if(categoryIds.size()==0){
-            if(sortColumn.equals("price") && sortValue.equals("DESC")){
-                q = em.createNamedQuery("Product.findWhere1", Product.class);      
-            }
-            else if(sortColumn.equals("name") && sortValue.equals("ASC")){//name
-                q = em.createNamedQuery("Product.findWhere2", Product.class);
-            }
-            else if(sortColumn.equals("name") && sortValue.equals("DESC")){//name
-                q = em.createNamedQuery("Product.findWhere3", Product.class);
-            }
-        }
-        else{
-            q = em.createNamedQuery("Product.findWhere4", Product.class);
-            if(sortColumn.equals("price") && sortValue.equals("DESC")){
-                q = em.createNamedQuery("Product.findWhere5", Product.class);      
-            }
-            else if(sortColumn.equals("name") && sortValue.equals("ASC")){//name
-                q = em.createNamedQuery("Product.findWhere6", Product.class);
-            }
-            else if(sortColumn.equals("name") && sortValue.equals("DESC")){//name
-                q = em.createNamedQuery("Product.findWhere7", Product.class);
-            }
-            q.setParameter("categoryIds", categoryIds);                
-        } 
-        q.setParameter("priceGreater", priceGreater);
-        q.setParameter("priceLower", priceLower);
+    public List<Product> findWhere(@QueryParam("limit") Integer limit,
+            @QueryParam("skip") Integer skip,
+            @QueryParam("priceGreater") Integer priceGreater,
+            @QueryParam("priceLower") Integer priceLower,
+            @QueryParam("categoryIds") List<String> categoryIds,
+            @QueryParam("sortColumn") String sortColumn,
+            @QueryParam("sortValue") String sortValue) {
+
         try {
+            Query q = em.createNamedQuery("Product.findWhere", Product.class);
+            if (categoryIds.size() == 0) {
+                if (sortColumn.equals("price") && sortValue.equals("DESC")) {
+                    q = em.createNamedQuery("Product.findWhere1", Product.class);
+                } else if (sortColumn.equals("name") && sortValue.equals("ASC")) {//name
+                    q = em.createNamedQuery("Product.findWhere2", Product.class);
+                } else if (sortColumn.equals("name") && sortValue.equals("DESC")) {//name
+                    q = em.createNamedQuery("Product.findWhere3", Product.class);
+                }
+            } else {
+                q = em.createNamedQuery("Product.findWhere4", Product.class);
+                if (sortColumn.equals("price") && sortValue.equals("DESC")) {
+                    q = em.createNamedQuery("Product.findWhere5", Product.class);
+                } else if (sortColumn.equals("name") && sortValue.equals("ASC")) {//name
+                    q = em.createNamedQuery("Product.findWhere6", Product.class);
+                } else if (sortColumn.equals("name") && sortValue.equals("DESC")) {//name
+                    q = em.createNamedQuery("Product.findWhere7", Product.class);
+                }
+                q.setParameter("categoryIds", categoryIds);
+            }
+            q.setParameter("priceGreater", priceGreater);
+            q.setParameter("priceLower", priceLower);
             q.setFirstResult(skip);
             q.setMaxResults(limit);
             return q.getResultList();
@@ -151,18 +149,19 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     @Path("count")
     @Produces({"application/xml", "application/json"})
     public List<count> countREST(@QueryParam("priceGreater") Integer priceGreater,
-                                 @QueryParam("priceLower") Integer priceLower,
-                                 @QueryParam("categoryIds") List<String> categoryIds) {
-        Query q = em.createNamedQuery("Product.count", Product.class);
-        if(categoryIds.size() != 0){
-            q = em.createNamedQuery("Product.count1", Product.class);
-            q.setParameter("categoryIds", categoryIds); 
-        }
-        q.setParameter("priceGreater", priceGreater);
-        q.setParameter("priceLower", priceLower);        
+            @QueryParam("priceLower") Integer priceLower,
+            @QueryParam("categoryIds") List<String> categoryIds) {
+
         List<count> listC = new ArrayList<count>();
         count c = new count();
         try {
+            Query q = em.createNamedQuery("Product.count", Product.class);
+            if (categoryIds.size() != 0) {
+                q = em.createNamedQuery("Product.count1", Product.class);
+                q.setParameter("categoryIds", categoryIds);
+            }
+            q.setParameter("priceGreater", priceGreater);
+            q.setParameter("priceLower", priceLower);
             c.setCount(((Long) q.getSingleResult()).intValue());
             listC.add(c);
             return listC;
@@ -177,5 +176,5 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

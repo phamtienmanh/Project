@@ -15,7 +15,7 @@ angular.module('shopnxApp', [
   'infinite-scroll',
   'darthwade.dwLoading',
   'angularMoment',
-  'ui.select'
+  'ui.select',
 ]).constant('_', window._)
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $qProvider) {
     $urlRouterProvider

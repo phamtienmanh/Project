@@ -22,9 +22,7 @@ angular.module('shopnxApp')
   .factory('Wishlist', ['$resource', function($resource) {
     var obj = {};
     obj = $resource('api/wishlist/:id', null, {'update': { method:'PUT' } });
-    obj.count = $resource('api/wishlist/count', null, {'update': { method:'PUT' }});
     obj.search = $resource('api/wishlist/search', null, {'update': { method:'PUT' }});
-    obj.all = $resource('api/wishlist/all', null, {'update': { method:'PUT' }});
     return obj;
   }])
 

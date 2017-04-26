@@ -55,8 +55,14 @@ public class RoleFacadeREST extends AbstractFacade<Role> {
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") String id) {
-        super.remove(super.find(id));
+    public Role remove(@PathParam("id") String id) {
+        try {
+            super.remove(super.find(id));
+        } catch (Exception e) {
+            super.find(id).setMessage("Delete Role fail, please try again!");
+            return super.find(id);
+        }
+        return null;
     }
 
     @GET

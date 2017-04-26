@@ -16,7 +16,7 @@
 
         <input type="text" placeholder="Filter Cart" class="form-control col-md-4" style="width:250px;margin-left:20px;" ng-model="filterCart" autofocus/>
 
-        <a value="Proceed to Checkout →" href="checkout" name="proceed" class="btn btn-primary pull-right" ng-disabled="cart.getTotalCount() <= 0" ng-click="cancel();">Proceed to Checkout →</a>
+        <a value="Proceed to Checkout →" href="checkout" name="proceed" class="btn btn-primary pull-right" ng-disabled="cart.getTotalCount() <= 0" ng-click="cancel();">Proceed to Order →</a>
 
         <div class="clearfix"></div>
     </div><br/>
@@ -56,10 +56,18 @@
                 <td>{{item.price| currency}}</td>
 
                 <td>
-                    <div class="input-group" style="width:105px;">
+<!--                    <div class="input-group" style="width:105px;">
                         <div class="input-group-addon btn" ng-click="cart.addItem(item.sku, item.name, item.pquantity, item.mrp, item.price, -1)">-</div>
                         <input class="form-control text-center" type="text" min="1" step="1" ng-model="item.quantity" ng-change="cart.saveItems()" disabled="">
                         <div class="input-group-addon btn" ng-disabled="item.quantity >= item.pquantity" ng-click="cart.addItem(item.sku, item.name, item.pquantity, item.mrp, item.price, +1)">+</div>
+                    </div>-->
+                    <div class="btn-group">
+                        <button class="btn btn-info"
+                                ng-click="cart.addItem(item.sku, item.name, item.pquantity, item.mrp, item.price, -1)">&nbsp;-</button>
+                        <button class="btn btn-info">{{item.quantity}}</button>
+                        <button class="btn btn-info"
+                                ng-click="cart.addItem(item.sku, item.name, item.pquantity, item.mrp, item.price, +1)"
+                                ng-disabled="item.quantity >= item.pquantity">+</button>
                     </div>
                 </td>
 

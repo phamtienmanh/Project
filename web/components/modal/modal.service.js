@@ -63,7 +63,7 @@ angular.module('shopnxApp')
                         $scope.$apply(function ($scope) {
                             $scope.theFile = element.files[0];
                             if ($scope.theFile) {
-                                if ($scope.theFile.type !== "image/png" && $scope.theFile.type !== "image/jpg" && $scope.theFile.type !== "image/bmp") {
+                                if ($scope.theFile.type !== "image/png" && $scope.theFile.type !== "image/jpeg" && $scope.theFile.type !== "image/bmp") {
                                     $scope.imgTypeError = true;
                                     $scope.data.image = "";
                                 }

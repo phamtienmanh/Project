@@ -10,8 +10,9 @@ angular.module('shopnxApp')
 //    [65, 59, 80, 81, 56, 55, 40],
 //    [28, 48, 40, 19, 86, 27, 90]
   ];
-  $scope.dt1 = moment().startOf('day').subtract(7, "days")._d;
-  $scope.dt2 = moment().endOf('day')._d;
+//    $scope.dt1 = moment().startOf('month').subtract(7, "days")._d;
+  $scope.dt1 = moment().startOf('year')._d;
+  $scope.dt2 = moment().endOf('year')._d;
   $scope.today = moment().endOf('day')._d;
   $scope.orders = {};
   $scope.loadOrders = function () {
@@ -23,26 +24,14 @@ angular.module('shopnxApp')
                                 for (var j = 0; j < res[i].orderDetailCollection.length; j++) {
                                     subTotal += res[i].orderDetailCollection[j].productId.price * parseInt(res[i].orderDetailCollection[j].quantity);
                                     total += res[i].orderDetailCollection[j].productId.price * parseInt(res[i].orderDetailCollection[j].quantity);
-                                    $scope.data.push(subTotal) ;
-                                    $scope.labels.push(res[i].date) ;
                                 }
                                 res[i].subTotal = subTotal;
+                                $scope.unformattedDate = res[i].date;
                             }
                             res.total = total;
-                        });
-                    }
-                    else {
-                        $scope.orders = Order.my.query({customerId: Auth.getCurrentUser().id, from: moment($scope.dt1).startOf('day').unix(), to: moment($scope.dt2).endOf('day').unix()}, function (res) {
-                            var total = 0;
-                            for (var i = 0; i < res.length; i++) {
-                                var subTotal = 0;
-                                for (var j = 0; j < res[i].orderDetailCollection.length; j++) {
-                                    subTotal += res[i].orderDetailCollection[j].productId.price * parseInt(res[i].orderDetailCollection[j].quantity);
-                                    total += res[i].orderDetailCollection[j].productId.price * parseInt(res[i].orderDetailCollection[j].quantity);
-                                }
-                                res[i].subTotal = subTotal;
-                            }
-                            res.total = total;
+                            $scope.formattedDate = moment($scope.unformattedDate).format('MMMM');
+                            $scope.labels.push($scope.formattedDate) ;
+                            $scope.data.push(res.total) ;
                         });
                     }
                 };

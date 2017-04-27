@@ -8,7 +8,6 @@ package services;
 import entities.Customer;
 import entities.Product;
 import entities.Wishlist;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.ejb.Stateless;
@@ -56,8 +55,13 @@ public class WishlistFacadeREST extends AbstractFacade<Wishlist> {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") String id, Wishlist entity) {
-        super.edit(entity);
+    public Wishlist edit(@PathParam("id") String id, Wishlist entity) {
+        try {
+            super.edit(entity);
+        } catch (Exception e) {
+            entity.setMessage("Update Wish info fail, please try again!");
+        }
+        return entity;
     }
 
     @DELETE

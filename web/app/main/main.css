@@ -204,3 +204,44 @@ em {
     border-width: 0 0 2px !important;
     outline: 0;
 }
+/*process bar*/
+.progress {
+    height: 5px !important;
+    margin: 0 20px 22px 45px !important;
+    overflow: hidden;
+    background-color: rgb(187,222,251) !important;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1) !important;
+    box-shadow: none !important;   
+    border-radius: 0 !important;
+}
+.lowratebg{
+    background-color: rgb(255,204,188) !important;
+}
+.lowrate{
+    color: rgb(255,87,34) !important;
+}
+.progress-bar-success {
+    background-color: rgb(33,150,243) !important;
+}
+.progress-bar-danger {
+    background-color: rgb(255,87,34) !important;
+}
+.ratehead{
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: rgb(33,150,243);
+}
+.ratingstar{
+    position: absolute;
+    left: 0;
+    top: -10px;
+    font-size: 1.3em;
+    color: rgb(33,150,243);
+}
+.ratingnum{
+    position: absolute;
+    right: 0;
+    top: -8px;
+    font-size: 1.2em;
+    color: rgb(255,87,34);
+}

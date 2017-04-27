@@ -5,11 +5,16 @@
  */
 package services;
 
+import entities.Customer;
+import entities.Product;
 import entities.Rating;
+import entities.Wishlist;
 import java.util.List;
+import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,6 +23,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 /**
  *
@@ -34,17 +40,27 @@ public class RatingFacadeREST extends AbstractFacade<Rating> {
     }
 
     @POST
-    @Override
     @Consumes({"application/xml", "application/json"})
-    public void create(Rating entity) {
-        super.create(entity);
+    public Rating createRating(Rating entity) {
+        try {
+            entity.setId(UUID.randomUUID().toString());
+            super.create(entity); 
+        } catch (Exception e) {
+            entity.setMessage("Add review & rating fail, please try again!");
+        }
+        return entity;
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") String id, Rating entity) {
-        super.edit(entity);
+    public Rating edit(@PathParam("id") String id, Rating entity) {
+        try {
+            super.edit(entity);
+        } catch (Exception e) {
+            entity.setMessage("Update review & rating fail, please try again!");
+        }
+        return entity;
     }
 
     @DELETE
@@ -57,6 +73,33 @@ public class RatingFacadeREST extends AbstractFacade<Rating> {
             return super.find(id);
         }
         return null;
+    }
+    
+    @GET
+    @Path("search")
+    @Produces({"application/xml", "application/json"})
+    public List<Rating> find(@QueryParam("customerId") String customerId, @QueryParam("productId") String productId) {        
+        try {
+            Query q = em.createNamedQuery("Rating.findByCustomerAndProduct", Wishlist.class);
+            q.setParameter("customerId", em.find(Customer.class, customerId));
+            q.setParameter("productId", em.find(Product.class, productId));
+            return q.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    @GET
+    @Path("searchbyproduct")
+    @Produces({"application/xml", "application/json"})
+    public List<Rating> findByProduct(@QueryParam("productId") String productId) {        
+        try {
+            Query q = em.createNamedQuery("Rating.findByProduct", Wishlist.class);
+            q.setParameter("productId", em.find(Product.class, productId));
+            return q.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @GET

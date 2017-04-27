@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('shopnxApp')
-        .controller('ProductDetailsCtrl', function ($scope, $rootScope, Product, Customer, Category, Wishlist, toastr, Auth, socket, $stateParams, $location, $state, $injector) {
+        .controller('ProductDetailsCtrl', function ($scope, $rootScope, Product, Customer, Category, Wishlist, Rating, toastr, Auth, socket, $stateParams, $location, $state, $injector) {
             var id = $stateParams.id;
             // Storing the product id into localStorage because the _id of the selected product which was passed as a hidden parameter from products won't available on page refresh
             if (localStorage !== null && JSON !== null && id !== null) {
@@ -11,6 +11,7 @@ angular.module('shopnxApp')
 
             $scope.categories = Category.all.query();
 
+            $scope.wished = {};
             $scope.isWished = false;
             // Check wish list exist
             Wishlist.search.query({
@@ -21,6 +22,7 @@ angular.module('shopnxApp')
                     if (resp[0] && resp[0].message) {
                     }
                     else {
+                        $scope.wished = resp[0];
                         $scope.isWished = true;
                     }
                 }
@@ -40,6 +42,7 @@ angular.module('shopnxApp')
                     }
                     else {
                         toastr.success("Product added to your wishlist", "Success!");
+                        $scope.wished = resp;
                         $scope.isWished = true;
                     }
                 });
@@ -53,6 +56,7 @@ angular.module('shopnxApp')
                     }
                     else {
                         toastr.success("Product removed from your wishlist", "Success!");
+                        $scope.wished = {};
                         $scope.isWished = false;
                     }
                 });
@@ -91,20 +95,64 @@ angular.module('shopnxApp')
             for (var index = 0; index < 5; index++) {
                 var starItem = {
                     index: index,
-                    class: 'star-off'
+                    class: 'star-off',
+                    type: index < 2 ? 'danger' : 'success'
                 };
                 $scope.starsArray.push(starItem);
             }
-            
+
             $scope.rates = [];
-            $scope.rates = Rate.searchByProduct.query({
+            $scope.cusRating = {customerId: Auth.getCurrentUser(),productId: $scope.product};
+            Rating.searchByProduct.query({
                 productId: productId
             }, function (res) {
-                $scope.avgRate = _.meanBy(res, 'rate');
-                _.foreach($scope.starsArray, function (star) {
-                    star.quantity = _.sumBy(res, r => (r.rate == star.index ? 1 : 0));
-                });
-            });           
+                $scope.rates = res;
+            });
+            $scope.$watch('rates', function (newValue, oldValue) {
+                if (newValue.length) {
+                    $scope.cusRating = angular.copy(_.find(newValue, {customerId: Auth.getCurrentUser()}));
+                    if ($scope.cusRating.id) {
+                        $scope.setRating($scope.cusRating.star);
+                    }
+                    $scope.avgRate = _.meanBy(newValue, 'star');
+                    _.forEach($scope.starsArray, function (star) {
+                        star.count = _.countBy(newValue, function (r) {
+                            return(r.star == star.index + 1)
+                        }).true || 0;
+                        star.percent = star.count * 100 / newValue.length;
+                    });
+                }
+            }, true);
+            $scope.saveRating = function (message) {
+                if ($scope.cusRating.id) {//update
+                    Rating.update({id: $scope.cusRating.id}, $scope.cusRating).$promise.then(function (resp) {
+                        if (resp && resp.message) {
+                            toastr.error(resp.message, "Error!");
+                        }
+                        else {
+                            toastr.success("Your rating & review updated", "Success!");
+                            var index = _.indexOf($scope.rates, _.find($scope.rates, {id: resp.id}));
+                            if (index != -1) {
+                                //edit
+                                $scope.rates.splice(index, 1, resp);
+                            }
+                            angular.element('#myModal').modal('hide');
+                        }
+                    });
+                }
+                else {//add new
+                    Rating.save($scope.cusRating).$promise.then(function (resp) {
+                        if (resp && resp.message) {
+                            toastr.error(resp.message, "Error!");
+                        }
+                        else {
+                            toastr.success("Your rating & review added", "Success!");
+                            $scope.rates.push(resp);
+                            angular.element('#myModal').modal('hide');
+                        }
+                    });
+                }
+            }
 
             $scope.setMouseOverRating = function (rating) {
                 if ($scope.readOnly) {
@@ -112,6 +160,7 @@ angular.module('shopnxApp')
                 }
                 $scope.validateStars(rating);
             };
+
             // Highlight stars
             $scope.validateStars = function (rating) {
                 if (!$scope.starsArray || $scope.starsArray.length === 0) {
@@ -131,8 +180,8 @@ angular.module('shopnxApp')
             $scope.setRating = function (rating) {
                 if ($scope.readOnly)
                     return;
-                $scope.rating = rating;
-                $scope.validateStars($scope.rating);
+                $scope.cusRating.star = rating;
+                $scope.validateStars(rating);
             };
         })
 

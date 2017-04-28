@@ -99,6 +99,7 @@ angular.module('shopnxApp')
     var obj = {};
     obj = $resource('api/customer/:id', null, {'update': { method:'PUT' } });
     obj.changePassword = $resource('api/customer/changePassword', null, {'update': { method:'PUT' } });
+    return obj;
   }])
   
   .factory('Setting', ['$resource', function($resource) {

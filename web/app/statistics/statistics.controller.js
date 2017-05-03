@@ -7,7 +7,7 @@ angular.module('shopnxApp')
   $scope.labels = moment.months();
   $scope.series = ['Total'];
 
-  $scope.data = [0, 0, 0, 0, 0, 0, 0,0,0,0,0,0];
+  $scope.data = [[0, 0, 0, 0, 0, 0, 0,0,0,0,0,0]];
 //    [28, 48, 40, 19, 86, 27, 90]
   
 //    $scope.dt1 = moment().startOf('month').subtract(7, "days")._d;
@@ -17,7 +17,7 @@ angular.module('shopnxApp')
   $scope.orders = {};
   $scope.loadOrders = function () {
                     if ($rootScope.isAdmin() == true) {
-                        $scope.orders = Order.all.query({from: moment($scope.dt1).startOf('day').unix(), to: moment($scope.dt2).endOf('day').unix()}, function (res) {
+                        $scope.orders = Order.allplaced.query({from: moment($scope.dt1).startOf('day').unix(), to: moment($scope.dt2).endOf('day').unix()}, function (res) {
                             var total = 0;
                             for (var i = 0; i < res.length; i++) {
                                 var subTotal = 0;
@@ -29,7 +29,7 @@ angular.module('shopnxApp')
                                 $scope.unformattedDate = res[i].date; // Lấy ngày order
                                 $scope.formattedDate = moment($scope.unformattedDate).format('M'); // chuyển thành tháng dạng số
                                 var index = parseInt($scope.formattedDate) - 1 ; // Index data = tháng - 1
-                                $scope.data[index] = total; // Gắn tổng tiền vào data theo index
+                                $scope.data[0][index] = total; // Gắn tổng tiền vào data theo index
 
                             }
                             res.total = total;

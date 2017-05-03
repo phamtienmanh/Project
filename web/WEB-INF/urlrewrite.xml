@@ -63,6 +63,10 @@ http://www.tuckey.org/urlrewrite/
     </rule>
     <rule>
         <from>^/statistics$</from>
+      <to>index.html</to>
+      </rule>
+      <rule>
+        <from>^/settings$</from>
         <to>index.html</to>
     </rule>
     <rule>

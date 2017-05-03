@@ -38,12 +38,17 @@ _________________________________________________________ -->
                     <a href="statistics"><i class="fa fa-star">&nbsp;</i>Statistics</a>
                   </li>
                   <li class="divider"></li>
+                  <li class="divider" ng-show="isAdmin()"></li>
                   <li ng-show="isAdmin()" ng-class="{active: isActive('role')}">
                     <a href="role"><i class="fa fa-users">&nbsp;</i>Roles</a>
                   </li>
                   <li ng-show="isAdmin()" ng-class="{active: isActive('customer')}">
                     <a href="customer"><i class="fa fa-user">&nbsp;</i>Customers</a>
                   </li>                                    
+                  <li class="divider"></li>
+                  <li ng-show="isLoggedIn()" ng-class="{active: isActive('settings')}">
+                    <a href="settings"><i class="fa fa-user">&nbsp;</i>Settings</a>
+                  </li> 
                   <li class="divider"></li>
 <!--                  <li ng-show="isLoggedIn()" ng-class="{active: isActive('/paymentMethod')}">
                     <a href="/paymentMethod"><i class="fa fa-wrench">&nbsp;</i>Payment Method</a>

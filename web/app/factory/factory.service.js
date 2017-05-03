@@ -31,6 +31,7 @@ angular.module('shopnxApp')
     obj = $resource('api/rating/:id', null, {'update': { method:'PUT' } });
     obj.count = $resource('api/rating/count', null, {'update': { method:'PUT' }});
     obj.search = $resource('api/rating/search', null, {'update': { method:'PUT' }});
+    obj.searchByProduct = $resource('api/rating/searchbyproduct', null, {'update': { method:'PUT' }});
     obj.all = $resource('api/rating/all', null, {'update': { method:'PUT' }});
     return obj;
   }])
@@ -103,8 +104,13 @@ angular.module('shopnxApp')
     return obj;
   }])
   .factory('Customer', ['$resource', function($resource) {
-    return $resource('api/customer/:id', null, {'update': { method:'PUT' } });
+//    return $resource('api/customer/:id', null, {'update': { method:'PUT' } });
+    var obj = {};
+    obj = $resource('api/customer/:id', null, {'update': { method:'PUT' } });
+    obj.changePassword = $resource('api/customer/changePassword', null, {'update': { method:'PUT' } });
+    return obj;
   }])
+  
   .factory('Setting', ['$resource', function($resource) {
     return $resource('api/settings/:id', null, {'update': { method:'PUT' } });
   }])

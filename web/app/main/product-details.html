@@ -98,65 +98,81 @@
                                          ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, 1, product.image, product.category, product.size, true);" 
                                          ng-disabled="product.quantity == 0"><i class="fa fa-shopping-cart"></i>Add to cart</button>
                             </div>
-
-                            <button  class="btn btn-default btn-wishlist"
-                                     ng-if="isLoggedIn() && !isWished"
+                            
+                            <div class="btn-group" ng-if="isLoggedIn() && !isWished">
+                                <button  class="btn btn-default btn-wishlist"                                     
                                      ng-click="addWishlist()"><i class="fa fa-heart"></i>Add to wishlist</button>
-                            <button  class="btn btn-default btn-wished"
-                                     ng-if="isLoggedIn() && isWished"
-                                     ng-click="removeWishlist()"><i class="fa fa-heart"></i>Wished</button>
-                        </div>
-                        <hr><hr>
-                        <button  class="btn btn-primary btn-mycart"
-                                 ng-if="isLoggedIn() && !listRating.length"
-                                 data-toggle="modal" data-target="#myModal"><i class="fa fa-star"></i>Be the first one review this item</button>
-                        <div class=""
-                             ng-if="isLoggedIn() && listRating.length">
-                            <div class="">
-                                <div class="progress" ng-repeat="starsArray">
-                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
-                                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
-                                        40%
-                                    </div>
-                                </div>
                             </div>
-                            <button  class="btn btn-primary btn-mycart" type="button"                                    
-                                     data-toggle="modal" data-target="#myModal">Rate & Review</button>
-
+                            <div class="btn-group" ng-if="isLoggedIn() && isWished">
+                                <button  class="btn btn-default btn-wished"
+                                     ng-click="removeWishlist()"><i class="fa fa-heart"></i>Wished</button>
+                            </div>                                                        
                         </div>
-                    </div>
+                        <hr>
+
+                        <button  class="btn btn-primary btn-mycart"
+                                 ng-if="isLoggedIn() && !rates.length"
+                                 data-toggle="modal" data-target="#myModal"><i class="fa fa-star"></i>Be the first one review this item</button>
+
+                        <div class="row"
+                             ng-if="isLoggedIn() && rates.length">
+                            <div class="ratehead">
+                                {{avgRate | number:1}} <i class="fa fa-star"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <span style="font-size: 16px">{{rates.length}} Ratings & Reviews</span>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="" ng-repeat="star in starsArray| reverse" style="position: relative">
+                                    <span class="ratingstar" ng-class="{'lowrate': star.type == 'danger'}">{{starsArray.length - $index}} <i class="fa fa-star"></i></span>
+                                    <span class="">
+                                        <progressbar ng-class="{'lowratebg': star.type == 'danger'}" animate="false" value="star.percent" type="{{star.type}}"></progressbar>
+                                    </span>
+                                    <span class="ratingnum" ng-class="{'lowrate': star.type == 'danger'}">{{star.count}}</span>
+                                </div> 
+                            </div>
+                            <div class="col-md-4">
+                                <button  class="btn btn-primary btn-mycart" type="button"                                    
+                                         data-toggle="modal" data-target="#myModal">Rate & Review</button>
+                            </div>                    
+                        </div>
+
+                    </div>                        
+
                 </div>
-
             </div>
+        </div>
 
+    </div>
 
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-9">
             <div class="box" id="details">
-                <p>
-                <h4>Category</h4>
-                <ul>
-                    <li><a href="">{{product.categoryId.name}}</a></li>
-                </ul>
-                <h4>Author</h4>
-                <ul>
-                    <li><a href="">{{product.author}}</a></li>
-                </ul>
+        <p>
+        <h4>Category</h4>
+        <ul>
+            <li><a href="">{{product.categoryId.name}}</a></li>
+        </ul>
+        <h4>Author</h4>
+        <ul>
+            <li><a href="">{{product.author}}</a></li>
+        </ul>
 
-                <blockquote>
-                    <p>{{product.description}}
-                    </p>
-                </blockquote>
+        <blockquote>
+            <p>{{product.description}}
+            </p>
+        </blockquote>
 
-                <hr>
-                <div class="social">
-                    <h4>Show it to your friends</h4>
-                    <p>
-                        <a href="" class="external facebook" data-animate-hover="pulse"><i class="fa fa-facebook"></i></a>
-                        <a href="" class="external gplus" data-animate-hover="pulse"><i class="fa fa-google-plus"></i></a>
-                        <a href="" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a>
-                        <a href="" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
-                    </p>
-                </div>
-            </div>
+        <hr>
+        <div class="social">
+            <h4>Show it to your friends</h4>
+            <p>
+                <a href="" class="external facebook" data-animate-hover="pulse"><i class="fa fa-facebook"></i></a>
+                <a href="" class="external gplus" data-animate-hover="pulse"><i class="fa fa-google-plus"></i></a>
+                <a href="" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a>
+                <a href="" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
+            </p>
+        </div>
+    </div>
         </div>
     </div>
 </div>
@@ -176,7 +192,7 @@
                                         <span class="button mystar" 
                                               ng-class="item.class" 
                                               ng-mouseover="setMouseOverRating($index + 1)" 
-                                              ng-mouseleave="setMouseOverRating(rating)" 
+                                              ng-mouseleave="setMouseOverRating(cusRating.star)" 
                                               ng-click="setRating($index + 1)" 
                                               ng-repeat="item in starsArray">
                                             <i class="fa fa-star" style="font-size: 1.5em"></i>
@@ -186,18 +202,18 @@
 
                                 <div class="form-group">
                                     <div>
-                                        <textarea type="text" name="message" class="input-message" ng-model="review.message"
-                                                  required placeholder="Message"/>
+                                        <textarea type="text" name="comment" class="input-message" ng-model="cusRating.comment"
+                                                  required placeholder="comment"></textarea>
                                     </div>
                                 </div>
                             </section>
-                            <span class="help-block" ng-show="form.$dirty && rating == 0 && form.message.$error.required">
-                                Please rate the item from a scale of 1-5 or leave a message<br/>
+                            <span class="help-block" ng-show="form.$dirty && !cusRating.star && form.comment.$error.required">
+                                Please rate the item from a scale of 1-5 or leave a comment<br/>
                             </span>
                             <div class="text-center" style="margin-bottom: 10px;">
                                 <button  class="btn btn-primary btn-mycart"
-                                         ng-click="save(review)" 
-                                         ng-disabled="!rating || form.message.$error.required"><i class="fa fa-save"></i>&nbsp;Save</button>
+                                         ng-click="saveRating()" 
+                                         ng-disabled="form.$dirty && !cusRating.star && form.comment.$error.required"><i class="fa fa-save"></i>&nbsp;Save</button>
                                 <button  class="btn btn-default btn-wishlist"
                                          data-dismiss="modal"
                                          >Cancel</button>

@@ -17,7 +17,7 @@ angular.module('shopnxApp')
   $scope.orders = {};
   $scope.loadOrders = function () {
                     if ($rootScope.isAdmin() == true) {
-                        $scope.orders = Order.allplaced.query({from: moment($scope.dt1).startOf('day').unix(), to: moment($scope.dt2).endOf('day').unix()}, function (res) {
+                        $scope.orders = Order.alldelivered.query({from: moment($scope.dt1).startOf('day').unix(), to: moment($scope.dt2).endOf('day').unix()}, function (res) {
                             var total = 0;
                             for (var i = 0; i < res.length; i++) {
                                 var subTotal = 0;

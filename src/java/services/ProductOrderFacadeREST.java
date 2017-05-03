@@ -135,11 +135,11 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
     }
     
     @GET
-    @Path("allplaced")
+    @Path("alldelivered")
     @Produces({"application/xml", "application/json"})
-    public List<ProductOrder> findAllPlacedOrder(@QueryParam("from") long from, @QueryParam("to") long to) {//select by datetime
+    public List<ProductOrder> findAllDeliveredOrder(@QueryParam("from") long from, @QueryParam("to") long to) {//select by datetime
         try {
-            Query q = em.createNamedQuery("ProductOrder.findAllPlacedOrder", Category.class);
+            Query q = em.createNamedQuery("ProductOrder.findAllDeliveredOrder", Category.class);
             q.setParameter("from", new Date(from*1000));
             q.setParameter("to", new Date(to*1000));            
             List<ProductOrder> listOrder = q.getResultList();

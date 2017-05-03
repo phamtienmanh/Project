@@ -122,7 +122,7 @@ angular.module('shopnxApp')
     obj = $resource('api/orders/:id', null, {'update': { method:'PUT' } });
     obj.my = $resource('api/orders/my', null, {'update': { method:'PUT' }});
     obj.all = $resource('api/orders/all', null, {'update': { method:'PUT' }});
-    obj.allplaced = $resource('api/orders/allplaced', null, {'update': { method:'PUT' }});
+    obj.alldelivered = $resource('api/orders/alldelivered', null, {'update': { method:'PUT' }});
     obj.changeStatus = $resource('api/orders/changestatus', null, {'update': { method:'PUT' }});
     obj.status = ['Order Placed', 'Order Accepted', 'Shipped', 'Delivered', 'Cancelled'];
     return obj;

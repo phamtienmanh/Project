@@ -76,8 +76,8 @@
 
                 </div>
                 <div class="col-sm-6">
-                    <div class="box text-center">
-                        <h3 class="text-center">{{product.name}}</h3>
+                    <div class="box text-center" id="details">
+                        <h3 class="text-center" style="margin-bottom: 6px">{{product.name}}</h3>
                         <p class="price"><del class="text-muted" ng-if="product.price != product.mrp">{{product.mrp}}</del>&nbsp;${{product.price}}</p>
                         <h5>
                             <a ng-if="product.quantity > 5">{{product.quantity}} in stock</a>
@@ -98,30 +98,29 @@
                                          ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, 1, product.image, product.category, product.size, true);" 
                                          ng-disabled="product.quantity == 0"><i class="fa fa-shopping-cart"></i>Add to cart</button>
                             </div>
-                            
+
                             <div class="btn-group" ng-if="isLoggedIn() && !isWished">
                                 <button  class="btn btn-default btn-wishlist"                                     
-                                     ng-click="addWishlist()"><i class="fa fa-heart"></i>Add to wishlist</button>
+                                         ng-click="addWishlist()"><i class="fa fa-heart"></i>Add to wishlist</button>
                             </div>
                             <div class="btn-group" ng-if="isLoggedIn() && isWished">
                                 <button  class="btn btn-default btn-wished"
-                                     ng-click="removeWishlist()"><i class="fa fa-heart"></i>Wished</button>
+                                         ng-click="removeWishlist()"><i class="fa fa-heart"></i>Wished</button>
                             </div>                                                        
                         </div>
                         <hr>
-
                         <button  class="btn btn-primary btn-mycart"
                                  ng-if="isLoggedIn() && !rates.length"
                                  data-toggle="modal" data-target="#myModal"><i class="fa fa-star"></i>Be the first one review this item</button>
 
-                        <div class="row"
+                        <div class="row" style="margin-bottom: -10px"
                              ng-if="isLoggedIn() && rates.length">
                             <div class="ratehead">
-                                {{avgRate | number:1}} <i class="fa fa-star"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                {{avgRate| number:1}} <i class="fa fa-star"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <span style="font-size: 16px">{{rates.length}} Ratings & Reviews</span>
                             </div>
                             <div class="col-md-8">
-                                <div class="" ng-repeat="star in starsArray| reverse" style="position: relative">
+                                <div class="" ng-repeat="star in starsArray| reverse" style="position: relative;">
                                     <span class="ratingstar" ng-class="{'lowrate': star.type == 'danger'}">{{starsArray.length - $index}} <i class="fa fa-star"></i></span>
                                     <span class="">
                                         <progressbar ng-class="{'lowratebg': star.type == 'danger'}" animate="false" value="star.percent" type="{{star.type}}"></progressbar>
@@ -129,10 +128,20 @@
                                     <span class="ratingnum" ng-class="{'lowrate': star.type == 'danger'}">{{star.count}}</span>
                                 </div> 
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4"><br><br>
                                 <button  class="btn btn-primary btn-mycart" type="button"                                    
                                          data-toggle="modal" data-target="#myModal">Rate & Review</button>
                             </div>                    
+                        </div>
+                        <hr>
+                        <div class="social">
+                            <h4>Show it to your friends</h4>
+                            <p>
+                                <a href="" class="external facebook" data-animate-hover="pulse"><i class="fa fa-facebook"></i></a>
+                                <a href="" class="external gplus" data-animate-hover="pulse"><i class="fa fa-google-plus"></i></a>
+                                <a href="" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a>
+                                <a href="" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
+                            </p>
                         </div>
 
                     </div>                        
@@ -146,40 +155,30 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-9">
-            <div class="box" id="details">
-        <p>
-        <h4>Category</h4>
-        <ul>
-            <li><a href="">{{product.categoryId.name}}</a></li>
-        </ul>
-        <h4>Author</h4>
-        <ul>
-            <li><a href="">{{product.author}}</a></li>
-        </ul>
+            <div class="box">
+                <p></p>
+                <h4>Category</h4>
+                <ul>
+                    <li><a href="">{{product.categoryId.name}}</a></li>
+                </ul>
+                <h4>Author</h4>
+                <ul>
+                    <li><a href="">{{product.author}}</a></li>
+                </ul>
 
-        <blockquote>
-            <p>{{product.description}}
-            </p>
-        </blockquote>
+                <blockquote>
+                    <p>{{product.description}}
+                    </p>
+                </blockquote>               
 
-        <hr>
-        <div class="social">
-            <h4>Show it to your friends</h4>
-            <p>
-                <a href="" class="external facebook" data-animate-hover="pulse"><i class="fa fa-facebook"></i></a>
-                <a href="" class="external gplus" data-animate-hover="pulse"><i class="fa fa-google-plus"></i></a>
-                <a href="" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a>
-                <a href="" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
-            </p>
-        </div>
-    </div>
+            </div>
         </div>
     </div>
 </div>
 
 <!--review modal-->
-<div class="modal fade" id="myModal" role="dialog" tabindex="-1">
-    <div class="modal-dialog">
+<div class="modal fade messagemodal" id="myModal" role="dialog" tabindex="-1">
+    <div class="modal-dialog rating">
         <div class="md-dialog md-transition-in">
             <div class="layout-row">
                 <div class="modal-content layout-column flex">

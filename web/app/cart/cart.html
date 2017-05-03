@@ -61,7 +61,7 @@
                         <input class="form-control text-center" type="text" min="1" step="1" ng-model="item.quantity" ng-change="cart.saveItems()" disabled="">
                         <div class="input-group-addon btn" ng-disabled="item.quantity >= item.pquantity" ng-click="cart.addItem(item.sku, item.name, item.pquantity, item.mrp, item.price, +1)">+</div>
                     </div>-->
-                    <div class="btn-group">
+                    <div class="btn-group" style="width: 100px">
                         <button class="btn btn-info"
                                 ng-click="cart.addItem(item.sku, item.name, item.pquantity, item.mrp, item.price, -1)">&nbsp;-</button>
                         <button class="btn btn-info">{{item.quantity}}</button>

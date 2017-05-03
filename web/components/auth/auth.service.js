@@ -2,7 +2,7 @@
 
 angular.module('shopnxApp')
 .value('redirectToUrlAfterLogin', { url: '/' })
-  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q, redirectToUrlAfterLogin) {
+  .factory('Auth', function Auth($location, $rootScope, $http, User, Customer , $cookieStore, $q, redirectToUrlAfterLogin) {
     var currentUser = {};
     if($cookieStore.get('token')) {
 //      currentUser = User.get();
@@ -95,14 +95,20 @@ angular.module('shopnxApp')
       changePassword: function(oldPassword, newPassword, callback) {
         var cb = callback || angular.noop;
 
-        return User.changePassword({ id: currentUser.id} , { 
-          oldPassword: oldPassword,
-          newPassword: newPassword
-        }, function(user) {
-          return cb(user);
-        }, function(err) {
-          return cb(err);
-        }).$promise;
+        var deferred = $q.defer();
+        var user = currentUser;
+        user.password = newPassword;
+        $http.put('api/customer/changePassword', {id: currentUser.id, oldPassword: oldPassword, newPassword: newPassword}).
+            then(function onSuccess(response) {
+                $cookieStore.put('token', response.data);
+                currentUser = response.data;
+                deferred.resolve(response);
+                return cb();
+            }).catch(function onError(err) {
+                deferred.reject(err);
+                return cb(err);
+            });
+        return deferred.promise;
       },
 
       /**

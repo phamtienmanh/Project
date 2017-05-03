@@ -5,6 +5,7 @@
  */
 package services;
 
+import customEntities.changePasswordCustomer;
 import customEntities.loginCustomer;
 import entities.Customer;
 import java.util.List;
@@ -103,26 +104,24 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
     @Path("changePassword")
     @Consumes({"application/xml", "application/json"})
     @Produces({"application/xml", "application/json"})
-    public Customer changePassword(@QueryParam("id") String id, @QueryParam("password") String password) {
+    public Customer changePassword(changePasswordCustomer c) {
+        Customer cus = null;
         try {
             //check if email exist
             Query q = em.createNamedQuery("Customer.findById", Customer.class);
-            q.setParameter("id", id);
-            Customer c = (Customer) q.getSingleResult();
-//            if (c.getPassword().equals(oldPassword)) {
-                c.setPassword(password);
-//            }else{
-//                return null;
-//            }
-            try {
-                super.edit(c);
-                return c;
-            } catch (Exception e) {
-                return null;
+            q.setParameter("id", c.getId());
+            cus = (Customer) q.getSingleResult();
+            if (cus.getPassword().equals(c.getOldPassword())) {
+                cus.setPassword(c.getNewPassword());
             }
+            try {
+                super.edit(cus);
+            } catch (Exception e) {
+            }
+
         } catch (Exception e) {
-            return null;
         }
+        return cus;
     }
 
     @PUT

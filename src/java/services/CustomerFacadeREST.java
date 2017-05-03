@@ -21,6 +21,8 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -95,6 +97,32 @@ public class CustomerFacadeREST extends AbstractFacade<Customer> {
             }
         }
         return entity;
+    }
+
+    @PUT
+    @Path("changePassword")
+    @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
+    public Customer changePassword(@QueryParam("id") String id, @QueryParam("password") String password) {
+        try {
+            //check if email exist
+            Query q = em.createNamedQuery("Customer.findById", Customer.class);
+            q.setParameter("id", id);
+            Customer c = (Customer) q.getSingleResult();
+//            if (c.getPassword().equals(oldPassword)) {
+                c.setPassword(password);
+//            }else{
+//                return null;
+//            }
+            try {
+                super.edit(c);
+                return c;
+            } catch (Exception e) {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @PUT

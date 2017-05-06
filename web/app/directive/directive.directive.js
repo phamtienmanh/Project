@@ -55,8 +55,10 @@ angular.module('shopnxApp')
                                $loading.finish('crudTable');
                                socket.syncUpdates(attrs.api.toLowerCase(), scope.data);
                                });
-                               }
-//                            scope.nodelete = false;
+                            }
+                            // Button edit, delete, etc...
+//                            scope.nodelete=false;
+                            scope.gotothis = attrs.gotothis;
                         }
                         else { // user = null, load all data
                             scope.data = api.query(function () {
@@ -65,7 +67,6 @@ angular.module('shopnxApp')
                             socket.syncUpdates(attrs.api.toLowerCase(), scope.data);
                             });
                         }
-                        
                         
                         scope.edit = function (item) {
                             var title;

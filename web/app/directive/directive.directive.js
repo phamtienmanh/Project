@@ -2,7 +2,7 @@
 
 angular.module('shopnxApp')
 
-        .directive('crudTable', ['Modal', '$injector', '$loading', 'socket', 'toastr', '_', function (Modal, $injector, $loading, socket, toastr, _) {
+        .directive('crudTable', ['Modal', '$injector', '$loading', 'socket', 'toastr', '_', function (Modal, $injector, $loading, socket, toastr, _ ) {
                 return {
                     templateUrl: 'app/directive/table.html',
                     restrict: 'EA',
@@ -34,13 +34,39 @@ angular.module('shopnxApp')
                         // }
                         var api = $injector.get(attrs.api);
                         scope.data = [];
-                        // scope.loadingTable = true;
+//                        scope.loadingTable = true;
                         $loading.start('crudTable');
-                        scope.data = api.query(function () {
+                        if (attrs.user != null) { // 
+                            scope.user = JSON.parse(attrs.user); // json to object
+                            if (scope.user.roleId.id=="2")  { // Role User , load user only
+                                if (attrs.api=="Wishlist") { // search wishlist by user id
+                                    scope.data = api.searchByCustomer.query({customerId: scope.user.id} , function(){
+                                        $loading.finish('crudTable');
+                                    });
+                                }
+                                else if (attrs.api=="Rating") { // like above
+                                    scope.data = api.searchByCustomer.query({customerId: scope.user.id} , function(){
+                                        $loading.finish('crudTable');
+                                    });
+                                }
+                            }else if (scope.user.roleId.id=="1") { // Role Admin, load all
+                                scope.data = api.query(function () {
+                               // scope.loadingTable = false;
+                               $loading.finish('crudTable');
+                               socket.syncUpdates(attrs.api.toLowerCase(), scope.data);
+                               });
+                               }
+//                            scope.nodelete = false;
+                        }
+                        else { // user = null, load all data
+                            scope.data = api.query(function () {
                             // scope.loadingTable = false;
                             $loading.finish('crudTable');
                             socket.syncUpdates(attrs.api.toLowerCase(), scope.data);
-                        });
+                            });
+                        }
+                        
+                        
                         scope.edit = function (item) {
                             var title;
                             if (item.id) {

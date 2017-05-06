@@ -90,6 +90,19 @@ public class WishlistFacadeREST extends AbstractFacade<Wishlist> {
             return null;
         }
     }
+    
+     @GET
+    @Path("searchByCustomer")
+    @Produces({"application/xml", "application/json"})
+    public List<Wishlist> find(@QueryParam("customerId") String customerId) {        
+        try {
+            Query q = em.createNamedQuery("Wishlist.findByCustomer", Wishlist.class);
+            q.setParameter("customerId", em.find(Customer.class, customerId));
+            return q.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     @GET
     @Override

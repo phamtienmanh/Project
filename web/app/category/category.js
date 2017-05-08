@@ -4,7 +4,7 @@ angular.module('shopnxApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('category', {
-        title: 'Add, Remove, Edit categories',
+        title: 'Categories administration',
         url: '/category',
         templateUrl: 'app/category/category.html',
         controller: 'CategoryCtrl',

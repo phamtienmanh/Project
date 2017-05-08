@@ -135,6 +135,21 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
     }
     
     @GET
+    @Path("alldelivered")
+    @Produces({"application/xml", "application/json"})
+    public List<ProductOrder> findAllDeliveredOrder(@QueryParam("from") long from, @QueryParam("to") long to) {//select by datetime
+        try {
+            Query q = em.createNamedQuery("ProductOrder.findAllDeliveredOrder", Category.class);
+            q.setParameter("from", new Date(from*1000));
+            q.setParameter("to", new Date(to*1000));            
+            List<ProductOrder> listOrder = q.getResultList();
+            return listOrder;
+        } catch (Exception e) {
+            return null;
+        }        
+    }
+    
+    @GET
     @Path("my")
     @Produces({"application/xml", "application/json"})
     public List<ProductOrder> findMy(@QueryParam("customerId") String customerId, @QueryParam("from") long from, @QueryParam("to") long to) {

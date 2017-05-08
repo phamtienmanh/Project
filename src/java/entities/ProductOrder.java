@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ProductOrder.findAll", query = "SELECT p FROM ProductOrder p WHERE p.date >= :from AND p.date <= :to"),
+    @NamedQuery(name = "ProductOrder.findAllDeliveredOrder", query = "SELECT p FROM ProductOrder p WHERE p.date >= :from AND p.date <= :to AND p.status='Delivered'"),
     @NamedQuery(name = "ProductOrder.findByCustomerId", query = "SELECT p FROM ProductOrder p WHERE p.customerId = :customerId AND p.date >= :from AND p.date <= :to"),
     @NamedQuery(name = "ProductOrder.findByDate", query = "SELECT p FROM ProductOrder p WHERE p.date = :date"),
     @NamedQuery(name = "ProductOrder.findByStatus", query = "SELECT p FROM ProductOrder p WHERE p.status = :status"),

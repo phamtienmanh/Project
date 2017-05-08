@@ -4,7 +4,7 @@ angular.module('shopnxApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('rating', {
-        title: 'Product Rating',
+        title: 'Rating administration',
         url: '/rating',
         templateUrl: 'app/rating/rating.html',
         controller: 'RatingCtrl',

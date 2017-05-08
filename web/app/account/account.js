@@ -16,7 +16,7 @@ angular.module('shopnxApp')
         controller: 'SignupCtrl'
       })
       .state('settings', {
-        title: 'Settings - Change Password ',
+        title: 'Change Password ',
         url: '/settings',
         templateUrl: 'app/account/settings/settings.html',
         controller: 'SettingsCtrl',

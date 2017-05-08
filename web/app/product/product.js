@@ -4,7 +4,7 @@ angular.module('shopnxApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('product', {
-        title: 'Products administration (Add, Remove, Edit)',
+        title: 'Products administration',
         url: '/product',
         templateUrl: 'app/product/product.html',
         controller: 'ProductCtrl',

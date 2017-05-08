@@ -23,6 +23,7 @@ angular.module('shopnxApp')
     var obj = {};
     obj = $resource('api/wishlist/:id', null, {'update': { method:'PUT' } });
     obj.search = $resource('api/wishlist/search', null, {'update': { method:'PUT' }});
+    obj.searchByCustomer = $resource('api/wishlist/searchByCustomer', null, {'update': { method:'PUT' }});
     return obj;
   }])
   
@@ -32,6 +33,7 @@ angular.module('shopnxApp')
     obj.count = $resource('api/rating/count', null, {'update': { method:'PUT' }});
     obj.search = $resource('api/rating/search', null, {'update': { method:'PUT' }});
     obj.searchByProduct = $resource('api/rating/searchbyproduct', null, {'update': { method:'PUT' }});
+    obj.searchByCustomer = $resource('api/rating/searchByCustomer', null, {'update': { method:'PUT' }});
     obj.all = $resource('api/rating/all', null, {'update': { method:'PUT' }});
     return obj;
   }])

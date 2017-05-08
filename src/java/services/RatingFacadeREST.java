@@ -101,6 +101,19 @@ public class RatingFacadeREST extends AbstractFacade<Rating> {
             return null;
         }
     }
+    
+    @GET
+    @Path("searchByCustomer")
+    @Produces({"application/xml", "application/json"})
+    public List<Rating> findByCustomer(@QueryParam("customerId") String customerId) {        
+        try {
+            Query q = em.createNamedQuery("Rating.findByCustomer", Wishlist.class);
+            q.setParameter("customerId", em.find(Customer.class, customerId));
+            return q.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     @GET
     @Path("{id}")

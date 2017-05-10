@@ -5,7 +5,7 @@ describe('Controller: ProfileCtrl', function () {
   // load the controller's module
   beforeEach(module('shopnxApp'));
 
-  var ProductCtrl, scope;
+  var ProfileCtrl, scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {

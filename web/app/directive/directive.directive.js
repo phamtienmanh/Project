@@ -2,7 +2,7 @@
 
 angular.module('shopnxApp')
 
-        .directive('crudTable', ['Modal', '$injector', '$loading', 'socket', 'toastr', '_', function (Modal, $injector, $loading, socket, toastr, _ ) {
+        .directive('crudTable', ['Modal', '$injector', '$loading', 'socket', 'toastr', '_', function (Modal, $injector, $loading, socket, toastr, _) {
                 return {
                     templateUrl: 'app/directive/table.html',
                     restrict: 'EA',
@@ -36,38 +36,22 @@ angular.module('shopnxApp')
                         scope.data = [];
 //                        scope.loadingTable = true;
                         $loading.start('crudTable');
-                        if (attrs.user != null) { // 
-                            scope.user = JSON.parse(attrs.user); // json to object
-                            if (scope.user.roleId.id=="2")  { // Role User , load user only
-                                if (attrs.api=="Wishlist") { // search wishlist by user id
-                                    scope.data = api.searchByCustomer.query({customerId: scope.user.id} , function(){
-                                        $loading.finish('crudTable');
-                                    });
-                                }
-                                else if (attrs.api=="Rating") { // like above
-                                    scope.data = api.searchByCustomer.query({customerId: scope.user.id} , function(){
-                                        $loading.finish('crudTable');
-                                    });
-                                }
-                            }else if (scope.user.roleId.id=="1") { // Role Admin, load all
-                                scope.data = api.query(function () {
-                               // scope.loadingTable = false;
-                               $loading.finish('crudTable');
-                               socket.syncUpdates(attrs.api.toLowerCase(), scope.data);
-                               });
-                            }
-                            // Button edit, delete, etc...
-//                            scope.nodelete=false;
-                            scope.gotothis = attrs.gotothis;
-                        }
-                        else { // user = null, load all data
-                            scope.data = api.query(function () {
-                            // scope.loadingTable = false;
-                            $loading.finish('crudTable');
-                            socket.syncUpdates(attrs.api.toLowerCase(), scope.data);
+                        if (attrs.userid && attrs.userid != null) {
+                            scope.gotothis = true;
+                            scope.data = api.query({customerId: attrs.userid},function () {
+                                // scope.loadingTable = false;
+                                $loading.finish('crudTable');
+                                socket.syncUpdates(attrs.api.toLowerCase(), scope.data);
                             });
                         }
-                        
+                        else {
+                            scope.data = api.query(function () {
+                                // scope.loadingTable = false;
+                                $loading.finish('crudTable');
+                                socket.syncUpdates(attrs.api.toLowerCase(), scope.data);
+                            });
+                        }
+
                         scope.edit = function (item) {
                             var title;
                             if (item.id) {

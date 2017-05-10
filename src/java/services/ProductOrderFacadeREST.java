@@ -6,6 +6,7 @@
 package services;
 
 import entities.Category;
+import entities.Customer;
 import entities.OrderDetail;
 import entities.Product;
 import entities.ProductOrder;
@@ -124,7 +125,7 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
     @Produces({"application/xml", "application/json"})
     public List<ProductOrder> findAllOrder(@QueryParam("from") long from, @QueryParam("to") long to) {//select by datetime
         try {
-            Query q = em.createNamedQuery("ProductOrder.findAll", Category.class);
+            Query q = em.createNamedQuery("ProductOrder.findAll", ProductOrder.class);
             q.setParameter("from", new Date(from*1000));
             q.setParameter("to", new Date(to*1000));            
             List<ProductOrder> listOrder = q.getResultList();
@@ -139,7 +140,7 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
     @Produces({"application/xml", "application/json"})
     public List<ProductOrder> findAllDeliveredOrder(@QueryParam("from") long from, @QueryParam("to") long to) {//select by datetime
         try {
-            Query q = em.createNamedQuery("ProductOrder.findAllDeliveredOrder", Category.class);
+            Query q = em.createNamedQuery("ProductOrder.findAllDeliveredOrder", ProductOrder.class);
             q.setParameter("from", new Date(from*1000));
             q.setParameter("to", new Date(to*1000));            
             List<ProductOrder> listOrder = q.getResultList();
@@ -154,8 +155,8 @@ public class ProductOrderFacadeREST extends AbstractFacade<ProductOrder> {
     @Produces({"application/xml", "application/json"})
     public List<ProductOrder> findMy(@QueryParam("customerId") String customerId, @QueryParam("from") long from, @QueryParam("to") long to) {
         try {
-            Query q = em.createNamedQuery("ProductOrder.findByCustomerId", Category.class);
-            q.setParameter("customerId", customerId);
+            Query q = em.createNamedQuery("ProductOrder.findByCustomerId", ProductOrder.class);
+            q.setParameter("customerId", em.find(Customer.class, customerId));
             q.setParameter("from", new Date(from*1000));
             q.setParameter("to", new Date(to*1000));                
             List<ProductOrder> listOrder = q.getResultList();

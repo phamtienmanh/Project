@@ -38,6 +38,12 @@ angular.module('shopnxApp')
     return obj;
   }])
   
+  .factory('MyRating', ['$resource', function($resource) {
+    var obj = {};
+    obj = $resource('api/rating/searchByCustomer', null, {'update': { method:'PUT' } });
+    return obj;
+  }])
+  
   .factory('Statistics', ['$resource', function($resource) {
     var obj = {};
     obj = $resource('api/rating/:id', null, {'update': { method:'PUT' } });

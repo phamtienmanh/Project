@@ -1,14 +1,65 @@
-<div class="col-md-12">
-<!--<crud-table api='Category' cols='[{"name":"text"},{"info":"text"},{"category":"number"},{"parentCategory":"number"},{"active":"boolean"}]'></crud-table>-->
-
-<crud-table api='Wishlist' 
-            cols='[
-            {"Customer":"wishlistCustomer"}, 
-            {"Product":"wishlistProduct"} 
-            ]' 
-            noadd="true" noedit="true" nodelete="true"
-            user="{{user}}" 
-            gotothis="true" 
-            ></crud-table>
-
+<div class="col-md-12" ng-if="isAdmin()">
+    <crud-table api='Wishlist' 
+                cols='[
+                {"Customer":"wishlistCustomer"}, 
+                {"Product":"wishlistProduct"} 
+                ]' 
+                noadd="true" noedit="true" nodelete="true"
+                ></crud-table>
+</div>
+<div class="col-md-12" ng-if="!isAdmin()">
+    <div class="panel panel-primary" ng-repeat="w in wishlist">
+        <div class="panel-body">
+                        <table class="table" style="margin-bottom: 0 !important">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-2 text-center">
+                                        <a ui-sref="productDetail({id:w.productId.id, name:w.productId.name})">
+                                            <img ng-src="assets/books/{{w.productId.image}}" err-src="assets/images/photo.png" width="70px" />
+                                        </a>
+                                    </td>
+                                    <td class="col-md-8">
+                                        {{w.productId.name}}<br/>
+                                        <span class="text-muted">Author: {{i.productId.author}}</span><br/>
+                                        <span class="text-muted">Quantity: {{i.quantity}}</span><br/>
+                                        <span class="text-muted">Unit Price: {{i.productId.price| currency}}</span>
+                                    </td>
+                                    <td class="col-md-2">
+                                        <span class="text-muted">= {{i.quantity * i.productId.price| currency}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="divider">
+                                    <td></td>
+                                    <td>
+                                        <a ng-show="isAdmin()">
+                                            <i class="fa fa-user"></i>&nbsp;&nbsp; {{o.customerId.name}}&nbsp;</br>
+                                            <i class="fa fa-phone-square"></i>&nbsp;&nbsp; {{o.customerId.phone}}&nbsp;</br>
+                                            <i class="fa fa-truck fa-flip-horizontal"></i>&nbsp;&nbsp; {{o.customerId.address}}</br>
+                                        </a>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr class="divider" ng-if="o.couponId.amount">
+                                    <td></td>
+                                    <td>
+                                        <a>
+                                            <i class="fa fa-money"></i>&nbsp;&nbsp; {{o.couponId.eventName}} coupon discount was applied. Code: {{o.couponId.code}}&nbsp;
+                                        </a>
+                                    </td>
+                                    <td>- {{o.couponId.amount| currency}}</td>
+                                </tr>
+                                <tr class="well" style="margin-bottom: 0 !important">
+                                    <td colspan="1"></td>
+                                    <td class="text-right">Order Total:</td>
+                                    <td colspan="1" ng-if="!o.couponId.amount">
+                                        {{o.subTotal| currency}}
+                                    </td>
+                                    <th colspan="1" ng-if="o.couponId.amount">
+                                        {{o.subTotal -  o.couponId.amount| currency}}
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+    </div>
 </div>

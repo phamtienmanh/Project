@@ -11,18 +11,18 @@
                         <div class="row">
                             <div class="col-md-3 text-right"><h5>Select orders from: </h5></div>
                             <div class="col-md-3">
-                                <span class="input-group" ng-click="popup1.opened = !popup1.opened">
+                                <span class="input-group" >
                                     <input type="text" class="form-control mycalendar" custom-class="getDayClass(date, mode)" datepicker-popup="dd-MM-yyyy" ng-model="dt1" ng-change="loadOrders()" max-date="dt2" is-open="popup1.opened" readonly close-text="Close" />
-                                    <span class="input-group-btn">
+                                    <span class="input-group-btn" ng-click="popup1.opened = !popup1.opened">
                                         <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
                                 </span>
                             </div>
                             <div class="col-md-1 text-right"><h5>To: </h5></div>
                             <div class="col-md-3">
-                                <span class="input-group" ng-click="popup2.opened = !popup2.opened">
+                                <span class="input-group">
                                     <input type="text" class="form-control mycalendar" custom-class="getDayClass(date, mode)" datepicker-popup="dd-MM-yyyy" ng-model="dt2" ng-change="loadOrders()" min-date="dt1" max-date="today" is-open="popup2.opened" readonly close-text="Close" />
-                                    <span class="input-group-btn">
+                                    <span class="input-group-btn" ng-click="popup2.opened = !popup2.opened">
                                         <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
                                 </span>

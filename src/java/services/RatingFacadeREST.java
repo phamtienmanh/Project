@@ -80,7 +80,7 @@ public class RatingFacadeREST extends AbstractFacade<Rating> {
     @Produces({"application/xml", "application/json"})
     public List<Rating> find(@QueryParam("customerId") String customerId, @QueryParam("productId") String productId) {        
         try {
-            Query q = em.createNamedQuery("Rating.findByCustomerAndProduct", Wishlist.class);
+            Query q = em.createNamedQuery("Rating.findByCustomerAndProduct", Rating.class);
             q.setParameter("customerId", em.find(Customer.class, customerId));
             q.setParameter("productId", em.find(Product.class, productId));
             return q.getResultList();
@@ -94,7 +94,7 @@ public class RatingFacadeREST extends AbstractFacade<Rating> {
     @Produces({"application/xml", "application/json"})
     public List<Rating> findByProduct(@QueryParam("productId") String productId) {        
         try {
-            Query q = em.createNamedQuery("Rating.findByProduct", Wishlist.class);
+            Query q = em.createNamedQuery("Rating.findByProduct", Rating.class);
             q.setParameter("productId", em.find(Product.class, productId));
             return q.getResultList();
         } catch (Exception e) {
@@ -107,7 +107,7 @@ public class RatingFacadeREST extends AbstractFacade<Rating> {
     @Produces({"application/xml", "application/json"})
     public List<Rating> findByCustomer(@QueryParam("customerId") String customerId) {        
         try {
-            Query q = em.createNamedQuery("Rating.findByCustomer", Wishlist.class);
+            Query q = em.createNamedQuery("Rating.findByCustomer", Rating.class);
             q.setParameter("customerId", em.find(Customer.class, customerId));
             return q.getResultList();
         } catch (Exception e) {

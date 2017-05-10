@@ -15,20 +15,10 @@
 
                     </div>
                     <hr/>
-                    <div class="form-group" ng-class="{ 'has-success': user_form.email.$valid ,
-                                                    'has-error': user_form.email.$invalid  }">
+                    <div class="form-group" >
                         <label for="name" class="col-sm-3 control-label no-padding-right">Email</label>
                         <div class="col-md-8">
-                            <input ng-model="user.email" name="email" type="email" class="form-control" placeholder="Email" required readonly="true" />
-                            <p class="help-block" ng-show="user_form.email.$error.email && user_form.email.$dirty && !user_form.email.$error.required">
-                                Doesn't look like a valid email.
-                            </p>
-                            <p class="help-block" ng-show="user_form.email.$error.required && user_form.email.$dirty">
-                                What's your email address?
-                            </p>
-                            <p class="help-block" ng-show="user_form.email.$error.mongoose">
-                                {{ errors.email}}
-                            </p> 
+                            <input ng-model="user.email" name="email" type="email" class="form-control" placeholder="Email" required disabled="" />
                         </div>
                     </div>
                     <hr/>

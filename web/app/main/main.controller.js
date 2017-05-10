@@ -111,7 +111,7 @@ angular.module('shopnxApp')
             $scope.$watch('rates', function (newValue, oldValue) {
                 if (newValue.length) {
                     $scope.cusRating = angular.copy(_.find(newValue, {customerId: Auth.getCurrentUser()}));
-                    if ($scope.cusRating.id) {
+                    if ($scope.cusRating && $scope.cusRating.id) {
                         $scope.setRating($scope.cusRating.star);
                     }
                     $scope.avgRate = _.meanBy(newValue, 'star');
@@ -124,7 +124,7 @@ angular.module('shopnxApp')
                 }
             }, true);
             $scope.saveRating = function (message) {
-                if ($scope.cusRating.id) {//update
+                if ($scope.cusRating && $scope.cusRating.id) {//update
                     Rating.update({id: $scope.cusRating.id}, $scope.cusRating).$promise.then(function (resp) {
                         if (resp && resp.message) {
                             toastr.error(resp.message, "Error!");

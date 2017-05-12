@@ -1,14 +1,16 @@
 <link rel="stylesheet" href="bower_components/angular-tablesort/tablesort.css" />
+
 <form name="user_form" class="form-horizontal" role="form">
     <div class="col-md-3"></div>
-    <div class="col-md-6">
-        <hr/>
-        <div class="box" ng-if="user.id">
+    <div class="col-md-6">        
+        <div class="box" ng-if="user.id">            
+            <h3>Profiles</h3>
+            <hr/>
             <!--<form class="form-horizontal" role="form" name="form" novalidate >-->
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="form-group row">
-                        <label for="id" class="col-sm-3 control-label no-padding-right">ID</label>
+                        <label for="id" class="col-md-3 control-label no-padding-right">ID</label>
                         <div class="col-md-8">
                             <input ng-model="user.id" type="text" disabled="" class="form-control" placeholder="ID"/>
                         </div>
@@ -16,7 +18,7 @@
                     </div>
                     <hr/>
                     <div class="form-group" >
-                        <label for="name" class="col-sm-3 control-label no-padding-right">Email</label>
+                        <label for="name" class="col-md-3 control-label no-padding-right">Email</label>
                         <div class="col-md-8">
                             <input ng-model="user.email" name="email" type="email" class="form-control" placeholder="Email" required disabled="" />
                         </div>
@@ -24,7 +26,7 @@
                     <hr/>
                     <div class="form-group" ng-class="{ 'has-success': user_form.name.$valid ,
                                                     'has-error': user_form.name.$invalid  }">
-                        <label for="name" class="col-sm-3 control-label no-padding-right">Name</label>
+                        <label for="name" class="col-md-3 control-label no-padding-right">Name</label>
                         <div class="col-md-8" >
                             <input type="text" name="name" class="form-control" ng-model="user.name" 
                                    ng-minlength="3"
@@ -43,7 +45,7 @@
                     <hr/>
                     <div class="form-group row" ng-class="{ 'has-success': user_form.phone.$valid ,
                                                     'has-error': user_form.phone.$invalid  }" >
-                        <label for="name" class="col-sm-3 control-label no-padding-right">Phone</label>
+                        <label for="name" class="col-md-3 control-label no-padding-right">Phone</label>
                         <div class="col-md-8">
                             <input ng-model="user.phone" name="phone" type="phone" 
                                    ng-pattern="/^(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{3,5}$/" 
@@ -59,7 +61,7 @@
                     <hr/>
                     <div class="form-group row" ng-class="{ 'has-success': user_form.address.$valid ,
                                                     'has-error': user_form.address.$invalid  }" >
-                        <label for="name" class="col-sm-3 control-label no-padding-right">Address</label>
+                        <label for="name" class="col-md-3 control-label no-padding-right">Address</label>
                         <div class="col-md-8">
                             <input ng-model="user.address" name="address" type="text" class="form-control" placeholder="Address" required/>
                             <p class="help-block" ng-show="user_form.address.$error.required && user_form.address.$dirty">

@@ -4,7 +4,7 @@ angular.module('shopnxApp')
         .factory('Modal', ['$rootScope', '$modal', '$q', function ($rootScope, $modal, $q) {
 
                 var obj = {};
-                var selectModalInstanceCtrl = function ($scope, $modalInstance, $injector, data, options, toastr, Category, Role) {
+                var selectModalInstanceCtrl = function ($scope, $modalInstance, $injector, data, options, toastr, Category, Role, Auth) {
                     var api = $injector.get(options.api);
                     $scope.showPassword = false;
                     $scope.data = angular.copy(data);
@@ -108,7 +108,7 @@ angular.module('shopnxApp')
                 };
 
                 // We need to manually inject to be minsafe
-                selectModalInstanceCtrl.$inject = ['$scope', '$modalInstance', '$injector', 'data', 'options', 'toastr', 'Category', 'Role'];
+                selectModalInstanceCtrl.$inject = ['$scope', '$modalInstance', '$injector', 'data', 'options', 'toastr', 'Category', 'Role', 'Auth'];
 
                 obj.show = function (data, options) {
                     var deferred = $q.defer();

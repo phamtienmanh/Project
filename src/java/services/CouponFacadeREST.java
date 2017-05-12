@@ -6,6 +6,7 @@
 package services;
 
 import entities.Coupon;
+import entities.Customer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +32,7 @@ import javax.ws.rs.QueryParam;
 @Stateless
 @Path("coupons")
 public class CouponFacadeREST extends AbstractFacade<Coupon> {
+
     @PersistenceContext(unitName = "BookStoreProjectPU")
     private EntityManager em;
 
@@ -61,22 +63,21 @@ public class CouponFacadeREST extends AbstractFacade<Coupon> {
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
-    public Coupon edit(@PathParam("id") String id, Coupon entity) {        
+    public Coupon edit(@PathParam("id") String id, Coupon entity) {
         try {
             //check if email exist
             Query q = em.createNamedQuery("Coupon.findByCode", Coupon.class);
             q.setParameter("code", entity.getCode());
             //check if code exist
-            Coupon check = (Coupon)q.getSingleResult();
-            if(!check.getId().equals(entity.getId())){
+            Coupon check = (Coupon) q.getSingleResult();
+            if (!check.getId().equals(entity.getId())) {
                 entity.setMessage("This code has already exist!");
-            }
-            else{
+            } else {
                 try {
                     super.edit(entity);
                 } catch (Exception ex) {
                     entity.setMessage("Update coupon info fail, please try again!");
-                } 
+                }
             }
         } catch (Exception e) {
             try {
@@ -103,18 +104,25 @@ public class CouponFacadeREST extends AbstractFacade<Coupon> {
     @GET
     @Path("find")
     @Produces({"application/xml", "application/json"})
-    public List<Coupon> findByCode(@QueryParam("code") String code, @QueryParam("cartValue") double cartValue) {
+    public List<Coupon> findByCode(@QueryParam("code") String code, @QueryParam("cartValue") double cartValue, @QueryParam("customerId") String customerId) {
         Coupon coupon = new Coupon();
         try {
             long timeNow = new Date().getTime();
             Query q = em.createNamedQuery("Coupon.findByCode", Coupon.class);
             q.setParameter("code", code);
-            coupon = (Coupon)q.getSingleResult();
-            if(timeNow < coupon.getFromDate().getTime() || timeNow > coupon.getToDate().getTime()){
+            coupon = (Coupon) q.getSingleResult();            
+            try {
+                Query q2 = em.createNamedQuery("ProductOrder.findByCodeCus", Coupon.class);
+                q2.setParameter("code", coupon);
+                q2.setParameter("customerId", em.find(Customer.class, customerId));
+                q2.getSingleResult();
+                coupon.setMessage("You have used this coupon!");
+            } catch (Exception e) {
+                if (timeNow < coupon.getFromDate().getTime() || timeNow > coupon.getToDate().getTime()) {
                 coupon.setMessage("Your coupon had expired!");
+            } else if (cartValue < coupon.getMinimumCartValue()) {
+                coupon.setMessage("You need at least $" + coupon.getMinimumCartValue() + " in cart value to have this discount applied, buy some  more items!");
             }
-            else if(cartValue < coupon.getMinimumCartValue()){
-                coupon.setMessage("You need at least $"+ coupon.getMinimumCartValue() + " in cart value to have this discount applied, buy some  more items!");
             }
         } catch (Exception e) {
             coupon.setMessage("This coupon is not exist!");
@@ -146,5 +154,5 @@ public class CouponFacadeREST extends AbstractFacade<Coupon> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

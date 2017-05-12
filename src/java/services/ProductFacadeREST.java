@@ -112,7 +112,8 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
             @QueryParam("priceLower") Integer priceLower,
             @QueryParam("categoryIds") List<String> categoryIds,
             @QueryParam("sortColumn") String sortColumn,
-            @QueryParam("sortValue") String sortValue) {
+            @QueryParam("sortValue") String sortValue,
+            @QueryParam("pNameLike") String pNameLike) {
 
         try {
             Query q = em.createNamedQuery("Product.findWhere", Product.class);
@@ -135,6 +136,7 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
                 }
                 q.setParameter("categoryIds", categoryIds);
             }
+            q.setParameter("pNameLike", pNameLike);
             q.setParameter("priceGreater", priceGreater);
             q.setParameter("priceLower", priceLower);
             q.setFirstResult(skip);
@@ -150,7 +152,8 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
     @Produces({"application/xml", "application/json"})
     public List<count> countREST(@QueryParam("priceGreater") Integer priceGreater,
             @QueryParam("priceLower") Integer priceLower,
-            @QueryParam("categoryIds") List<String> categoryIds) {
+            @QueryParam("categoryIds") List<String> categoryIds,
+            @QueryParam("pNameLike") String pNameLike) {
 
         List<count> listC = new ArrayList<count>();
         count c = new count();
@@ -160,6 +163,7 @@ public class ProductFacadeREST extends AbstractFacade<Product> {
                 q = em.createNamedQuery("Product.count1", Product.class);
                 q.setParameter("categoryIds", categoryIds);
             }
+            q.setParameter("pNameLike", pNameLike);
             q.setParameter("priceGreater", priceGreater);
             q.setParameter("priceLower", priceLower);
             c.setCount(((Long) q.getSingleResult()).intValue());

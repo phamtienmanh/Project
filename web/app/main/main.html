@@ -11,7 +11,19 @@
 </div>
 
 <div class="col-md-3">
-
+    <div class="panel panel-default sidebar-menu">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <div class="nav-search" id="nav-search">
+                    <span class="input-icon" style="width: 100%;">
+                        <input placeholder="Filter products by name" class="nav-search-input" ng-model="pNameLike" ng-change="filter()" autocomplete="off" type="text" autofocus style="width:100%">
+                        <i class="search-icon fa fa-search nav-search-icon"></i>
+                    </span>
+                </div>
+            </h3>
+        </div>
+    </div>
+    
     <div class="panel panel-default sidebar-menu">
 
         <div class="panel-heading">
@@ -27,6 +39,7 @@
                         rz-slider-ceil="priceSlider.ceil"
                         rz-slider-model="priceSlider.min"
                         rz-slider-high="priceSlider.max"
+                        rz-slider-step="1"
                         rz-slider-translate="currencyFormatting"
                         rz-slider-on-end="filter()"></rzslider>
 
@@ -36,23 +49,20 @@
             </form>
 
         </div>
-    </div>
+    </div>        
 
     <div class="panel panel-default sidebar-menu">
-
         <div class="panel-heading">
             <h3 class="panel-title">Categories
-                <div class="nav-search" id="nav-search">
-                    <span class="input-icon">
-                        <input placeholder="Filter Categories ..." class="nav-search-input" ng-model="filterCat" autocomplete="off" type="text" autofocus style="width:100%">
-                        <i class="search-icon fa fa-search nav-search-icon"></i>
-                    </span>
-                </div>
+                <!--                <div class="nav-search" id="nav-search">
+                                    <span class="input-icon">
+                                        <input placeholder="Filter Categories ..." class="nav-search-input" ng-model="filterCat" autocomplete="off" type="text" autofocus style="width:100%">
+                                        <i class="search-icon fa fa-search nav-search-icon"></i>
+                                    </span></br></br>                  
+                                </div>-->
             </h3>
         </div>
-
-        <div class="panel-body brand-filter-panel">
-
+        <div class="panel-body brand-filter-panel hidescroll">
             <form>
                 <div class="form-group">
                     <div class="checkbox" ng-repeat="cat in categories| filter:filterCat" style="position: relative">
@@ -63,7 +73,6 @@
                     </div>
                 </div>
             </form>
-
         </div>
     </div>
 
@@ -76,7 +85,6 @@
             <div class="col-sm-12 col-md-5 products-showing">
                 Showing {{products.items.length}} products of {{products.count}} in: $<strong>{{priceSlider.min}}</strong> &nbsp;-&nbsp; $<strong>{{priceSlider.max}}</strong>
             </div>
-
             <div class="col-sm-12 col-md-7 text-right products-number-sort">
                 <div class="row">
                     <form class="form-inline">
@@ -155,7 +163,7 @@
                         </div>
                         <div class="btn-group"  ng-show="checkCart(product.id)">
                             <button  class="btn btn-primary btn-mycart"
-                                     ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, 1, product.image, product.category, product);"                                                  
+                                     ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, 1, product.image, product.categoryId, product);"                                                  
                                      ng-disabled="product.quantity == 0"><i class="fa fa-shopping-cart"></i>Add to cart</button>                                    
                         </div>                                    
                     </div>

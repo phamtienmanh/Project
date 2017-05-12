@@ -112,14 +112,14 @@ em {
 }
 
 .modal.fade.in .modal-dialog {
-/*    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -ms-transform: scale(1);
-    transform: scale(1);
-    -webkit-transform: translate3d(0, -300px, 0);
-    transform: translate3d(0, -300px, 0);
-    opacity: 1;*/
-    
+    /*    -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+        -webkit-transform: translate3d(0, -300px, 0);
+        transform: translate3d(0, -300px, 0);
+        opacity: 1;*/
+
     opacity: 1;
     -webkit-transition: all .4s cubic-bezier(.25,.8,.25,1);
     transition: all .4s cubic-bezier(.25,.8,.25,1);
@@ -248,5 +248,24 @@ em {
     right: 0;
     top: -8px;
     font-size: 1.2em;
-    color: rgb(255,87,34);
+    color: rgb(33,150,243);
+}
+.hidescroll::-webkit-scrollbar { 
+    display: none;       
+}
+.hidescroll{
+    overflow-y: scroll;  
+    max-height: 440px;
+}
+.rating-good {
+    font-size: 1.3em;
+    color: rgb(33,150,243);
+    background-color: rgb(187,222,251) !important;
+    padding: 1px 6px 1px 0px;
+    border-radius: 4px;
+}
+.rating-bad {
+    font-size: 1.3em;
+    color: rgb(255,87,34) !important;
+    background-color: rgb(255,204,188) !important;
 }

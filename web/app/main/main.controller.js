@@ -102,7 +102,7 @@ angular.module('shopnxApp')
             }
 
             $scope.rates = [];
-            $scope.cusRating = {customerId: Auth.getCurrentUser(),productId: $scope.product};
+            $scope.cusRating = {customerId: Auth.getCurrentUser(), productId: $scope.product};
             Rating.searchByProduct.query({
                 productId: productId
             }, function (res) {
@@ -110,8 +110,8 @@ angular.module('shopnxApp')
             });
             $scope.$watch('rates', function (newValue, oldValue) {
                 if (newValue.length) {
-                    $scope.cusRating = angular.copy(_.find(newValue, {customerId: Auth.getCurrentUser()}));
-                    if ($scope.cusRating && $scope.cusRating.id) {
+                    if (_.find(newValue, {customerId: Auth.getCurrentUser()})) {
+                        $scope.cusRating = angular.copy(_.find(newValue, {customerId: Auth.getCurrentUser()}));
                         $scope.setRating($scope.cusRating.star);
                     }
                     $scope.avgRate = _.meanBy(newValue, 'star');
@@ -214,6 +214,7 @@ angular.module('shopnxApp')
                 $scope.fl.categories.push($stateParams.myCategory);
             }
             $scope.priceSlider = {};
+            $scope.pNameLike = '';
             $scope.navigate = function (page, params) {
                 // var params = params.delete('$$hashKey');
                 if (page === 'sort') {
@@ -262,6 +263,7 @@ angular.module('shopnxApp')
                 q.priceGreater = $scope.priceSlider.min;
                 q.priceLower = $scope.priceSlider.max;
                 q.categoryIds = categoryIds;
+                q.pNameLike = '%' + $scope.pNameLike + '%';
 
                 // console.log(f,q);
                 displayProducts(q, true);
@@ -310,12 +312,26 @@ angular.module('shopnxApp')
             $scope.resetPriceRange = function () {
                 $scope.priceSlider = {
                     min: 0,
-                    max: 100,
+                    max: 50,
                     ceil: 100,
-                    floor: 0
+                    floor: 0,
+                    step: 1
                 };
                 $scope.filter();
             };
+
+            $scope.$watch('priceSlider', function (newValue, oldValue) {
+                if (newValue === oldValue)
+                    return;
+                if (newValue.max == newValue.ceil && newValue.ceil < 2000) {
+                    newValue.ceil = newValue.ceil + 10;
+                    return;
+                }
+                if (newValue.ceil >= 200 && newValue.max < (newValue.ceil - 100)) {
+                    newValue.ceil = (newValue.ceil-100)<200?100:(newValue.ceil-100);
+                    return;
+                }
+            }, true);
 
             if ('page' in $stateParams) {
                 var categoryId;

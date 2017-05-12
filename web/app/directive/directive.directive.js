@@ -19,10 +19,22 @@ angular.module('shopnxApp')
                             angular.forEach(o, function (v, k) {
                                 var v1;
                                 if (v === 'number' || v === 'float' || v === 'integer' || v === 'currency') {
-                                    v1 = 'parseFloat';
+                                    v1 = k+'| parseFloat';
+                                }
+                                else if(v === 'percent'){
+                                    v1 = 'amount| parseFloat';
+                                }
+                                else if(v === 'wishlistCustomer'){
+                                    v1 = 'customerId.name';
+                                }
+                                else if(v === 'wishlistProduct'){
+                                    v1 = 'productId.name';
+                                }
+                                else if(v === 'selectRole'){
+                                    v1 = 'roleId.name';
                                 }
                                 else {
-                                    v1 = 'lowercase';
+                                    v1 = k+'| lowercase';
                                 }
                                 obj.push({heading: k, dataType: v, sortType: v1});
                             });
@@ -101,6 +113,13 @@ angular.module('shopnxApp')
                         scope.$on('$destroy', function () {
                             socket.unsyncUpdates(attrs.api.toLowerCase());
                         });
+                        
+                        scope.checkRole = function(p){
+                            if(p.id == '1' && p.name == 'admin'){
+                                return true;
+                            }
+                            return false;
+                        }
                     }
                 };
             }])

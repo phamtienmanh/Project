@@ -34,12 +34,15 @@
           <thead>
               <tr>
                 <th>#</th>
-                <th ng-repeat="c in cols" ts-criteria="{{c.heading}} | {{c.sortType}}" ng-if="c.heading=='name'" ts-default>
+                <th ng-repeat="c in cols" ts-criteria="{{c.sortType}}" ng-if="c.heading=='name'" ts-default>
                   {{c.heading | labelCase}}
                 </th>
-                <th ng-repeat="c in cols" ts-criteria="{{c.heading}} | {{c.sortType}}" ng-if="c.heading!='name'">
+                <th ng-repeat="c in cols" ts-criteria="{{c.sortType}}" ng-if="c.heading!='name'">
                   {{c.heading | labelCase}}
                 </th>
+<!--                <th ng-repeat="c in cols" ts-criteria="{{c.sortType}}" ng-if="c.heading!='name' && (c.dataType=='wishlistCustomer'|| c.dataType=='wishlistProduct')">
+                  {{c.heading | labelCase}}
+                </th>-->
                 <th ng-if="!noedit && !nodelete " >
                     Edit / Remove
                 </th>
@@ -49,6 +52,7 @@
                 <th ng-if="noedit && !nodelete " >
                     Remove
                 </th>
+                <th ng-if="noedit && nodelete" ></th>
                 <th ng-if="gotothis"></th>
               </tr>
           </thead>
@@ -72,8 +76,11 @@
                       <span ng-switch-when="currency">
                         {{p[c.heading] | currency}}
                       </span>
+                      <span ng-switch-when="price">
+                        {{p[c.heading] | currency}}
+                      </span>
                       <span ng-switch-when="image">
-                        <img ng-src="assets/books/{{p.image}}"/>
+                        <img class="productimg" ng-src="assets/books/{{p.image}}"/>
                       </span>
                       <span ng-switch-when="password">
                         ******
@@ -87,6 +94,9 @@
                       <span ng-switch-when="wishlistProduct">
                         {{p.productId.name}}
                       </span>
+                      <span ng-switch-when="percent">
+                        {{p.amount}}%
+                      </span>
                       <span ng-switch-default>
                           {{p[c.heading]}}
                       </span>
@@ -94,8 +104,8 @@
                   <td>
                       <div class="btn-group">
                         <a class="btn btn-default btn-sm btn-link" href="product/{{p.productId.id}}" ng-if="gotothis">Go to this product<i class="fa fa-arrow-right"></i></a>
-                        <a class="btn btn-default btn-sm btn-default" ng-click="edit(p);" ng-if="!noedit"><i class="fa fa-edit"></i></a>
-                        <a class="btn btn-default btn-sm btn-danger" ng-confirm-message="Are you sure to delete {{p.name}}?" ng-confirm-click="delete(p)" item="p" ng-if="!nodelete"><i class="fa fa-trash-o"></i></a>
+                        <a class="btn btn-default btn-sm btn-default" ng-click="edit(p);" ng-if="!noedit" ng-hide="checkRole(p)"><i class="fa fa-edit"></i></a>
+                        <a class="btn btn-default btn-sm btn-danger" ng-confirm-message="Are you sure to delete {{p.name}}?" ng-confirm-click="delete(p)" item="p" ng-if="!nodelete" ng-hide="checkRole(p)"><i class="fa fa-trash-o"></i></a>
                       </div>
                   </td>
               </tr>

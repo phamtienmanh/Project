@@ -56,7 +56,7 @@
                                 <tr ng-repeat="i in o.orderDetailCollection" >
                                     <td class="col-md-2 text-center">
                                         <a ui-sref="productDetail({id:i.productId.id, name:i.productId.name})">
-                                            <img ng-src="assets/books/{{i.productId.image}}" err-src="assets/images/photo.png" width="70px" />
+                                            <img class="productimg" ng-src="assets/books/{{i.productId.image}}" err-src="assets/images/photo.png" width="70px" />
                                         </a>
                                     </td>
                                     <td class="col-md-8">
@@ -84,19 +84,19 @@
                                     <td></td>
                                     <td>
                                         <a>
-                                            <i class="fa fa-money"></i>&nbsp;&nbsp; {{o.couponId.eventName}} coupon discount was applied. Code: {{o.couponId.code}}&nbsp;
+                                            <i class="fa fa-money"></i>&nbsp;&nbsp; {{o.couponId.eventName}} coupon discount was applied. Code: {{o.couponId.code}}. Discount {{o.couponId.amount}}%&nbsp;
                                         </a>
                                     </td>
-                                    <td>- {{o.couponId.amount| currency}}</td>
+                                    <td>- {{o.subTotal * o.couponId.amount / 100| currency}}</td>
                                 </tr>
                                 <tr class="well" style="margin-bottom: 0 !important">
-                                    <td colspan="1"></td>
+                                    <td class="text-center" colspan="1">{{ o.id | limitTo:11}}</td>
                                     <td class="text-right">Order Total:</td>
                                     <td colspan="1" ng-if="!o.couponId.amount">
                                         {{o.subTotal| currency}}
                                     </td>
                                     <th colspan="1" ng-if="o.couponId.amount">
-                                        {{o.subTotal -  o.couponId.amount| currency}}
+                                        {{o.subTotal -  o.subTotal * o.couponId.amount / 100| currency}}
                                     </th>
                                 </tr>
                             </tbody>

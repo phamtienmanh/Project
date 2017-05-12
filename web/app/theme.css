@@ -1712,6 +1712,9 @@ button:disabled, .btn[disabled]{
 }
 .myTitle {
     margin-top: -15px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 /*override angular-material.css*/
 html, body {

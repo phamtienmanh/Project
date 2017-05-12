@@ -1,0 +1,86 @@
+<link rel="stylesheet" href="bower_components/angular-tablesort/tablesort.css" />
+<form name="user_form" class="form-horizontal" role="form">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <hr/>
+        <div class="box" ng-if="user.id">
+            <!--<form class="form-horizontal" role="form" name="form" novalidate >-->
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label for="id" class="col-sm-3 control-label no-padding-right">ID</label>
+                        <div class="col-md-8">
+                            <input ng-model="user.id" type="text" disabled="" class="form-control" placeholder="ID"/>
+                        </div>
+
+                    </div>
+                    <hr/>
+                    <div class="form-group" >
+                        <label for="name" class="col-sm-3 control-label no-padding-right">Email</label>
+                        <div class="col-md-8">
+                            <input ng-model="user.email" name="email" type="email" class="form-control" placeholder="Email" required disabled="" />
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="form-group" ng-class="{ 'has-success': user_form.name.$valid ,
+                                                    'has-error': user_form.name.$invalid  }">
+                        <label for="name" class="col-sm-3 control-label no-padding-right">Name</label>
+                        <div class="col-md-8" >
+                            <input type="text" name="name" class="form-control" ng-model="user.name" 
+                                   ng-minlength="3"
+                                   required placeholder="Your name"/>
+
+                        <p class="help-block" ng-show="user_form.name.$error.required && user_form.name.$dirty">
+                            A name is required.
+                        </p>
+                        <span class="help-block" ng-show="user_form.name.$error.minlength && user_form.name.$dirty && !user_form.name.$error.required">
+                            Name must be at least 3 character.
+                        </span>
+                        </div>
+                    </div>
+
+
+                    <hr/>
+                    <div class="form-group row" ng-class="{ 'has-success': user_form.phone.$valid ,
+                                                    'has-error': user_form.phone.$invalid  }" >
+                        <label for="name" class="col-sm-3 control-label no-padding-right">Phone</label>
+                        <div class="col-md-8">
+                            <input ng-model="user.phone" name="phone" type="phone" 
+                                   ng-pattern="/^(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{3,5}$/" 
+                                   class="form-control" placeholder="Phone" required/>
+                            <p class="help-block" ng-show="user_form.phone.$error.required && user_form.phone.$dirty">
+                                Phone number is required
+                            </p>
+                            <span class="help-block" ng-show="user_form.$error.pattern && user_form.$dirty && !user_form.$error.required">
+                                Phone can only contain numbers and letter -<br/>
+                            </span>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="form-group row" ng-class="{ 'has-success': user_form.address.$valid ,
+                                                    'has-error': user_form.address.$invalid  }" >
+                        <label for="name" class="col-sm-3 control-label no-padding-right">Address</label>
+                        <div class="col-md-8">
+                            <input ng-model="user.address" name="address" type="text" class="form-control" placeholder="Address" required/>
+                            <p class="help-block" ng-show="user_form.address.$error.required && user_form.address.$dirty">
+                                Shipping address is required
+                            </p>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-info" ng-disabled="user_form.$invalid" ng-click="save(user);" ng-if="user != null"  ><i class="fa fa-save"></i> &nbsp;Save</button>
+                    </div>
+
+
+                </div>
+            </div>
+            <hr/>
+            <div class="clearfix"></div>
+            <!--</form>-->
+        </div>
+
+
+    </div>
+
+
+</form>

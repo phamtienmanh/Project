@@ -135,6 +135,7 @@ angular.module('shopnxApp')
         var coupon = {};
         var status = '';
         var total = 0;
+        var couponAmount = 0;
         for (var i = 0; i < order.orderDetailCollection.length; i++) {
             var item = order.orderDetailCollection[i].productId;
             var quantity = order.orderDetailCollection[i].quantity;
@@ -147,9 +148,10 @@ angular.module('shopnxApp')
             totalPrice = Math.round(parseFloat(totalPrice)* 100 )/100;
             
         }
-        total = totalPrice - (totalPrice*coupon.amount)/100 ;
+        couponAmount = (totalPrice*coupon.amount)/100 ;
+        total = totalPrice - couponAmount ;
         total = Math.round(parseFloat(total)* 100 )/100 ;
-        
+         
         var docDefinition = {
             info: {
                 title: 'Order',
@@ -166,7 +168,7 @@ angular.module('shopnxApp')
                     
                 table(dataOrder,  ['name', 'quantity', 'price', 'amount']),
                 
-                {text: 'Discount: ' + coupon.amount + '%', style: 'subheader'},
+                {text: 'Discount: ' + coupon.amount + '% - ' + couponAmount , style: 'subheader'},
                 {text: 'Total Amount: $' + total, style: 'subheader'},
                 {text: 'Status: ' + status, style: 'subheader'},
 

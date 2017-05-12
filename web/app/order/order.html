@@ -91,6 +91,9 @@
                                 </tr>
                                 <tr class="well" style="margin-bottom: 0 !important">
                                     <td colspan="1"></td>
+                                    <td class="text-right" >
+                                        <a href="#" ng-show="isAdmin()"ng-click="export(o)">Bill</a>
+                                    </td>
                                     <td class="text-right">Order Total:</td>
                                     <td colspan="1" ng-if="!o.couponId.amount">
                                         {{o.subTotal| currency}}

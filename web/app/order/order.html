@@ -69,10 +69,10 @@
                                         <span class="text-muted">= {{i.quantity * i.productId.price| currency}}</span>
                                     </td>
                                 </tr>
-                                <tr class="divider">
+                                <tr class="divider" ng-show="isAdmin()">
                                     <td></td>
                                     <td>
-                                        <a ng-show="isAdmin()">
+                                        <a>
                                             <i class="fa fa-user"></i>&nbsp;&nbsp; {{o.customerId.name}}&nbsp;</br>
                                             <i class="fa fa-phone-square"></i>&nbsp;&nbsp; {{o.customerId.phone}}&nbsp;</br>
                                             <i class="fa fa-truck fa-flip-horizontal"></i>&nbsp;&nbsp; {{o.customerId.address}}</br>

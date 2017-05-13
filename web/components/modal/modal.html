@@ -148,7 +148,7 @@
                     Image extension is not valid, only .png .jpg .bmp are accepted
                 </span>
                 <br/>
-                <span><img ng-src="assets/books/{{data.image}}" 
+                <span><img class="productimg" ng-src="assets/books/{{data.image}}" 
                            style="max-width: 100px" alt="" class="img-responsive"/></span>
             </div>
             <div class="col-sm-7"
@@ -169,11 +169,30 @@
                 </span>
             </div>
             <div class="col-sm-7"
+                 ng-switch-when="percent">
+                <span class="block input-icon input-icon-right">
+                    <input type="text"
+                           class="form-control"
+                           name="{{i.heading}}"
+                           ng-model="data.amount"                             
+                           ng-pattern="/^[1-9][0-9]?$|^100$/" required                             
+                           placeholder="Discount percent"
+                           min='0'
+                           max='100'/>
+                    <span class="help-block" ng-show="modalform[i.heading].$error.required && modalform[i.heading].$dirty">
+                        Discount percent is required
+                    </span>
+                    <span class="help-block" ng-show="modalform[i.heading].$error.pattern && modalform[i.heading].$dirty && !modalform[i.heading].$error.required">
+                        Discount percent must be a positive integer number from 1 to 100
+                    </span>
+                </span>
+            </div>
+            <div class="col-sm-7"
                  ng-switch-when="fromDate">
                 <span class="block input-icon input-icon-right">
-                    <span class="input-group" ng-click="popup1.opened = !popup1.opened">
-                        <input type="text" class="form-control mycalendar" custom-class="getDayClass(date, mode)" datepicker-popup="dd-MM-yyyy" ng-model="data.fromDate" max-date="data.toDate" is-open="popup1.opened" readonly close-text="Close" />
-                      <span class="input-group-btn">
+                    <span class="input-group">
+                        <input type="text" class="form-control mycalendar" custom-class="getDayClass(date, mode)" datepicker-popup="dd-MM-yyyy" ng-model="data.fromDate" min-date="today" max-date="data.toDate" is-open="popup1.opened" readonly close-text="Close" />
+                      <span class="input-group-btn" ng-click="popup1.opened = !popup1.opened">
                         <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
                       </span>
                     </span>
@@ -182,9 +201,9 @@
             <div class="col-sm-7"
                  ng-switch-when="toDate">
                 <span class="block input-icon input-icon-right">
-                    <span class="input-group" ng-click="popup2.opened = !popup2.opened">
+                    <span class="input-group">
                         <input type="text" class="form-control mycalendar" custom-class="getDayClass(date, mode)" datepicker-popup="dd-MM-yyyy" ng-model="data.toDate" min-date="data.fromDate" is-open="popup2.opened" readonly close-text="Close" />
-                      <span class="input-group-btn">
+                      <span class="input-group-btn" ng-click="popup2.opened = !popup2.opened">
                         <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
                       </span>
                     </span>

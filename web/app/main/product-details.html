@@ -20,17 +20,16 @@
             <div class="panel panel-default sidebar-menu">              
                 <div class="panel-heading">
                     <h3 class="panel-title">Categories
-                        <div class="nav-search" id="nav-search">
-                            <span class="input-icon">
-                                <input placeholder="Filter Categories ..." class="nav-search-input" ng-model="filterCat" autocomplete="off" type="text" autofocus style="width:100%">
-                                <i class="search-icon fa fa-search nav-search-icon"></i>
-                            </span>
-                        </div>
+                        <!--                        <div class="nav-search" id="nav-search">
+                                                    <span class="input-icon">
+                                                        <input placeholder="Filter Categories ..." class="nav-search-input" ng-model="filterCat" autocomplete="off" type="text" autofocus style="width:100%">
+                                                        <i class="search-icon fa fa-search nav-search-icon"></i>
+                                                    </span>
+                                                </div>-->
                     </h3>
                 </div>
 
-                <div class="panel-body brand-filter-panel">
-
+                <div class="panel-body brand-filter-panel hidescroll">
                     <form>
                         <div class="form-group">
                             <div class="checkbox" ng-repeat="cat in categories| filter:filterCat" style="position: relative">
@@ -42,7 +41,6 @@
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
 
@@ -95,7 +93,7 @@
                             </div>
                             <div class="btn-group" ng-show="checkCart(product.id)">
                                 <button  class="btn btn-primary btn-mycart"
-                                         ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, 1, product.image, product.category, product);" 
+                                         ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, 1, product.image, product.categoryId, product);" 
                                          ng-disabled="product.quantity == 0"><i class="fa fa-shopping-cart"></i>Add to cart</button>
                             </div>
 
@@ -115,9 +113,9 @@
 
                         <div class="row" style="margin-bottom: -10px"
                              ng-if="isLoggedIn() && rates.length">
-                            <div class="ratehead">
+                            <div class="ratehead checkbox">
                                 {{avgRate| number:1}} <i class="fa fa-star"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <span style="font-size: 16px">{{rates.length}} Ratings & Reviews</span>
+                                <label style="font-size: 16px" data-toggle="modal" data-target="#rateModal">{{rates.length}} Ratings & Reviews</label>
                             </div>
                             <div class="col-md-8">
                                 <div class="" ng-repeat="star in starsArray| reverse" style="position: relative;">
@@ -222,5 +220,28 @@
                 </div>     
             </div>
         </div>        
+    </div>
+</div>
+
+<div class="modal fade messagemodal" id="rateModal" role="dialog" tabindex="-1">     
+    <div class="modal-dialog rating"> 
+        <div class="md-dialog md-transition-in">
+            <div class="layout-row">
+                <div class="modal-content layout-column flex hidescroll">
+                    <h4 class="text-center">Customer's Rating & Review</h4>
+                    <div class="wishlistpanel" ng-repeat="rate in rates| orderBy: 'star': reverse">
+                        <div class="panel-body" style="">
+                            <a>
+                                <i class="fa fa-user"></i>&nbsp;{{rate.customerId.name}}&nbsp;</br>
+                            </a>
+                            <div style="overflow: auto">
+                                <span class="rating-good text-center" ng-class="{'rating-bad': rate.star == '1'||rate.star == '2'}">&nbsp;&nbsp;{{rate.star}} <i class="fa fa-star"></i></span>
+                                &nbsp;{{rate.comment}}
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

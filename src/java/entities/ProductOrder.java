@@ -40,7 +40,8 @@ import javax.xml.bind.annotation.XmlType;
     @NamedQuery(name = "ProductOrder.findByCustomerId", query = "SELECT p FROM ProductOrder p WHERE p.customerId = :customerId AND p.date >= :from AND p.date <= :to"),
     @NamedQuery(name = "ProductOrder.findByDate", query = "SELECT p FROM ProductOrder p WHERE p.date = :date"),
     @NamedQuery(name = "ProductOrder.findByStatus", query = "SELECT p FROM ProductOrder p WHERE p.status = :status"),
-    @NamedQuery(name = "ProductOrder.updateStatus", query = "UPDATE ProductOrder p SET p.status = :status WHERE p.id = :id")
+    @NamedQuery(name = "ProductOrder.updateStatus", query = "UPDATE ProductOrder p SET p.status = :status WHERE p.id = :id"),
+    @NamedQuery(name = "ProductOrder.findByCodeCus", query = "SELECT p FROM ProductOrder p WHERE p.customerId = :customerId AND p.couponId = :code"),
 })
 public class ProductOrder implements Serializable {
     @JoinColumn(name = "coupon_id", referencedColumnName = "_id")

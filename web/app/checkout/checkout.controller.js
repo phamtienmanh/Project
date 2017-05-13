@@ -2,7 +2,7 @@
 
 angular.module('shopnxApp')
         .controller('CheckoutCtrl', function ($scope, Order, PaymentMethod, Shipping, Coupon, Country, Auth, Cart, $state, toastr) {
-            $scope.msg = 'No items in cart. Shop Now';
+            $scope.msg = 'Your cart is empty. Shop Now';
             $scope.couponCode = '';
             $scope.customer = Auth.getCurrentUser();
             $scope.coupon = {};
@@ -30,7 +30,7 @@ angular.module('shopnxApp')
             };
 
             $scope.checkCoupon = function (code, cartValue) {
-                Coupon.find.query({code: code, cartValue: cartValue}, function (res) {
+                Coupon.find.query({code: code, cartValue: cartValue, customerId: $scope.customer.id}, function (res) {
                     $scope.coupon = res[0];
                 });
             };

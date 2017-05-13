@@ -95,9 +95,9 @@
                                     <td colspan="1" ng-if="!o.couponId.amount">
                                         {{o.subTotal| currency}}
                                     </td>
-                                    <th colspan="1" ng-if="o.couponId.amount">
-                                        {{o.subTotal -  o.subTotal * o.couponId.amount / 100| currency}}
-                                    </th>
+                                    <td colspan="1" ng-if="o.couponId.amount">
+                                        {{o.subTotal -  o.subTotal * o.couponId.amount / 100| currency}}&nbsp;&nbsp;<a href="#" ng-show="isAdmin()"ng-click="export(o)">Print Bill</a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

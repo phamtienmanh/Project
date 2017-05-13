@@ -90,16 +90,20 @@ angular.module('shopnxApp')
             var col = [];
             for (var i = 0, max = columns.length; i < max; i++) {
                     if (columns[i]=='name') {
-                        col.push('Product Name');
+                        var colData= {text: 'Product Name', style: 'tableHeader' ,  alignment:'left' };
+                        col.push(colData);
                     }
                     else if (columns[i]=='quantity') {
-                        col.push('Quantity');
+                        var colData= {text: 'Quantity', style: 'tableHeader' ,  alignment:'right' };
+                        col.push(colData);
                     } 
                     else if (columns[i]=='price') {
-                        col.push('Price');
+                        var colData= {text: 'Price', style: 'tableHeader' ,  alignment:'right' };
+                        col.push(colData);
                     } 
                     else if (columns[i]=='amount') {
-                        col.push('Amount');
+                        var colData= {text: 'Amount', style: 'tableHeader' ,  alignment:'right' };
+                        col.push(colData);
                     } 
             }
             body.push(col);
@@ -108,7 +112,21 @@ angular.module('shopnxApp')
                 var dataRow = [];
 
                 columns.forEach(function(column) {
-                    dataRow.push(row[column].toString());
+                    var colValue = row[column].toString(); // column data
+                    // Edit column style
+                    var col= {text: colValue, style: 'normalText' , alignment:'left' };
+                    if (column=='name') {
+                    }
+                    else if (column=='quantity') {
+                        col= {text: colValue, style: 'normalText' , alignment:'right' };
+                    } 
+                    else if (column=='price') {
+                        col= {text: colValue, style: 'normalText' , alignment:'right' };
+                    } 
+                    else if (column=='amount') {
+                        col= {text: colValue, style: 'normalText' , alignment:'right' };
+                    } 
+                    dataRow.push(col);
                 });
                 
 
@@ -122,34 +140,39 @@ angular.module('shopnxApp')
             return {
                 table: {
                     alignment: 'center',
-                    width: ['25%','25%','25%','25%'],
+                    widths: ['70%','10%','10%','10%'],
                     headerRows: 1,
                     body: buildTableBody(data, columns),
                     
-                }
+                },
+                layout: 'lightHorizontalLines' 
             };
         }
         var dataOrder = [];
         var dataColumns = [];
-        var totalPrice = 0;
-        var coupon = {};
+        var totalAmount = 0;
+        var coupon = {code: 'No code' , amount: 0};
         var status = '';
         var total = 0;
-        var couponAmount = 0;
+        var discount = 0;
+        var customer = {};
         for (var i = 0; i < order.orderDetailCollection.length; i++) {
             var item = order.orderDetailCollection[i].productId;
             var quantity = order.orderDetailCollection[i].quantity;
             var amount = quantity*item.price;
-            coupon = order.couponId;
+            if (order.couponId) {
+                coupon = order.couponId;
+            }
             status = order.status ;
+            customer = order.customerId;
             var row = {name: item.name, quantity: quantity, price: item.price, amount: amount};
             dataOrder.push(row);
-            totalPrice += parseFloat(amount);
-            totalPrice = Math.round(parseFloat(totalPrice)* 100 )/100;
+            totalAmount += parseFloat(amount);
+            totalAmount = Math.round(parseFloat(totalAmount)* 100 )/100;
             
         }
-        couponAmount = (totalPrice*coupon.amount)/100 ;
-        total = totalPrice - couponAmount ;
+        discount = (totalAmount*coupon.amount)/100 ;
+        total = totalAmount - discount ;
         total = Math.round(parseFloat(total)* 100 )/100 ;
          
         var docDefinition = {
@@ -162,17 +185,71 @@ angular.module('shopnxApp')
             content: [
                 { width: '*', text: '' },
                 
-                {text: 'THANK YOU', style: 'header', alignment:'center'},
-                {text: 'Order #'+order.id, style: 'subheader'},
+                {text: 'THANK YOU', style: 'header', alignment:'center' },
+                {text: 'Customer Information ' , style: 'subheader' , alignment:'left' , italics: 'true'},
+                {text: 'Name: ' + customer.name , style: 'normalText' ,  alignment:'left'},
+                {text: 'Phone: ' + customer.phone  , style: 'normalText' , alignment:'left'},
+                {text: 'Shipping Address: ' + customer.address  , style: 'normalText' , alignment:'left'},
+                {text: '\n' },
+                {text: 'Order #'+   order.id.toString().substring(0,7),  style: 'subheader' },
                 
                     
                 table(dataOrder,  ['name', 'quantity', 'price', 'amount']),
-                
-                {text: 'Discount: ' + coupon.amount + '% - ' + couponAmount , style: 'subheader'},
-                {text: 'Total Amount: $' + total, style: 'subheader'},
-                {text: 'Status: ' + status, style: 'subheader'},
+                {text: '\n' },
+                {
+                    table: {
+                        alignment: 'center',
+                        widths: ['100%'],
+                        body: [
+                            // row 1
+                            [
+                                {text: 'Total Amount: $' + totalAmount , style: 'normalText' , alignment:'right'}
+                            ],
+                            // row 2
+                            [
+                                {text: 'Coupon: ' + coupon.code + ' - Discount: ' + coupon.amount + '% - $' + discount , style: 'normalText' , alignment:'right'}
+                            ],
+                            // row 3
+                            [
+                                {text: 'Total Amount After Discount: $' + total, style: 'normalText' , alignment:'right'}
+                            ]
+                        ]
+                    },
+                    layout: 'noBorders' ,
+                },
+                {text: '\n\n' },
+                {text: '----------------- UNICORN BOOK STORE -----------------' , alignment:'center'},
+//                {text: 'Status: ' + status, style: 'subheader', alignment:'right'},
 
-            ]
+            ],
+            styles: {
+		header: {
+			fontSize: 30,
+			bold: true,
+                        italics: 'true' ,
+			margin: [0, 0, 0, 10] ,
+                        color: '#3C59AB'
+		},
+		subheader: {
+			fontSize: 16,
+			bold: true,
+                        italics: 'true' ,
+			margin: [0, 10, 0, 5] ,
+                        color: '#32AB45' 
+		},
+		tableExample: {
+			margin: [0, 5, 0, 15]
+		},
+		tableHeader: {
+			bold: true,
+                        italics: 'true' ,
+			fontSize: 13,
+			color: '#6231AB'
+		},
+                normalText: {
+                    color: 'black'
+                }
+            },
         };
         
         var docPdf = PdfService.create(docDefinition);

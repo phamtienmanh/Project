@@ -1,22 +1,22 @@
 'use strict';
 
 angular.module('shopnxApp', [
-    'ngCookies',
-    'ngResource',
-    'ngAnimate',
-    'toastr',
-    'ngSanitize',
-    'btford.socket-io',
-    'ui.router',
-    'ui.bootstrap',
-    'tableSort',
-    'checklist-model',
-    'rzModule',
-    'infinite-scroll',
-    'darthwade.dwLoading',
-    'angularMoment',
-    'ui.select',
-    'chart.js'
+  'ngCookies',
+  'ngResource',
+  'ngAnimate',
+  'toastr',
+  'ngSanitize',
+  'btford.socket-io',
+  'ui.router',
+  'ui.bootstrap',
+  'tableSort',
+  'checklist-model',
+  'rzModule',
+  'infinite-scroll',
+  'darthwade.dwLoading',
+  'angularMoment',
+  'ui.select',
+  'chart.js'
 ]).constant('_', window._)
         .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $qProvider) {
             $urlRouterProvider

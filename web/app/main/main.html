@@ -151,13 +151,13 @@
                         <h5 ng-if="product.quantity == 0" class="help-block">Out of stock</h5>
                         <p class="buttons"></p>
                         <button ui-sref="productDetail({id:product.id, name:product.name})" 
-                                class="btn btn-default">View detail</button>
+                                class="btn btn-default btn-sd">View detail</button>
                         <div class="btn-group" 
                              ng-hide="checkCart(product.id)">                                      
-                            <button class="btn btn-info"
+                            <button class="btn btn-info btn-sd"
                                     ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, -1)">&nbsp;-</button>
-                            <button class="btn btn-info">{{getQuantity(product.id);}}</button>
-                            <button class="btn btn-info"
+                            <button class="btn btn-info btn-sd">{{getQuantity(product.id);}}</button>
+                            <button class="btn btn-info btn-sd"
                                     ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, +1)" 
                                     ng-disabled="getQuantity(product.id) >= product.quantity">+</button>
                         </div>
@@ -165,7 +165,7 @@
                             <button  class="btn btn-primary btn-mycart"
                                      ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, 1, product.image, product.categoryId, product);"                                                  
                                      ng-disabled="product.quantity == 0"><i class="fa fa-shopping-cart"></i>Add to cart</button>                                    
-                        </div>                                    
+                        </div><p></p>                                  
                     </div>
                     <!-- /.text -->
                 </div>

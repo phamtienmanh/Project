@@ -8,6 +8,7 @@ angular.module('shopnxApp')
         url: '/statistics',
         templateUrl: 'app/statistics/statistics.html',
         controller: 'StatisticsCtrl',
-        authenticate: true
+        authenticate: true,
+        isAdmin: true
       });
   });

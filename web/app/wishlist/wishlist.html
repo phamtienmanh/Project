@@ -33,10 +33,10 @@
                             <div class="col-md-6">
                                 <div class="btn-group" 
                                      ng-hide="checkCart(w.productId.id)">                                      
-                                    <button class="btn btn-info"
+                                    <button class="btn btn-info btn-sd"
                                             ng-click="cart.addItem(w.productId.id, w.productId.name, w.productId.quantity, w.productId.mrp, w.productId.price, -1)">&nbsp;-</button>
-                                    <button class="btn btn-info">{{getQuantity(w.productId.id);}}</button>
-                                    <button class="btn btn-info"
+                                    <button class="btn btn-info btn-sd">{{getQuantity(w.productId.id);}}</button>
+                                    <button class="btn btn-info btn-sd"
                                             ng-click="cart.addItem(w.productId.id, w.productId.name, w.productId.quantity, w.productId.mrp, w.productId.price, +1)" 
                                             ng-disabled="getQuantity(w.productId.id) >= w.productId.quantity">+</button>
                                 </div>

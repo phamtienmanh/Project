@@ -8,6 +8,7 @@ angular.module('shopnxApp')
         url: '/category',
         templateUrl: 'app/category/category.html',
         controller: 'CategoryCtrl',
-        authenticate: true
+        authenticate: true,
+        isAdmin: true
       });
   });

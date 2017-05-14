@@ -7,6 +7,7 @@ angular.module('shopnxApp')
         title: 'Coupons administration',
         url: '/coupon',
         templateUrl: 'app/coupon/coupon.html',
-        controller: 'CouponCtrl'
+        controller: 'CouponCtrl',
+        authenticate: true
       });
   });

@@ -9,7 +9,7 @@ p.price .text-muted{
     font-size: 20px;
 }
 .product .text{
-    min-height: 170px;
+    min-height: 120px;
 }
 .product a.invisible{
     min-height: 300px;
@@ -58,6 +58,7 @@ em {
     font-size: 1.1em !important;
     color: rgb(255,64,129) !important;
     border-color: white !important;
+    box-shadow: none !important;
 }
 .btn-wished:hover{
     background-color: rgba(33,150,243,0.2) !important;

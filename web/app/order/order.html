@@ -91,12 +91,12 @@
                                 </tr>
                                 <tr class="well" style="margin-bottom: 0 !important">
                                     <td class="text-center" colspan="1">{{ o.id | limitTo:11}}</td>
-                                    <td class="text-right">Order Total:</td>
+                                    <td class="text-right"><a class="btn-wishlist" href="#" ng-show="isAdmin()" ng-click="export(o)"><i class="fa fa-print"></i>Print Bill</a>&nbsp;&nbsp;&nbsp;&nbsp;Order Total:</td>
                                     <td colspan="1" ng-if="!o.couponId.amount">
                                         {{o.subTotal| currency}}
                                     </td>
                                     <td colspan="1" ng-if="o.couponId.amount">
-                                        {{o.subTotal -  o.subTotal * o.couponId.amount / 100| currency}}&nbsp;&nbsp;<a href="#" ng-show="isAdmin()"ng-click="export(o)">Print Bill</a>
+                                        {{o.subTotal -  o.subTotal * o.couponId.amount / 100| currency}}
                                     </td>
                                 </tr>
                             </tbody>

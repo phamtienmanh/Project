@@ -8,6 +8,7 @@ angular.module('shopnxApp')
         url: '/product',
         templateUrl: 'app/product/product.html',
         controller: 'ProductCtrl',
-        authenticate: true
+        authenticate: true,
+        isAdmin: true
       });
   });

@@ -84,10 +84,10 @@
                         <h5 ng-if="product.quantity == 0" class="help-block">Out of stock</h5>
                         <div class="text-center buttons">                            
                             <div class="btn-group" ng-hide="checkCart(product.id)">
-                                <button class="btn btn-info"
+                                <button class="btn btn-info btn-sd"
                                         ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, -1)">&nbsp;-</button>
-                                <button class="btn btn-info">{{getQuantity(product.id);}}</button>
-                                <button class="btn btn-info"
+                                <button class="btn btn-info btn-sd">{{getQuantity(product.id);}}</button>
+                                <button class="btn btn-info btn-sd"
                                         ng-click="cart.addItem(product.id, product.name, product.quantity, product.mrp, product.price, +1)" 
                                         ng-disabled="getQuantity(product.id) >= product.quantity">+</button>
                             </div>
@@ -102,7 +102,7 @@
                                          ng-click="addWishlist()"><i class="fa fa-heart"></i>Add to wishlist</button>
                             </div>
                             <div class="btn-group" ng-if="isLoggedIn() && isWished">
-                                <button  class="btn btn-default btn-wished"
+                                <button  class="btn-wished btn btn-default"
                                          ng-click="removeWishlist()"><i class="fa fa-heart"></i>Wished</button>
                             </div>                                                        
                         </div>

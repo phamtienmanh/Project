@@ -550,7 +550,7 @@ h1 {
     }
 }
 #content .product .text {
-    padding: 10px 10px 0;
+    padding: 5px 10px 0;
 }
 #content .product .text h3 {
     font-size: 18px;
@@ -566,6 +566,7 @@ h1 {
     font-size: 18px;
     text-align: center;
     font-weight: 300;
+    margin-bottom: 0;
 }
 #content .product .text p.price del {
     color: #999999;
@@ -1712,6 +1713,7 @@ button:disabled, .btn[disabled]{
 }
 .myTitle {
     margin-top: -15px;
+    margin-bottom: 5px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -1722,4 +1724,7 @@ html, body {
 }
 textarea::placeholder {
     color: #66afe9 !important;
+}
+.btn-sd{
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
 }

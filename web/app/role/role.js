@@ -8,6 +8,7 @@ angular.module('shopnxApp')
         url: '/role',
         templateUrl: 'app/role/role.html',
         controller: 'RoleCtrl',
-        authenticate: true
+        authenticate: true,
+        isAdmin: true
       });
   });

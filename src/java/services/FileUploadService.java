@@ -20,9 +20,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 @Path("/upload")
 public class FileUploadService {
 
-    /**
-     * The path to the folder where we want to store the uploaded files
-     */
+    private String a = System.getProperty("user.dir");
     private static final String UPLOAD_FOLDER = "/assets/images/";
     public FileUploadService() {
     }

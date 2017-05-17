@@ -4,7 +4,7 @@ angular.module('shopnxApp')
         .factory('Modal', ['$rootScope', '$modal', '$q', function ($rootScope, $modal, $q) {
 
                 var obj = {};
-                var selectModalInstanceCtrl = function ($scope, $modalInstance, $injector, data, options, toastr, Category, Role, Auth) {
+                var selectModalInstanceCtrl = function ($scope, $modalInstance, $injector, data, options, toastr, Category, Role, Auth, UploadImage) {
                     var api = $injector.get(options.api);
                     $scope.showPassword = false;
                     $scope.data = angular.copy(data);
@@ -14,6 +14,7 @@ angular.module('shopnxApp')
                     $scope.roles = Role.query(function () {
                     });
                     $scope.saveItem = function (item) {
+                        $scope.uploadImage($scope.theFile);
                         if ($scope.data.id) {
                             //edit
                             api.update({id: $scope.data.id}, $scope.data).$promise.then(function (data) {
@@ -71,9 +72,27 @@ angular.module('shopnxApp')
                                     $scope.imgTypeError = false;
                                     // gắn img vào product.image
                                     $scope.data.image = $scope.theFile.name;
+                                    var reader = new FileReader();
+                                    reader.onload = function (e) {
+                                        $('#showImg').attr('src', e.target.result);
+                                    }
+                                    reader.readAsDataURL($scope.theFile);
                                 }
                             }
                         });
+                    };
+                    $scope.uploadImage = function (file) {
+                        if (file) {
+                            file.location = document.location.pathname.substring(1, document.location.pathname.indexOf('/', 2));
+                            var fd = new FormData();
+                            fd.append('file', file);
+                            fd.append('location', file, document.location.pathname.substring(1, document.location.pathname.indexOf('/', 2)));
+                            $scope.upload = UploadImage.save(fd, function () {
+//                        toastr.success("Image upload successfully", "Success!");
+                            }, function (error) {
+                                toastr.error("Image upload error", "Error!");
+                            });
+                        }
                     };
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');

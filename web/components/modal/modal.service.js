@@ -127,7 +127,7 @@ angular.module('shopnxApp')
                 };
 
                 // We need to manually inject to be minsafe
-                selectModalInstanceCtrl.$inject = ['$scope', '$modalInstance', '$injector', 'data', 'options', 'toastr', 'Category', 'Role', 'Auth'];
+                selectModalInstanceCtrl.$inject = ['$scope', '$modalInstance', '$injector', 'data', 'options', 'toastr', 'Category', 'Role', 'Auth', 'UploadImage'];
 
                 obj.show = function (data, options) {
                     var deferred = $q.defer();

@@ -88,10 +88,11 @@ angular.module('shopnxApp')
                     });
                 }
             };
+            
             //check img type, load img
             $scope.imgTypeError = false;
             $scope.getFile = function (element) {
-                $scope.$apply(function ($scope) {
+                
                     $scope.theFile = element.files[0];
                     if ($scope.theFile) {
                         $scope.imgType = $scope.theFile.name.substring($scope.theFile.name.lastIndexOf('.') + 1).toLowerCase();
@@ -102,13 +103,26 @@ angular.module('shopnxApp')
                         else {
                             $scope.imgTypeError = false;
                             $scope.product.image = $scope.theFile.name;
-                            var reader = new FileReader();
-                            reader.onload = function (e) {
-                                $('#showImg').attr('src', e.target.result);
-                            }
-                            reader.readAsDataURL($scope.theFile);
+                            var image = new Image();
+                            image.onload = function(){
+                                // 3. when image is loaded, assign image src to #showImg and revoke object to free memory
+                                $('#showImg').attr('src', image.src);
+                                window.URL.revokeObjectURL(url);
+                            };
+                            var url = window.URL.createObjectURL($scope.theFile); // 1. create object url
+                            image.src = url; // 2. assign image source from url
+                            
+//                            var reader = new FileReader();
+//                            reader.onload = function (e) {
+//                                // 2. when data is read, assign result/image source to #showImg
+//                                $('#showImg').attr('src', e.target.result);
+//                            };
+//                            reader.readAsDataURL($scope.theFile); // 1. read data
+                            
                         }
                     }
+                $scope.$apply(function(){
+                   
                 });
             };
             $scope.uploadImage = function (file) {

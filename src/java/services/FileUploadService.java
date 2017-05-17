@@ -21,7 +21,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 public class FileUploadService {
 
     private String a = System.getProperty("user.dir");
-    private static final String UPLOAD_FOLDER = "/assets/images/";
+    private static final String UPLOAD_FOLDER = (System.getProperty("com.sun.aas.instanceRootURI") + "applications/BookStoreProject/assets/books/").substring(6);
     public FileUploadService() {
     }
     @Context

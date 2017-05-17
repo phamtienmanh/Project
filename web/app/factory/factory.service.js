@@ -19,6 +19,12 @@ angular.module('shopnxApp')
     return obj;
   }])
   
+  .factory('UploadImage', ['$resource', function($resource) {
+    var obj = {};
+    obj = $resource('api/upload/', null, {'update': { method:'PUT' } });
+    return obj;
+  }])
+  
   .factory('Wishlist', ['$resource', function($resource) {
     var obj = {};
     obj = $resource('api/wishlist/:id', null, {'update': { method:'PUT' } });

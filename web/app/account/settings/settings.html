@@ -10,9 +10,14 @@
                         <label>Current Password</label>
 
                         <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
+                               ng-minlength="3" required
                                mongoose-error placeholder="Old password"/>
-                        <p class="help-block" ng-show="form.password.$error.mongoose">
+                        <p class=" text-danger " ng-show="form.password.$error.mongoose">
                             {{ errors.other}}
+                        </p>
+                        <p class=" text-danger "
+                           ng-show="(form.password.$error.minlength || form.password.$error.required) && (form.password.$dirty || submitted)">
+                            Password must be at least 3 characters.
                         </p>
                     </div>
 
@@ -22,13 +27,13 @@
                         <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword"
                                ng-minlength="3"
                                required placeholder="Set a new password"/>
-                        <p class="help-block"
+                        <p class=" text-danger "
                            ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
                             Password must be at least 3 characters.
                         </p>
                     </div>
 
-                    <p class="help-block"> {{ message}} </p>
+                    <p class=" text-success"> {{ message}} </p>
                     <div class="text-center">
                         <button class="btn btn-primary" type="submit">Save changes</button>
                     </div>

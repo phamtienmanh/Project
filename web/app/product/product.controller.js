@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('shopnxApp')
-        .controller('ProductCtrl', function ($scope, socket, Product, Category, Brand, Feature, Modal, toastr) {
+        .controller('ProductCtrl', function ($scope, socket, Product, Category, UploadImage , Brand, Feature, Modal, toastr) {
             var cols = [
                 {heading: 'name', dataType: 'text', sortType: 'lowercase'},
                 {heading: 'category', dataType: 'selectCat', sortType: 'lowercase'},
@@ -92,17 +92,30 @@ angular.module('shopnxApp')
                 $scope.$apply(function ($scope) {
                     $scope.theFile = element.files[0];
                     if($scope.theFile){
-                       if ($scope.theFile.type !== "image/png" && $scope.theFile.type !== "image/jpeg" && $scope.theFile.type !== "image/bmp") {
+                        $scope.imgType = $scope.theFile.name.substring($scope.theFile.name.lastIndexOf('.') + 1).toLowerCase();
+                        if ($scope.theFile.type !== "image/png" && $scope.theFile.type !== "image/jpeg" && $scope.theFile.type !== "image/bmp") {
                             $scope.imgTypeError = true;
                             $scope.product.image = "";
                         }
                         else {
                             $scope.imgTypeError = false;
                             // gắn img vào product.image
-                            $scope.product.image = $scope.theFile.name;
+//                            $scope.product.image = $scope.theFile.name;
                         } 
                     }
                 });
+            };
+            
+            $scope.uploadImage = function(file){
+                if (file) {
+                    $scope.upload = UploadImage.query({file: file}, function () {
+                        toastr.success("Image saved successfully", "Success!");
+                    }, function(error){
+                        toastr.error("Image upload error", "Error!");
+                    });
+                }else{
+                    alert('Please choose an image');
+                }
             };
 
 

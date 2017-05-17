@@ -85,6 +85,7 @@
                                        onchange="angular.element(this).scope().getFile(this)" 
                                        style="display:none;"/><br/>
                             </label>
+                            <button ng-click="uploadImage(theFile)" >Upload</button>
                             &nbsp;{{product.image}}
                             <span class="help-block" ng-show="imgTypeError">
                                 Image extension is not valid, only .png .jpg .bmp are accepted

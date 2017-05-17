@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('shopnxApp')
-        .controller('ProductCtrl', function ($scope, socket, Product, Category, UploadImage , Brand, Feature, Modal, toastr) {
+        .controller('ProductCtrl', function ($scope, socket, Product, Category, UploadImage, Brand, Feature, Modal, toastr) {
             var cols = [
                 {heading: 'name', dataType: 'text', sortType: 'lowercase'},
                 {heading: 'category', dataType: 'selectCat', sortType: 'lowercase'},
@@ -44,12 +44,13 @@ angular.module('shopnxApp')
                 });
             };
             $scope.save = function (product) {
+                $scope.uploadImage($scope.theFile);
                 if ('id' in product) {
                     Product.update({id: $scope.product.id}, $scope.product).$promise.then(function (resp) {
-                        if(resp && resp.message){
-                             toastr.error(resp.message, "Error!");
+                        if (resp && resp.message) {
+                            toastr.error(resp.message, "Error!");
                         }
-                        else{
+                        else {
                             toastr.success("Product info saved successfully", "Success!");
                         }
                     }, function (error) { // error handler
@@ -58,10 +59,10 @@ angular.module('shopnxApp')
                 }
                 else {
                     Product.save($scope.product).$promise.then(function (resp) {
-                        if(resp && resp.message){
-                             toastr.error(resp.message, "Error!");
+                        if (resp && resp.message) {
+                            toastr.error(resp.message, "Error!");
                         }
-                        else{
+                        else {
                             toastr.success("Product info added successfully", "Success!");
                         }
                     }, function (error) { // error handler
@@ -73,10 +74,10 @@ angular.module('shopnxApp')
             $scope.delete = function (product) {
                 if ('id' in product) {
                     Product.delete({id: $scope.product.id}).$promise.then(function (resp) {
-                        if(resp && resp.message){
-                             toastr.error(resp.message, "Error!");
+                        if (resp && resp.message) {
+                            toastr.error(resp.message, "Error!");
                         }
-                        else{
+                        else {
                             toastr.success("Product delete successfully", "Success!");
                             $scope.products = Product.query(); // get list product
                             $scope.product = null; // set null
@@ -87,11 +88,12 @@ angular.module('shopnxApp')
                     });
                 }
             };
+            //check img type, load img
             $scope.imgTypeError = false;
             $scope.getFile = function (element) {
                 $scope.$apply(function ($scope) {
                     $scope.theFile = element.files[0];
-                    if($scope.theFile){
+                    if ($scope.theFile) {
                         $scope.imgType = $scope.theFile.name.substring($scope.theFile.name.lastIndexOf('.') + 1).toLowerCase();
                         if ($scope.theFile.type !== "image/png" && $scope.theFile.type !== "image/jpeg" && $scope.theFile.type !== "image/bmp") {
                             $scope.imgTypeError = true;
@@ -99,22 +101,27 @@ angular.module('shopnxApp')
                         }
                         else {
                             $scope.imgTypeError = false;
-                            // gắn img vào product.image
-//                            $scope.product.image = $scope.theFile.name;
-                        } 
+                            $scope.product.image = $scope.theFile.name;
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                $('#showImg').attr('src', e.target.result);
+                            }
+                            reader.readAsDataURL($scope.theFile);
+                        }
                     }
                 });
             };
-            
-            $scope.uploadImage = function(file){
+            $scope.uploadImage = function (file) {
                 if (file) {
-                    $scope.upload = UploadImage.query({file: file}, function () {
-                        toastr.success("Image saved successfully", "Success!");
-                    }, function(error){
+                    file.location = document.location.pathname.substring(1, document.location.pathname.indexOf('/', 2));
+                    var fd = new FormData();
+                    fd.append('file', file);
+                    fd.append('location', file, document.location.pathname.substring(1, document.location.pathname.indexOf('/', 2)));
+                    $scope.upload = UploadImage.save(fd, function () {
+//                        toastr.success("Image upload successfully", "Success!");
+                    }, function (error) {
                         toastr.error("Image upload error", "Error!");
                     });
-                }else{
-                    alert('Please choose an image');
                 }
             };
 

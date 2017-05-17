@@ -20,8 +20,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 @Path("/upload")
 public class FileUploadService {
 
-    private String a = System.getProperty("user.dir");
-    private static final String UPLOAD_FOLDER = (System.getProperty("com.sun.aas.instanceRootURI") + "applications/BookStoreProject/assets/books/").substring(6);
+    private static final String UPLOAD_FOLDER = (System.getProperty("com.sun.aas.instanceRootURI") + "applications/").substring(6);
     public FileUploadService() {
     }
     @Context
@@ -31,20 +30,13 @@ public class FileUploadService {
     @Produces({"text/xml"})
     public Response uploadFile(
             @FormDataParam("file") InputStream uploadedInputStream,
-            @FormDataParam("file") FormDataContentDisposition fileDetail) {
+            @FormDataParam("file") FormDataContentDisposition fileDetail, 
+            @FormDataParam("location") FormDataContentDisposition location) {
         // check if all form parameters are provided
         if (uploadedInputStream == null || fileDetail == null) {
             return Response.status(400).entity("Invalid form data").build();
         }
-        // create our destination folder, if it not exists
-        try {
-            createFolderIfNotExists(UPLOAD_FOLDER);
-        } catch (Exception se) {
-            return Response.status(500)
-                    .entity("Can not create destination folder on server")
-                    .build();
-        }
-        String uploadedFileLocation = UPLOAD_FOLDER + fileDetail.getFileName();
+        String uploadedFileLocation = UPLOAD_FOLDER+ location.getFileName() +"/assets/books/" + fileDetail.getFileName();
         try {
             saveToFile(uploadedInputStream, uploadedFileLocation);
         } catch (Exception e) {

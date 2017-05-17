@@ -74,7 +74,7 @@ angular.module('shopnxApp')
                                     $scope.data.image = $scope.theFile.name;
                                     var reader = new FileReader();
                                     reader.onload = function (e) {
-                                        $('#showImg').attr('src', e.target.result);
+                                        $('#showImg2').attr('src', e.target.result);
                                     }
                                     reader.readAsDataURL($scope.theFile);
                                 }

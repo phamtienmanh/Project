@@ -25,7 +25,6 @@ angular.module('shopnxApp')
 //          $scope.message = '';
 //        });
 //      }
-        $scope.checkNewPasswordErr = false;
         if(form.$valid){
         if (!$scope.checkPassword($scope.user.oldPassword)) {
             form.password.$setValidity('mongoose', false);
@@ -35,6 +34,7 @@ angular.module('shopnxApp')
             $scope.checkNewPasswordErr = true;
             $scope.message = '';
         }else {
+            $scope.checkNewPasswordErr = false;
             Auth.changePassword( $scope.user.oldPassword, $scope.user.newPassword )
             .then( function() {
               $scope.message = 'Password successfully changed.';

@@ -11,7 +11,7 @@ angular.module('shopnxApp')
         }
         return false;
     };
-
+    
     $scope.changePassword = function(form) {
       $scope.submitted = true;
 //      if(form.$valid) {
@@ -30,17 +30,21 @@ angular.module('shopnxApp')
             form.password.$setValidity('mongoose', false);
             $scope.errors.other = 'Incorrect password';
             $scope.message = '';
-        }else{
+        }else if($scope.checkPassword($scope.user.newPassword)){
+            $scope.checkNewPasswordErr = true;
+            $scope.message = '';
+        }else {
+            $scope.checkNewPasswordErr = false;
             Auth.changePassword( $scope.user.oldPassword, $scope.user.newPassword )
             .then( function() {
               $scope.message = 'Password successfully changed.';
             })
             .catch( function() {
-              form.password.$setValidity('mongoose', false);
-              $scope.errors.other = 'Incorrect password';
-              $scope.message = '';
+//              form.password.$setValidity('mongoose', false);
+//              $scope.errors.other = 'Incorrect password';
+//              $scope.message = '';
         });
         }
         }
-		};
+    };
   });

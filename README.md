@@ -13,4 +13,5 @@ Dưới đây là link file nén gồm :
 + tài liệu cài đặt (Installion_Guide.docx)
 + file cài đặt cơ sở dữ liệu trong Microsoft SQL Server (BookStoreDBProject.sql)
 + thư viện cho Glassfish (sqljdbc41.jar)
-https://raw.githubusercontent.com/phamtienmanh/Project/Full-source-codes-and-documents/%5BProject_SEM_4%5DF2-13-1508-C0_Group3_Unicorn.rar
+
+[Download](https://raw.githubusercontent.com/phamtienmanh/Project/master/%5BProject_SEM_4%5DF2-13-1508-C0_Group3_Unicorn.rar)

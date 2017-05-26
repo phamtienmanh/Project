@@ -11,6 +11,8 @@ Project được xây dựng và phát triển dựa trên các link sau 
 + https://github.com/itswadesh/shopnx
 + http://demo.shopnx.in/
 + http://mshop.codenx.com/
++ http://jtblin.github.io/angular-chart.js/
++ http://pdfmake.org/playground.html 
 
 Dưới đây là link file nén gồm :
 + file .war được build từ project trên NetBeans (BookStoreProject.war)

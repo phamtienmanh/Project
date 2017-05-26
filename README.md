@@ -1,11 +1,16 @@
-# Project
+# UNICORN Book Store
 Project Sem 4 tại FPT Aptech ở đường CMT8.
 
-Sử dụng công cụ NetBeans 8.0.2 và Glassfish 4.1 (Trên trường chạy Glassfish 4.0 sẽ bị lỗi, bắt buộc phải 4.1)
+Sử dụng công cụ NetBeans 8.0.2 và Glassfish 4.1 (Trên trường chạy Glassfish 4.0 sẽ bị lỗi, bắt buộc phải 4.1).
 
-Frontend là HTML, JavaScript, JQuery, AngularJS, Bootstrap, xử lý dữ liệu chủ yếu = AngularJS
+Frontend là HTML, JavaScript, JQuery, AngularJS, Bootstrap, xử lý dữ liệu chủ yếu = AngularJS .
 
-Backend là Java JPA 2.1 có EJB và Jersey RESTFUL Web Services (JAX-RS)
+Backend là Java JPA 2.1 có EJB và Jersey RESTFUL Web Services (JAX-RS) , Microsoft SQL Server 2014 .
+
+Project được xây dựng và phát triển dựa trên các link sau :
++ https://github.com/itswadesh/shopnx
++ http://demo.shopnx.in/
++ http://mshop.codenx.com/
 
 Dưới đây là link file nén gồm :
 + file .war được build từ project trên NetBeans (BookStoreProject.war)

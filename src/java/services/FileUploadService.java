@@ -20,7 +20,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 @Path("/upload")
 public class FileUploadService {
 
-    private static final String UPLOAD_FOLDER = (System.getProperty("com.sun.aas.instanceRootURI") + "applications/").substring(6);
+    private static final String UPLOAD_FOLDER = (System.getProperty("com.sun.aas.instanceRootURI").replace("%20", " ") + "applications/").substring(6);
     public FileUploadService() {
     }
     @Context

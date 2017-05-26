@@ -1,7 +1,10 @@
 # Project
 Project Sem 4 tại FPT Aptech ở đường CMT8.
+
 Sử dụng công cụ NetBeans 8.0.2 và Glassfish 4.1 (Trên trường chạy Glassfish 4.0 sẽ bị lỗi, bắt buộc phải 4.1)
+
 Frontend là HTML, JavaScript, JQuery, AngularJS, Bootstrap, xử lý dữ liệu chủ yếu = AngularJS
+
 Backend là Java JPA 2.1 có EJB và Jersey RESTFUL Web Services (JAX-RS)
 
 Dưới đây là link file nén gồm :
